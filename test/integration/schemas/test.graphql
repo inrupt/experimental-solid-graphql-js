@@ -1,0 +1,16 @@
+# https://sandbox.topquadrant.com/graphql/directives.html
+# https://sandbox.topquadrant.com/graphql/graphql-shacl.html
+
+schema
+	@prefixes(
+    _base: "http://example.org/human/",
+		human: "http://example.org/human/",
+		starwars: "http://starwars.com/data/"
+	)
+  {
+	  query: Query
+  }
+
+type Human @uri(template: "human:{$id}") {
+	id: ID!
+}

@@ -1,0 +1,41 @@
+# Rather than comments - we could potentially make
+# JSON-LD mappings part of comments
+# Or do something with directives e.g. @id("<http://example.org#Jesse>")
+
+# Note: interfaces in GraphQL exist as an abstract 
+# https://sandbox.topquadrant.com/graphql/directives.html
+
+
+
+
+
+
+# @base(base: )
+# @prefix(
+#   prefix: "ex", namespace: "http://example.org#";
+
+# )
+# @prefix(prefix: "ex", namespace: "http://example.org#")
+
+type Query {
+  # We would recieve a resolver for the query
+  # resolves the user part of that query (as query.user)
+  # It will recieve the args that are specified.
+  # 
+  user(iri: String!): Person!
+}
+
+# type Person @is("https://schema.org/Person") {
+# type Person @is(class: "foaf:Person") {
+
+type Person @is(class: "foaf:Person") {
+  name: String! @is(property: "foaf:name")
+  # friends: [Person]! @propertyList("foaf:frproperties: iend")
+  # TODO: Check this syntax is valid
+  # friends: [Person]! @relations(properties: ["foaf:friend", "schema:friend"])
+  friends(first: Integer): [Person!]! @relation(property: "foaf:knows")
+  # friends: [Person]! @is(
+  #   property: "foaf:friend",
+  #   propery: "schema:friend"
+  # )
+}

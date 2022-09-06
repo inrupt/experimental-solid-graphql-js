@@ -1,0 +1,10 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+<#me> a foaf:Person ;
+  foaf:name "Jesse Wright" ;
+  foaf:knows <#Alice> .
+
+<#Alice> a foaf:Person ;
+  foaf:name "Alice" ;
+  foaf:knows <#me> .
+
