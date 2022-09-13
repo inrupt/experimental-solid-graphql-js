@@ -5,7 +5,7 @@ import gql from 'graphql-tag'
 import { SparqlEngine } from './src/sparqlEngine';
 import { QueryEngine } from '@comunica/query-sparql';
 import { Store, DataFactory as DF } from 'n3';
-import { mapSchema, MapperKind } from '@graphql-tools/utils';
+import { mapSchema, MapperKind, getDirective } from '@graphql-tools/utils';
 
 const engine = new SparqlEngine(
   new QueryEngine()
@@ -72,26 +72,64 @@ const schema = makeExecutableSchema({
 })
 
 mapSchema(schema, {
-  [MapperKind.FIELD]: field => {
-    // console.log('field', field, field.astNode?.directives)
+  [MapperKind.FIELD]: (fieldConfig) => {
+    console.log(fieldConfig);
 
-    const property = field.astNode?.directives
-      ?.filter(directive => directive.name.kind === 'Name' && directive.name.value === 'property' && directive.arguments?.length === 1)
-      .map(directive => directive.arguments!)
+    return fieldConfig;
+  },
+  [MapperKind.OBJECT_FIELD]: (fieldConfig) => {
 
-    if (property?.length === 1) {
-      // TODO: Proper validation here
-      const [[{ value }]] = property;
-      console.log(value)
+    const propertyDirective = getDirective(schema, fieldConfig, 'property')?.[0].iri;
+
+    const defaultResolve = fieldConfig.resolve;
+    fieldConfig.resolve = (source, args, context, info) => {
+      return defaultResolve?.(source, args, { ...context, property: propertyDirective }, info)
     }
 
-    // TODO: Finish this mapping properly
+    return fieldConfig;
 
-    return field;
-  }
+    // fieldConfig.extensions = {
+    //   ...fieldConfig.extensions,
+    //   ['urn:solidGraphQL:directive:property']: propertyDirective
+    // }
+
+    // fieldConfig.resolve()
+
+    // ??= {})['urn:solidGraphQL:directive:property'] = propertyDirective
+
+    // return fieldConfig;
+
+    // if (deprecatedDirective) {
+
+    //   fieldConfig.deprecationReason = deprecatedDirective['reason'];
+
+    //   return fieldConfig;
+
+    // }
+
+  },
+  // [MapperKind.FIELD]: field => {
+  //   // console.log('field', field, field.astNode?.directives)
+
+  //   const property = field.astNode?.directives
+  //     ?.filter(directive => directive.name.kind === 'Name' && directive.name.value === 'property' && directive.arguments?.length === 1)
+  //     .map(directive => directive.arguments!)
+
+  //   if (property?.length === 1) {
+  //     // TODO: Proper validation here
+  //     const [[{ value }]] = property;
+  //     console.log(value)
+  //   }
+
+  //   // TODO: Finish this mapping properly
+
+  //   return field;
+  // }
 })
 
-process.exit();
+// console.log(getDirectives(schema))
+
+// process.exit();
 
 console.log('after making executable schema')
 
@@ -100,7 +138,10 @@ graphql({
   schema,
   source,
   async fieldResolver(source, args, context, info) {
-    console.log(source, args, context, info)
+
+    // const directives = getDirectives(info.schema, info.operation.directives)
+    console.log(info.parentType)
+    console.log(source, args, context)
 
     if (!source && args.id)
       return DF.namedNode(args.id)
@@ -109,7 +150,7 @@ graphql({
     
     const result = await engine.queryObject(source, DF.namedNode(map[info.fieldName as 'mother' | 'father' | 'label']), { sources: [store] })
     
-    console.log(source, args, context, info.returnType)
+    // console.log(source, args, context, info.returnType)
 
     // TODO: Make this more general
     if (info.returnType.toString() === 'String!')
