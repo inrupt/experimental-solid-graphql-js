@@ -4,13 +4,14 @@ import gql from 'graphql-tag'
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
   type Query {
-    a: String!
-    b: B!
+    me(id: String): Human!
   }
 
-  type B {
-    c: String!
-    d: String!
+  type Human {
+    id: String!
+    name: String!
+    mother: Human
+    father: Human
   }
 `);
 
@@ -24,10 +25,14 @@ var rootValue = {
 // Run the GraphQL query '{ hello }' and print out the response
 graphql({
   schema,
-  source: '{ a, b }',
-  fieldResolver(a, b, c, d) {
-    console.log(a, b, c, d);
-    return 's';
+  source: '{ me(id: "https://id.inrupt.com/jeswr") { name, mother { name }, father { name } } }',
+  fieldResolver(source, args, context, info) {
+    console.log(source, args, context, info.fieldName)
+
+    if (args.id)
+      return args.id;
+    
+    return 's'
   }
   // rootValue
 }).then((response) => {

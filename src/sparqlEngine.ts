@@ -14,24 +14,34 @@ export class SparqlEngine {
 
   }
 
-  public queryBindings(query: Algebra.Project): Promise<ResultStream<RDF.Bindings>> {
-    return this.sparqlEngineBase.queryBindings(query);
+  public queryBindings(query: Algebra.Project, context?: RDF.QueryContext | undefined): Promise<ResultStream<RDF.Bindings>> {
+    return this.sparqlEngineBase.queryBindings(query, context);
   }
 
   /**
    * Returns the binding if there is exactly one result.
    * Errors otherwise.
    */
-  public async queryBinding(query: Algebra.Project): Promise<RDF.Bindings> {
-    return getSingle(wrap(await this.queryBindings(query)));
+  public async queryBinding(query: Algebra.Project, context?: RDF.QueryContext | undefined): Promise<RDF.Bindings> {
+    const bindings = await this.queryBindings(query, context);
+    const arr = await (bindings as AsyncIterator<any>).toArray();
+    // console.log(JSON.stringify(arr, null, 2));
+
+    if (arr.length !== 1) {
+      throw new Error("More than one element in iterator")
+    }
+
+    return arr[0];
+
+    // return getSingle(wrap(await this.queryBindings(query, context)));
   }
 
   /**
    * Returns the binding if there is exactly one result and one term/variable in that result.
    * Errors otherwise.
    */
-  public async queryTerm(query: Algebra.Project): Promise<RDF.Term> {
-    return getSingleBinding(await this.queryBinding(query));
+  public async queryTerm(query: Algebra.Project, context?: RDF.QueryContext | undefined): Promise<RDF.Term> {
+    return getSingleBinding(await this.queryBinding(query, context));
   }
 
   private objectAlgebra(subject: RDF.Term, predicate: RDF.Term): Algebra.Project {
@@ -40,20 +50,20 @@ export class SparqlEngine {
     return this.factory.createProject(pattern, [object]);
   }
 
-  public async queryObject(subject: RDF.Term, predicate: RDF.Term): Promise<RDF.Term> {
-    return this.queryTerm(this.objectAlgebra(subject, predicate));
+  public async queryObject(subject: RDF.Term, predicate: RDF.Term, context?: RDF.QueryContext | undefined): Promise<RDF.Term> {
+    return this.queryTerm(this.objectAlgebra(subject, predicate), context);
   }
 
-  public async queryObjects(subject: RDF.Term, predicate: RDF.Term): Promise<AsyncIterator<RDF.Term>> {
-    return this.queryTerms(this.objectAlgebra(subject, predicate));
+  public async queryObjects(subject: RDF.Term, predicate: RDF.Term, context?: RDF.QueryContext | undefined): Promise<AsyncIterator<RDF.Term>> {
+    return this.queryTerms(this.objectAlgebra(subject, predicate), context);
   }
 
   /**
    * Returns the terms of a query with a single variable.
    * The stream will error if there are any bindings without a single result.
    */
-  public async queryTerms(query: Algebra.Project): Promise<AsyncIterator<RDF.Term>> {
-    const bindings = wrap(await this.queryBindings(query));
+  public async queryTerms(query: Algebra.Project, context?: RDF.QueryContext | undefined): Promise<AsyncIterator<RDF.Term>> {
+    const bindings = wrap(await this.queryBindings(query, context));
 
     // TODO: Clean this up
     return bindings.map(result => getSingleBinding(result));
