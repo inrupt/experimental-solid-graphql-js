@@ -8,14 +8,21 @@ import { type AsyncIterator, wrap } from 'asynciterator'
 import { DataFactory as DF } from 'n3';
 import { ResultStream } from '@rdfjs/types';
 
+const _RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+const RDF_TYPE = `${_RDF}type`
+
 export class SparqlEngine {
   private readonly factory = new Factory();
-  constructor(private readonly sparqlEngineBase: RDF.AlgebraSparqlQueryable<Algebra.Project, RDF.BindingsResultSupport>) {
+  constructor(private readonly sparqlEngineBase: RDF.AlgebraSparqlQueryable<Algebra.Project | Algebra.Ask, RDF.BindingsResultSupport & RDF.BooleanResultSupport>) {
 
   }
 
   public queryBindings(query: Algebra.Project, context?: RDF.QueryContext | undefined): Promise<ResultStream<RDF.Bindings>> {
     return this.sparqlEngineBase.queryBindings(query, context);
+  }
+
+  public queryBoolean(query: Algebra.Ask, context?: RDF.QueryContext | undefined): Promise<boolean> {
+    return this.sparqlEngineBase.queryBoolean(query, context);
   }
 
   /**
@@ -50,6 +57,15 @@ export class SparqlEngine {
     return this.factory.createProject(pattern, [object]);
   }
 
+  private askPatternAlgebra(subject: RDF.Term, predicate: RDF.Term, object: RDF.Term): Algebra.Ask {
+    return this.factory.createAsk(this.factory.createPattern(subject, predicate, object));
+  }
+
+  private askClassAlgebra(subject: RDF.Term, clss: RDF.Term): Algebra.Ask {
+    // TODO: ADD RDF:TYPE
+    return this.askPatternAlgebra(subject, DF.namedNode(RDF_TYPE), clss);
+  }
+
   public async queryObject(subject: RDF.Term, predicate: RDF.Term, context?: RDF.QueryContext | undefined): Promise<RDF.Term> {
     return this.queryTerm(this.objectAlgebra(subject, predicate), context);
   }
@@ -68,6 +84,12 @@ export class SparqlEngine {
     // TODO: Clean this up
     return bindings.map(result => getSingleBinding(result));
   }
+
+  // Checks if a subject belongs to a particular class
+  public async askClass(subject: RDF.Term, clss: RDF.Term, context?: RDF.QueryContext | undefined): Promise<boolean> {
+    return this.queryBoolean(this.askClassAlgebra(subject, clss), context);
+  }
+
 }
 
 function getSingleBinding(bindings: RDF.Bindings): RDF.Term {

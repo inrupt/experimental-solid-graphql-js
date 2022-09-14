@@ -73,18 +73,22 @@ const schema = makeExecutableSchema({
 
 mapSchema(schema, {
   [MapperKind.FIELD]: (fieldConfig) => {
-    console.log(fieldConfig);
-
+    // console.log('MapperKind.FIELD', fieldConfig);
+// 
     return fieldConfig;
   },
   [MapperKind.OBJECT_FIELD]: (fieldConfig) => {
+    // console.log('MapperKind.OBJECT_FIELD', fieldConfig);
 
     const propertyDirective = getDirective(schema, fieldConfig, 'property')?.[0].iri;
 
-    const defaultResolve = fieldConfig.resolve;
-    fieldConfig.resolve = (source, args, context, info) => {
-      return defaultResolve?.(source, args, { ...context, property: propertyDirective }, info)
-    }
+    fieldConfig.extensions = { a: 'boo' }
+
+    // const defaultResolve = fieldConfig.resolve;
+    // fieldConfig.resolve = (source, args, context, info) => {
+    //   console.log('resolve called ----------------------------------------------------------')
+    //   return defaultResolve?.(source, args, { ...context, property: propertyDirective }, info)
+    // }
 
     return fieldConfig;
 
@@ -141,7 +145,7 @@ graphql({
 
     // const directives = getDirectives(info.schema, info.operation.directives)
     console.log(info.parentType)
-    console.log(source, args, context)
+    console.log(source, args, context, info)
 
     if (!source && args.id)
       return DF.namedNode(args.id)
