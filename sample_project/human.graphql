@@ -1,0 +1,18 @@
+# TODO: Add these using an extend-schema plugin https://www.the-guild.dev/graphql/codegen/docs/custom-codegen/extend-schema
+directive @property(iri: String!) on FIELD_DEFINITION # Require a singular property
+directive @namespace(iri: String!) on ENUM
+
+type Human @is(class: "https://example.org/human") {
+  id: String!
+  label: String! @property(iri: "http://www.w3.org/2000/01/rdf-schema#label")
+  mother: Human @property(iri: "http://example.org/mother")
+  father: Human @property(iri: "http://example.org/father")
+}
+
+type Query {
+  me(id: String!): Human!
+}
+
+enum RDFS @namespace(iri: "http://www.w3.org/2000/01/rdf-schema#") {
+  label
+}

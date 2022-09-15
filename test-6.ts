@@ -33,7 +33,14 @@ const typeDefs = /* GraphQL */ `
   # is directive so that we can toggle whether or not the element
   # belongs to the asserted classes.
   directive @is(class: String!) on OBJECT
-  directive @property(iri: String!) on FIELD_DEFINITION
+  directive @property(iri: String!) on FIELD_DEFINITION # Require a singular property
+  directive @properties(iri: String!) on FIELD_DEFINITION # Return a list of all properties
+  # ^^ Should be ordered
+  directive @list on FIELD_DEFINITION # Resolve and RDF List
+  directive @identifier on type # TODO Check this
+  directive @label on FIELD_DEFINITION # Resolve to the label of the node
+
+  type ID extends String @identifier # Should also be able to apply @identifier directly
 
   type Query {
     me(id: String): Human!
@@ -44,6 +51,7 @@ const typeDefs = /* GraphQL */ `
     id: String!
     label: String! @property(iri: "${RDFS}label")
     mother: Human @property(iri: "http://example.org/mother")
+    # TODO: Consider enabling full sparql paths inside these properties
     father: Human @property(iri: "http://example.org/father")
   }
 `;
@@ -164,8 +172,14 @@ graphql({
   schema,
   source,
   fieldResolver,
+  // It looks like we can pass a context through here
+  contextValue: { 'myContextKey': true }
 }).then((response) => {
   console.log(JSON.stringify(response, null, 2));
-  console.log(response.data?.)
+  console.log(response.data)
 });
+
+// TODO Work out conditional inline fragments
+// Booelan does appear to be part of GraphQL
+// TODO: Work out how we need to handle variables
 

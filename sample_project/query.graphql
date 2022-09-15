@@ -1,0 +1,11 @@
+query Person($id: String!) {
+  me(id: $id) {
+    label
+    mother {
+      label
+    }
+    father {
+      label
+    }
+  }
+}
