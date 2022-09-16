@@ -19,12 +19,13 @@ class GraphQLEngine implements IQueryEngine {
   }
 }
 
-
 // Create a GraphQL-LD client based on a client-side Comunica engine over 2 sources
 const comunicaConfig = {
   sources: [ "http://dbpedia.org/sparql", "https://ruben.verborgh.org/profile/" ],
 };
 const client = new Client({ context, queryEngine: new QueryEngineComunica(comunicaConfig) });
+
+
 
 // // Define a query
 // const query = `

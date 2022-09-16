@@ -37,10 +37,11 @@ const typeDefs = /* GraphQL */ `
   directive @properties(iri: String!) on FIELD_DEFINITION # Return a list of all properties
   # ^^ Should be ordered
   directive @list on FIELD_DEFINITION # Resolve and RDF List
-  directive @identifier on type # TODO Check this
+  # directive @identifier on type # TODO Check this
   directive @label on FIELD_DEFINITION # Resolve to the label of the node
+  # TODO: Add a directive for write locations
 
-  type ID extends String @identifier # Should also be able to apply @identifier directly
+  # type ID extends String @identifier # Should also be able to apply @identifier directly
 
   type Query {
     me(id: String): Human!
@@ -77,6 +78,9 @@ let schema = makeExecutableSchema({
 })
 
 async function fieldResolver(source: any, args: any, context: any, info: any) {
+  console.log(context)
+
+
     if (!source && args.id)
       return DF.namedNode(args.id)
 
@@ -175,7 +179,7 @@ graphql({
   // It looks like we can pass a context through here
   contextValue: { 'myContextKey': true }
 }).then((response) => {
-  console.log(JSON.stringify(response, null, 2));
+  // console.log(JSON.stringify(response, null, 2));
   console.log(response.data)
 });
 
