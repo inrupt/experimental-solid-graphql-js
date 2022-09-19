@@ -1,0 +1,19 @@
+schema: human.graphql
+documents: query.graphql
+generates:
+  operations-types.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node
+    config:
+      scalars:
+        JSON: string
+        UUID: string
+        # Specify the scalar type for the TypedDocumentNode generation
+        Date: Date
+        URL: URL
+# https://www.the-guild.dev/graphql/scalars/docs/quick-start
+
+# TODO: Future - enable things like the comunica engine config to be set from within here
+# https://www.the-guild.dev/graphql/codegen/plugins/typescript/typescript-react-query

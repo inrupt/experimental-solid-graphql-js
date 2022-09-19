@@ -1,0 +1,16 @@
+@prefix inrupt: <https://id.inrupt.com/> .
+@prefix ex: <http://example.org/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+inrupt:jeswr a ex:Person ;
+  ex:mother inrupt:leanne ;
+  ex:father inrupt:paul ;
+  ex:dob "2000-01-10"^^xsd:date ;
+  rdfs:label "Jesse Wright" .
+
+inrupt:paul a ex:Person ;
+  rdfs:label "Paul Wright" .
+
+inrupt:leanne a ex:Person ;
+  rdfs:label "Leanne Wright" .

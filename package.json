@@ -12,7 +12,8 @@
     "test": "jest",
     "generate:sample": "cd ./sample_project/ && graphql-codegen --watch",
     "sample:run": "ts-node ./sample_project/index.ts",
-    "sample2:run": "ts-node ./sample_project_2/index.ts"
+    "sample2:run": "ts-node ./sample_project_2/index.ts",
+    "generate:samplelib": "cd ./sample_lib/ && graphql-codegen"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@apollo/client": "^3.6.9",
     "@comunica/query-sparql": "^2.4.3",
+    "@comunica/query-sparql-file": "^2.4.3",
     "@graphql-codegen/typed-document-node": "^2.3.3",
     "@graphql-codegen/typescript": "^2.7.3",
     "@graphql-codegen/typescript-operations": "^2.5.3",

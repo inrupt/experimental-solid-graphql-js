@@ -1,0 +1,36 @@
+# TODO: Add these using an extend-schema plugin https://www.the-guild.dev/graphql/codegen/docs/custom-codegen/extend-schema
+# Note: There is no union scalar type
+
+directive @property(iri: String!) on FIELD_DEFINITION # Require a singular property
+directive @namespace(iri: String!) on ENUM
+directive @identifier on ARGUMENT_DEFINITION | FIELD_DEFINITION
+directive @coerceLiteral on FIELD_DEFINITION
+directive @upper on FIELD_DEFINITION
+# directive @is(class: String!) on TYPE
+
+scalar Date
+scalar URL
+
+type Human { #@is(class: "https://example.org/human")
+  id: String @identifier @coerceLiteral
+  label: String! @property(iri: "http://www.w3.org/2000/01/rdf-schema#label") @coerceLiteral #@upper
+  mother: Human @property(iri: "http://example.org/mother")
+  father: Human @property(iri: "http://example.org/father")
+  something: Boolean @property(iri: "http://example.org/something") @coerceLiteral
+  birthDate: Date @property(iri: "http://example.org/dob") @coerceLiteral
+  url: URL #@coerceLiteral
+  # TODO: Improve handling of numbers in the rdf-literal library
+}
+
+type Query {
+  me(id: String! @identifier): Human!
+}
+
+type Mutation {
+  me: Human
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
