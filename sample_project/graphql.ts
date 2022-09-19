@@ -1,9 +1,12 @@
-import { Client } from 'urql';
+import { Client, useClient } from 'urql';
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import { PersonDocument } from './operations-types';
 import { useQuery } from '@apollo/client';
 import { propertyDirective } from '../src/resolvers/propertyDirective';
 import { graphql } from 'graphql';
+
+const client = useClient()
+client.query
 
 let schema = makeExecutableSchema({
   typeDefs: PersonDocument
@@ -16,11 +19,20 @@ const source = /* GraphQL */ `
     me(id: "https://id.inrupt.com/jeswr") {
       label,
       mother {
-        label
+        label,
+        something,
+        birthDate,
+        url
       },
       father {
-        label
-      }
+        label,
+        something,
+        birthDate,
+        url
+      },
+      something,
+      birthDate,
+      url
     }
   }
 `

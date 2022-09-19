@@ -9,7 +9,8 @@ import { source } from './source';
 import { typeDefs } from './typeDefs';
 
 let schema = makeExecutableSchema({
-  typeDefs
+  typeDefs,
+  schemaExtensions
 })
 
 // console.log(getArgumentsWithDirectives(getDocumentNodeFromSchema(schema)))
@@ -17,9 +18,12 @@ let schema = makeExecutableSchema({
 // process.exit();
 
 // TODO: Work out how to ensure the ordering of directives comes from the schema rather than the application here
+// TODO: Improve how source is handled (we probably should have an internal property with the node rather than)
+// making the node the value itself so that we can also add metadata
 schema = coerceLiteralDirective('coerceLiteral')(schema)
 schema = propertyDirective('property')(schema);
-schema = identifierDirective('identifier')(schema); // TODO: See why coerce is being called excessively
+schema = identifierDirective('identifier')(schema); // TODO: See why coerce is being called excessively (log the resolver from this directive to see what I mean)
+// TODO: See if we can map by types instead for ^^
 
 // process.exit();
 

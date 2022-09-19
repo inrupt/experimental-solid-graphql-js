@@ -6,3 +6,11 @@ generates:
       - typescript
       - typescript-operations
       - typed-document-node
+    config:
+      scalars:
+        JSON: string
+        UUID: string
+        # Specify the scalar type for the TypedDocumentNode generation
+        Date: Date
+        URL: URL
+# https://www.the-guild.dev/graphql/scalars/docs/quick-start
