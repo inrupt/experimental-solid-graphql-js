@@ -6,13 +6,19 @@ generates:
       - typescript
       - typescript-operations
       - typed-document-node
+      # TODO: Introduce such a plugin
+      # TODO: Separate this into Solid Operations and Linked Data Operations
+      # TODO: The modules should include linked-data-scalars-js, linked-data-scalars-xsd, 
+      # - soid-operations
     config:
       scalars:
         JSON: string
         UUID: string
         # Specify the scalar type for the TypedDocumentNode generation
         Date: Date
+        XSDDate: Date
         URL: URL
+        Label: string
 # https://www.the-guild.dev/graphql/scalars/docs/quick-start
 
 # TODO: Future - enable things like the comunica engine config to be set from within here

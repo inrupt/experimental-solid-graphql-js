@@ -1,0 +1,5 @@
+
+type Mutation {
+  # Have write hints but keep it separate so short term and long term don't get confused
+  me: Human #@writeTo(file: )
+}

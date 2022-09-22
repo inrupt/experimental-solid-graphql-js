@@ -12,16 +12,21 @@ export type Scalars = {
   Int: number;
   Float: number;
   Date: Date;
+  Label: string;
   URL: URL;
+  XSDDate: Date;
 };
 
 export type Human = {
   __typename?: 'Human';
-  birthDate?: Maybe<Scalars['Date']>;
-  father?: Maybe<Human>;
+  ancestors: Array<Human>;
+  birthDate: Scalars['Date'];
+  birthDate_2?: Maybe<Scalars['XSDDate']>;
+  father: Human;
   id?: Maybe<Scalars['String']>;
   label: Scalars['String'];
-  mother?: Maybe<Human>;
+  mother: Human;
+  name: Scalars['String'];
   something?: Maybe<Scalars['Boolean']>;
   url?: Maybe<Scalars['URL']>;
 };
@@ -41,12 +46,16 @@ export type QueryMeArgs = {
   id: Scalars['String'];
 };
 
+export enum Rdfs {
+  Label = 'label'
+}
+
 export type PersonQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type PersonQuery = { __typename?: 'Query', me: { __typename?: 'Human', label: string, id?: string | null, something?: boolean | null, birthDate?: Date | null, url?: URL | null, mother?: { __typename?: 'Human', id?: string | null, label: string, something?: boolean | null, birthDate?: Date | null, url?: URL | null } | null, father?: { __typename?: 'Human', id?: string | null, label: string, something?: boolean | null, birthDate?: Date | null, url?: URL | null } | null } };
+export type PersonQuery = { __typename?: 'Query', me: { __typename?: 'Human', label: string, name: string, birthDate: Date, mother: { __typename?: 'Human', name: string, birthDate: Date }, father: { __typename?: 'Human', name: string, birthDate: Date }, ancestors: Array<{ __typename?: 'Human', name: string }> } };
 
 
-export const PersonDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Person"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"mother"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"something"}},{"kind":"Field","name":{"kind":"Name","value":"birthDate"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"father"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"something"}},{"kind":"Field","name":{"kind":"Name","value":"birthDate"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"something"}},{"kind":"Field","name":{"kind":"Name","value":"birthDate"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]} as unknown as DocumentNode<PersonQuery, PersonQueryVariables>;
+export const PersonDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Person"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mother"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"birthDate"}}]}},{"kind":"Field","name":{"kind":"Name","value":"father"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"birthDate"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ancestors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"birthDate"}}]}}]}}]} as unknown as DocumentNode<PersonQuery, PersonQueryVariables>;

@@ -1,7 +1,7 @@
 import { MapperKind, mapSchema } from '@graphql-tools/utils';
-import { defaultFieldResolver, GraphQLSchema } from 'graphql';
+import { defaultFieldResolver, GraphQLSchema, isListType, isNonNullType } from 'graphql';
 import { DataFactory } from 'n3';
-import { queryObject } from '../sparql';
+import { queryObject, queryObjects } from '../sparql';
 import { FieldConfig } from "../types";
 import { getResolverFromConfig, getSingleDirective } from './util';
 
@@ -37,27 +37,53 @@ export function propertyDirective(directiveName: string): (schema: GraphQLSchema
   return schema =>
     mapSchema(schema, {
       [MapperKind.OBJECT_FIELD]: (fieldConfig: FieldConfig) => {
-        const directive = getSingleDirective(schema, fieldConfig, directiveName);
+          const directive = getSingleDirective(schema, fieldConfig, directiveName);
 
-        if (directive) {
-          // Get this field's original resolver
-          const resolve = getResolverFromConfig(fieldConfig);
+          if (directive) {
+            // Get this field's original resolver
+            const resolve = getResolverFromConfig(fieldConfig);
 
-          // Replace the original resolver with a function that *first* replaces the node with the identifier
-          // and then performs the standard resolution actions
-          fieldConfig.resolve = async function (source, args, context, info) {
-            return resolve(
-              {
-                [info.fieldName]: {
-                  __node: await queryObject(context, source.__node, nodeFromDirective(directive, directiveName))
-                }
-              },
-              args, context, info
-            );
+            if (isListType(
+              isNonNullType(fieldConfig.type) ? fieldConfig.type.ofType : fieldConfig.type
+              // TODO: Re-enable this section of code
+            )) {
+              fieldConfig.resolve = async function (source, args, context, info) {
+                const objects = await queryObjects(context, source.__node, nodeFromDirective(directive, directiveName))
+                .then(
+                  nodes => nodes
+                    .map(node => ({ __node: node }))
+                    .toArray()
+                );
+
+                return resolve(
+                  {
+                    [info.fieldName]: objects
+                  },
+                  args, context, info
+                );
+              }
+              // throw new Error('Not implemented')
+            } else {
+    
+            // Replace the original resolver with a function that *first* replaces the node with the identifier
+            // and then performs the standard resolution actions
+            fieldConfig.resolve = async function (source, args, context, info) {
+              // console.log('resolve called for', info.fieldName, isListType(fieldConfig.type), fieldConfig.type)
+              return resolve(
+                {
+                  [info.fieldName]: {
+                    __node: await queryObject(context, source.__node, nodeFromDirective(directive, directiveName))
+                  }
+                },
+                args, context, info
+              );
+            }
           }
+  
+          return fieldConfig;
         }
 
-        return fieldConfig;
+
       }
     })
 }

@@ -12,7 +12,7 @@ const RDFS = "http://www.w3.org/2000/01/rdf-schema#";
 const RDF_TYPE = `${_RDF}type`;
 const RDFS_LABEL = `${RDFS}label`;
 
-function queryBindings(context: IContext, query: Algebra.Project) {
+export function queryBindings(context: IContext, query: Algebra.Project) {
   return context.sparqlEngine.queryBindings(query, context.context);
 }
 
@@ -64,19 +64,30 @@ export function queryLabel(context: IContext, subject: RDF.Term): Promise<RDF.Te
   return queryObject(context, subject, DF.namedNode(RDFS_LABEL));
 }
 
-export function queryObjects(context: IContext, subject: RDF.Term, predicate: RDF.Term): Promise<AsyncIterator<RDF.Term>> {
-  return queryTerms(context, objectAlgebra(subject, predicate));
+export async function queryObjects(context: IContext, subject: RDF.Term, predicate: RDF.Term): Promise<AsyncIterator<RDF.Term>> {
+  const algebra = objectAlgebra(subject, predicate);
+  // await Promise.resolve();
+  // console.log('bindings are', await queryBindings(context, algebra).then(al => arrayify(al)))
+  // console.log('bindings are', await queryBindings(context, algebra).then(al => arrayify(al)))
+  await queryBindings(context, algebra).then(al => arrayify(al))
+  await queryBindings(context, algebra).then(al => arrayify(al))
+  return queryTerms(context, algebra);
 }
 
 /**
  * Returns the terms of a query with a single variable.
  * The stream will error if there are any bindings without a single result.
  */
-export async function queryTerms(context: IContext, query: Algebra.Project): Promise<AsyncIterator<RDF.Term>> {
-  const bindings = wrap(await queryBindings(context, query));
+export function queryTerms(context: IContext, query: Algebra.Project): Promise<AsyncIterator<RDF.Term>> {
+  return queryBindings(context, query)
+    .then(result => wrap(result))
+    .then(results => results.map(r => getSingleBinding(r)))
+  
+  
+  // const bindings = wrap(await queryBindings(context, query));
 
-  // TODO: Clean this up
-  return bindings.map(result => getSingleBinding(result));
+  // // TODO: Clean this up
+  // return bindings.map(result => getSingleBinding(result));
 }
 
 // Checks if a subject belongs to a particular class

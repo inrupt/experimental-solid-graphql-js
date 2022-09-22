@@ -17,10 +17,7 @@ export function coerceLiteralDirective(directiveName: string): (schema: GraphQLS
 
           fieldConfig.resolve = async function (source, args, context, info) {
             const data = await resolve(source, args, context, info);
-            console.log('a. ',data);
-            const r = fromRdf(data.__node);
-            console.log('b. ', r)
-            return r;
+            return fromRdf(data.__node, true);
           }
         }
 

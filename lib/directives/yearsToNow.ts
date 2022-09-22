@@ -1,0 +1,40 @@
+import { MapperKind, mapSchema, getFieldsWithDirectives } from '@graphql-tools/utils';
+// import { g } from '@graphql-tools/schema';
+import { GraphQLSchema } from 'graphql';
+import { FieldConfig } from "../types";
+import { getResolverFromConfig, getSingleDirective } from './util';
+
+// TODO: Check the ordering of resolution calls
+export function yearsToNowDirective(directiveName: string): (schema: GraphQLSchema) => GraphQLSchema {
+  return schema =>
+    mapSchema(schema, {
+      [MapperKind.OBJECT_FIELD]: (fieldConfig: FieldConfig) => {
+        const directive = getSingleDirective(schema, fieldConfig, directiveName);
+
+        if (directive) {
+          // Get this field's original resolver
+          const resolve = getResolverFromConfig(fieldConfig);
+
+          // Replace the original resolver with a function that *first* replaces the node with the identifier
+          // and then performs the standard resolution actions
+          fieldConfig.resolve = async function (source, args, context, info) {
+            console.error(`not yet implemented ${JSON.stringify(directive, null, 2)}`)
+            // console.error(source, args, context, info)
+            // getFieldsWithDirectives(info.schema)
+            const dob = await resolve(source, args, context, info)
+            console.error(dob);
+            throw new Error(`not yet implemented ${directive}`)
+            
+            const date = await resolve(source, args, context, info);
+            date
+            
+            
+            
+            return resolve({ ...source, [info.fieldName]: source.__node }, args, context, info);
+          }
+        }
+
+        return fieldConfig;
+      }
+    })
+}

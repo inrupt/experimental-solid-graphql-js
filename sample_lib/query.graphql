@@ -1,23 +1,38 @@
 query Person($id: String!) {
   me(id: $id) {
-    label
+    # age
+    label,
+    name,
+    # motherName,
     mother {
-      id,
-      label,
-      something,
+      name,
       birthDate,
-      url
+      # id,
+      # label,
+      # something,
+      # birthDate_2,
+      # url
     }
     father {
-      id,
-      label,
-      something,
+      name,
+
+      # id,
+      # label,
+      # something,
       birthDate,
-      url
+      # birthDate_2,
+      # url
     },
-    id,
-    something,
+    ancestors {
+      name
+    }
+  #   id,
+  #   something,
     birthDate,
-    url
+    # ancestorsLabels {
+    #   name
+    # }
+  #   birthDate_2,
+  #   url
   }
 }

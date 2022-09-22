@@ -1,0 +1,11 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+{
+
+    ?s a ?o . ?o rdfs:subClassOf ?o2
+  
+  } => {
+  
+    ?s a ?o2
+
+}

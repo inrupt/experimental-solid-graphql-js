@@ -6,6 +6,9 @@ import { GraphQLSchema } from "graphql";
 import { graphql, getOperationAST, execute, buildSchema, } from "graphql";
 import { IContext, ISparqlEngine, OperationVariables } from "./types";
 import * as directives from './directives';
+import { queryLabel, queryObjects } from './sparql'
+import { DataFactory as DF } from 'n3';
+import { wrap } from 'asynciterator';
 
 export interface ISolidQueryOptions<TData, TVariables> {
   document: TypedDocumentNode<TData, TVariables>;
@@ -17,6 +20,31 @@ export interface ISolidQueryOptions<TData, TVariables> {
 }
 
 export async function solidQuery<TData, TVariables extends Record<string, any>>(options: ISolidQueryOptions<TData, TVariables>): Promise<ExecutionResult<TData>> {
+  // Note: This is just a sanity check that our setup enables the retrieval of ancestors
+  // console.time('get ancestors')
+  // queryObjects(
+  //   options.context,
+  //   DF.namedNode('https://id.inrupt.com/jeswr'),
+  //   DF.namedNode('http://example.org/dob')
+  // )
+
+  // console.log(1)
+  // const ancestors = await queryObjects(
+  //     options.context,
+  //     DF.namedNode('https://id.inrupt.com/jeswr'),
+  //     DF.namedNode('http://example.org/ancestor')
+  //   )
+  //   // .then(result => wrap(result))
+  //   .then(result => result.toArray())
+  //   // .then(results => Promise.all(results.map(d => queryLabel(options.context, d))))
+  //   // .then(results => results.map(r => r.value));
+  // console.log(2)
+  // console.log(ancestors)
+
+  // console.timeEnd('get ancestors')
+  // // console.log(ancestors);
+  // throw new Error('')
+  
   let { schema } = options;
   
   
@@ -32,29 +60,31 @@ export async function solidQuery<TData, TVariables extends Record<string, any>>(
 
   // schema = directives.upperDirectiveTransformer(schema, 'upper');
   // schema = mapSchema(schema);
+
+  // TODO: Use this
+  schema = directives.labelDirective('label')(schema);
+  
+  
   schema = directives.identifierObjectFieldDirective('identifier')(schema);
   schema = directives.identifierQueryRootFieldDirective('identifier')(schema);
   schema = directives.propertyDirective('property')(schema);
   schema = directives.coerceLiteralDirective('coerceLiteral')(schema);
+  schema = directives.coerceXSDDatesDirective('xsdDate')(schema);
+  schema = directives.yearsToNowDirective('yearsToNow')(schema);
+  
 
   // TODO: Work out why this needs to be put *after* the other directives
-  schema = directives.upperDirectiveTransformer(schema, 'upper');
+  // schema = directives.upperDirectiveTransformer(schema, 'upper');
+  // schema = directives.coerceLabelScalar('Label')(schema);
 
   return execute({
     schema: schema,
     document: options.document,
     variableValues: options.variables,
     contextValue: options.context,
-    // typeResolver(...args) {
-    //   console.log('type resolver called')
-    //   return args[0]
-    // },
     // fieldResolver(...args) {
-    //   console.log('field resolver called', args[0])
-    //   return args[0].__node.value
+    //   return args[0]
     // }
-    // extensions
-    // rootValue: getOperationAST(options.document)
   }) as Promise<ExecutionResult<TData>> | ExecutionResult<TData>;
   
   

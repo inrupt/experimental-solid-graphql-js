@@ -6,20 +6,56 @@ directive @namespace(iri: String!) on ENUM
 directive @identifier on ARGUMENT_DEFINITION | FIELD_DEFINITION
 directive @coerceLiteral on FIELD_DEFINITION
 directive @upper on FIELD_DEFINITION
+directive @xsdDate on SCALAR
+directive @label on FIELD_DEFINITION
+# TODO: Work out how to implement this
+# directive @yearsToNow(from: XSDDate) on FIELD_DEFINITION
 # directive @is(class: String!) on TYPE
+
+# Bundle all xsd types into js types
 
 scalar Date
 scalar URL
 
+scalar XSDDate @xsdDate
+# scalar Label @label
+scalar Label #@property(iri: "http://www.w3.org/2000/01/rdf-schema#label") @coerceLiteral
+
+
+# Flip default on coercion (perhaps?)
+# TODO: Implement this
+# scalar ID @identifier @coerceLiteral
+# TODO: Introduce sorting and filtering like https://docs.amplify.aws/cli/graphql/search-and-result-aggregations/#nested-search-conditions-and-or-not
+
+# type Human @is(class: "https://example.org/human") {
+#   nodeUri: ID
+# }
+
+
+
+
+
+
 type Human { #@is(class: "https://example.org/human")
   id: String @identifier @coerceLiteral
   label: String! @property(iri: "http://www.w3.org/2000/01/rdf-schema#label") @coerceLiteral #@upper
-  mother: Human @property(iri: "http://example.org/mother")
-  father: Human @property(iri: "http://example.org/father")
+  name: String! @label @coerceLiteral
+  mother: Human! @property(iri: "http://example.org/mother")
+  # TODO: Make this work
+  # motherName: String! @property(iri: "http://example.org/mother") @label
+  father: Human! @property(iri: "http://example.org/father")
   something: Boolean @property(iri: "http://example.org/something") @coerceLiteral
-  birthDate: Date @property(iri: "http://example.org/dob") @coerceLiteral
+  birthDate: Date! @property(iri: "http://example.org/dob") @coerceLiteral
+  # age: Int @yearsToNow(from: RDFS)
+  birthDate_2: XSDDate @property(iri: "http://example.org/dob") # @coerceLiteral
   url: URL #@coerceLiteral
+  # ancestorsLabels: [Human!] @property(iri: "http://example.org/ancestor")
+  ancestors: [Human!]! @property(iri: "http://example.org/ancestor")
   # TODO: Improve handling of numbers in the rdf-literal library
+}
+
+enum RDFS {
+  label
 }
 
 type Query {

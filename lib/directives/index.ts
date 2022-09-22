@@ -3,3 +3,7 @@ export * from './identifierObjectField';
 export * from './identifierQueryRootField';
 export * from './upper';
 export * from './coerceLiteralDirective';
+export * from './datatypes';
+export * from './yearsToNow';
+export * from './labelScalar';
+export * from './labelDirective';
