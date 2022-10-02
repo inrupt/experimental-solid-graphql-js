@@ -38,7 +38,7 @@ scalar Label #@property(iri: "http://www.w3.org/2000/01/rdf-schema#label") @coer
 
 type Human { #@is(class: "https://example.org/human")
   id: String @identifier @coerceLiteral
-  label: String! @property(iri: "http://www.w3.org/2000/01/rdf-schema#label") @coerceLiteral #@upper
+  label: String! @property(iri: "http://www.w3.org/2000/01/rdf-schema#label") @coerceLiteral @upper
   name: String! @label @coerceLiteral
   mother: Human! @property(iri: "http://example.org/mother")
   # TODO: Make this work

@@ -1,7 +1,6 @@
 import { mapSchema, MapperKind } from '@graphql-tools/utils';
 import { GraphQLSchema } from 'graphql';
 import { fromRdf, TypeHandlerDate } from 'rdf-literal';
-import { context } from '../../sample_project_2/context';
 import { queryLabel } from '../sparql';
 import { FieldConfig } from '../types';
 import { getSingleDirective, getResolverFromConfig } from './util';

@@ -64,17 +64,16 @@ export async function solidQuery<TData, TVariables extends Record<string, any>>(
   // TODO: Use this
   schema = directives.labelDirective('label')(schema);
   
-  
+  // Have an applyDirectives method that applies all directives
   schema = directives.identifierObjectFieldDirective('identifier')(schema);
   schema = directives.identifierQueryRootFieldDirective('identifier')(schema);
   schema = directives.propertyDirective('property')(schema);
   schema = directives.coerceLiteralDirective('coerceLiteral')(schema);
   schema = directives.coerceXSDDatesDirective('xsdDate')(schema);
   schema = directives.yearsToNowDirective('yearsToNow')(schema);
-  
 
   // TODO: Work out why this needs to be put *after* the other directives
-  // schema = directives.upperDirectiveTransformer(schema, 'upper');
+  schema = directives.upperDirectiveTransformer(schema, 'upper');
   // schema = directives.coerceLabelScalar('Label')(schema);
 
   return execute({

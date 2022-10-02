@@ -47,8 +47,8 @@ export function propertyDirective(directiveName: string): (schema: GraphQLSchema
               isNonNullType(fieldConfig.type) ? fieldConfig.type.ofType : fieldConfig.type
               // TODO: Re-enable this section of code
             )) {
-              fieldConfig.resolve = async function (source, args, context, info) {
-                const objects = await queryObjects(context, source.__node, nodeFromDirective(directive, directiveName))
+              fieldConfig.resolve = function (source, args, context, info) {
+                const objects = queryObjects(context, source.__node, nodeFromDirective(directive, directiveName))
                 .then(
                   nodes => nodes
                     .map(node => ({ __node: node }))

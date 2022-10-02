@@ -1,11 +1,16 @@
 {
-  "name": "solid-graphql",
+  "name": "@inrupt/solid-graphql",
   "version": "0.0.0",
   "description": "Query Solid using GraphQL from the client",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.js",
   "directories": {
+    "lib": "lib",
     "test": "test"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "lint": "eslint . --ext .ts",
     "lint:fix": "npm run lint -- --fix",
@@ -15,7 +20,8 @@
     "sample2:run": "ts-node ./sample_project_2/index.ts",
     "generate:samplelib": "cd ./sample_lib/ && graphql-codegen",
     "demo:run": "ts-node sample_lib/index.ts",
-    "demo": "npm run generate:samplelib && npm run demo:run"
+    "demo": "npm run generate:samplelib && npm run demo:run",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -42,6 +48,8 @@
     "@graphql-codegen/typed-document-node": "^2.3.3",
     "@graphql-codegen/typescript": "^2.7.3",
     "@graphql-codegen/typescript-operations": "^2.5.3",
+    "@inrupt/solid-client-authn-browser": "^1.12.2",
+    "@inrupt/solid-client-authn-core": "^1.12.2",
     "@rdfjs/types": "^1.1.0",
     "@types/n3": "^1.10.4",
     "@types/rdf-validate-shacl": "^0.4.0",
@@ -56,12 +64,14 @@
     "@comunica/reasoning-context-entries": "^0.2.0",
     "@comunica/types": "^2.4.0",
     "@graphql-codegen/cli": "^2.12.0",
+    "@graphql-codegen/plugin-helpers": "^2.7.1",
     "@graphql-codegen/typescript-resolvers": "^2.7.3",
     "@graphql-tools/schema": "^9.0.4",
     "@graphql-tools/utils": "^8.12.0",
     "@graphql-typed-document-node/core": "^3.1.1",
     "arrayify-stream": "^2.0.0",
     "event-emitter-promisify": "^1.1.0",
+    "graphql": "^16.6.0",
     "graphql-ld": "^1.4.0",
     "graphql-scalars": "^1.18.0",
     "graphql-tag": "^2.12.6",
