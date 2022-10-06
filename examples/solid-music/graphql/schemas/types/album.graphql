@@ -1,0 +1,8 @@
+type Album {
+  _id: ID! @identifier
+  name: String!
+  artist: [Artist!]!
+  songs: [Song!]!
+  genre: [Genre!]!
+  url: String!
+}

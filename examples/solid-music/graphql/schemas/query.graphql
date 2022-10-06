@@ -1,0 +1,18 @@
+type Person {
+  _id: ID!
+  # name: String!
+}
+
+type Query {
+  person(_id: ID! @identifier): Person!
+  album(_id: ID! @identifier): Album!
+  albums: [Album!]!
+  artist(_id: ID!): Artist
+  artists: [Artist!]!
+  song(_id: ID!): Song
+  songs: [Song!]!
+  playlist(_id: ID!): Playlist
+  playlists: [Playlist!]!
+  search(filter: String!): MusicalItem
+  user: User! @webId
+}

@@ -1,0 +1,202 @@
+@prefix genre: <http://example.org/genre#> .
+@prefix artist: <http://example.org/artist#> .
+@prefix song: <http://example.org/song#> .
+@prefix record: <http://example.org/record#> .
+@prefix mediaType: <http://example.org/mediaType#> .
+@prefix playlist: <http://example.org/playlist#> .
+@prefix playlistEntry: <http://example.org/playlist#> .
+@prefix mo: <http://purl.org/ontology/mo/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix po: <http://liveschema.it/dataset/lov_plo/resource/51cedf29-308e-4583-a2bf-06c9eff7cbb7> .
+@prefix inrupt: <https://id.inrupt.com/> .
+@prefix me: <../profile/card#me> .
+
+# Genres
+genre:jazz a mo:Genre ;
+  rdfs:label "Jazz" .
+
+genre:rock a mo:Genre ;
+  rdfs:label "Rock" .
+
+genre:alt_rock a mo:Genre ;
+  rdfs:label "Alternate Rock" .
+
+# Artists
+artist:Lost_European a mo:MusicArtist ;
+  foaf:name "Lost European" .
+
+artist:Bill_Shostak a mo:MusicArtist ;
+  foaf:name "Bill Shostak" .
+
+artist:Geoff_Hurley a mo:MusicArtist ;
+  foaf:name "Geoff Hurley" .
+
+# Songs
+song:angel a mo:Track ;
+  mo:available_as <https://www.dropbox.com/s/wyoq5ku3ofpgce9/Angel%20No%20Vocal%20-%20Lost%20European.mp3?dl=1> ;
+  mo:compiler artist:Lost_European ;
+  foaf:name "Angel" ;
+  foaf:thumbnail <https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/angel-e1411005866899.jpg> ;
+  mo:genre genre:alt_rock ;
+  mo:track_number "1"^^xsd:nonNegativeInteger .
+
+<https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/angel-e1411005866899.jpg> a foaf:Image .
+
+<https://www.dropbox.com/s/wyoq5ku3ofpgce9/Angel%20No%20Vocal%20-%20Lost%20European.mp3?dl=1> a mo:AudioFile ;
+  mo:encoding "MP3 CBR @ 128kbps" .
+
+
+
+song:the_beginning a mo:Track ;
+  mo:available_as <https://www.dropbox.com/s/no9hm9ak4pv99nd/The%20Beginning%20%28Of%20the%20End%29%20-%20Lost%20European.mp3?dl=1> ;
+  mo:compiler artist:Lost_European ;
+  foaf:name "The Beginning" ;
+  foaf:thumbnail <https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/space.jpg> ;
+  mo:genre genre:alt_rock ;
+  mo:track_number "2"^^xsd:nonNegativeInteger .
+
+<https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/space.jpg> a foaf:Image .
+
+<https://www.dropbox.com/s/wyoq5ku3ofpgce9/Angel%20No%20Vocal%20-%20Lost%20European.mp3?dl=1> a mo:AudioFile ;
+  mo:encoding "MP3 CBR @ 128kbps" .
+
+
+
+song:china_doll a mo:Track ;
+  mo:available_as <https://www.dropbox.com/s/75znu0xnl6o89nq/China%20Doll%20No%20Vocal%20-%20Lost%20European.mp3?dl=1> ;
+  mo:compiler artist:Lost_European ;
+  foaf:name "China Doll" ;
+  foaf:thumbnail <https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/cdoll.jpg> ;
+  mo:genre genre:alt_rock ;
+  mo:track_number "3"^^xsd:nonNegativeInteger .
+
+<https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/cdoll.jpg> a foaf:Image .
+
+<https://www.dropbox.com/s/75znu0xnl6o89nq/China%20Doll%20No%20Vocal%20-%20Lost%20European.mp3?dl=1> a mo:AudioFile ;
+  mo:encoding "MP3 CBR @ 128kbps" .
+
+
+
+song:red_cushions a mo:Track ;
+  mo:available_as <https://www.dropbox.com/s/fe62oro6s4k3efu/Red%20Cushions.mp3?dl=1> ;
+  mo:compiler artist:Bill_Shostak ;
+  foaf:name "Red Cushions" ;
+  foaf:thumbnail <https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/red-cushions.jpg> ;
+  mo:genre genre:alt_rock ;
+  mo:track_number "1"^^xsd:nonNegativeInteger .
+
+<https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/red-cushions.jpg> a foaf:Image .
+
+<https://www.dropbox.com/s/fe62oro6s4k3efu/Red%20Cushions.mp3?dl=1> a mo:AudioFile ;
+  mo:encoding "MP3 CBR @ 128kbps" .
+
+
+
+song:an_illusion a mo:Track ;
+  mo:available_as <https://www.dropbox.com/s/q8i1tdbievkx382/An%20Illusion%20-%20Lost%20European.wav?dl=1> ;
+  mo:compiler artist:Lost_European ;
+  foaf:name "An Illusion" ;
+  foaf:thumbnail <https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/ILLUSION3.jpg> ;
+  mo:genre genre:alt_rock ;
+  mo:track_number "1"^^xsd:nonNegativeInteger .
+
+<https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/ILLUSION3.jpg> a foaf:Image .
+
+<https://www.dropbox.com/s/q8i1tdbievkx382/An%20Illusion%20-%20Lost%20European.wav?dl=1> a mo:AudioFile ;
+  mo:encoding "WAV" .
+
+
+
+song:the_end a mo:Track ;
+  mo:available_as <https://www.dropbox.com/s/71qds7jga2y7das/The%20End%20-%20Lost%20European.wav?dl=1> ;
+  mo:compiler artist:Lost_European ;
+  foaf:name "The End" ;
+  foaf:thumbnail <https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/the-end2.jpg> ;
+  mo:genre genre:alt_rock ;
+  mo:track_number "2"^^xsd:nonNegativeInteger .
+
+<https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/the-end2.jpg> a foaf:Image .
+
+<https://www.dropbox.com/s/71qds7jga2y7das/The%20End%20-%20Lost%20European.wav?dl=1> a mo:AudioFile ;
+  mo:encoding "WAV" .
+
+
+# Record
+record:Angels_Album a mo:Record ;
+  foaf:name "Angels Album" ;
+  mo:track song:angel, song:the_beginning, song:china_doll .
+
+record:Angels_Album_2 a mo:Record ;
+  foaf:name "Angels New and Improved Album" ;
+  mo:track song:an_illusion, song:the_end .
+
+record:RC_Album_2 a mo:Record ;
+  foaf:name "The Red Cushions Album" ;
+  mo:track song:red_cushions .
+
+# Playlist
+playlist:a a po:Playlist ;
+  mo:compiler me: ;
+  po:playlistName "My Awesome Playlist" .
+
+
+playlist:b a po:Playlist ;
+  mo:compiler me: ;
+  po:playlistName "My More Awesome Playlist" .
+
+
+playlist:c a po:Playlist ;
+  mo:compiler inrupt:timbl ;
+  po:playlistName "The Compilation" .
+
+
+# Playlist Entries
+
+playlistEntry:a1 a po:PlaylistEntry ;
+  po:playlistEntrySong song:the_beginning ;
+  po:partOfPlaylist playlist:a ;
+  po:position "1"^^xsd:nonNegativeInteger .
+
+playlistEntry:a2 a po:PlaylistEntry ;
+  po:playlistEntrySong song:red_cushions ;
+  po:partOfPlaylist playlist:a ;
+  po:position "2"^^xsd:nonNegativeInteger .
+
+
+
+
+playlistEntry:b1 a po:PlaylistEntry ;
+  po:playlistEntrySong song:red_cushions ;
+  po:partOfPlaylist playlist:b ;
+  po:position "1"^^xsd:nonNegativeInteger .
+
+
+playlistEntry:b2 a po:PlaylistEntry ;
+  po:playlistEntrySong song:china_doll ;
+  po:partOfPlaylist playlist:b ;
+  po:position "2"^^xsd:nonNegativeInteger .
+
+playlistEntry:b3 a po:PlaylistEntry ;
+  po:playlistEntrySong song:the_end ;
+  po:partOfPlaylist playlist:b ;
+  po:position "3"^^xsd:nonNegativeInteger .
+
+
+
+playlistEntry:c1 a po:PlaylistEntry ;
+  po:playlistEntrySong song:red_cushions ;
+  po:partOfPlaylist playlist:c ;
+  po:position "2"^^xsd:nonNegativeInteger .
+
+
+playlistEntry:c2 a po:PlaylistEntry ;
+  po:playlistEntrySong song:china_doll ;
+  po:partOfPlaylist playlist:c ;
+  po:position "1"^^xsd:nonNegativeInteger .
+
+me: foaf:likes playlist:b, playlist:c .
+inrupt:leanne foaf:likes playlist:a, playlist:c .
+inrupt:timbl foaf:likes playlist:a, playlist:c .

@@ -1,0 +1,6 @@
+query fetchArtists {
+  artists {
+    _id
+    name
+  }
+}

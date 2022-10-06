@@ -1,0 +1,32 @@
+query search($filter: String!) {
+  search(filter: $filter) {
+    ... on Album {
+      __typename
+      _id
+      name
+      genre {
+        name
+      }
+      artist {
+        _id
+        name
+      }
+      url
+      songs {
+        _id
+        title
+        url
+      }
+    }
+    ... on Artist {
+      __typename
+      _id
+      name
+    }
+    ... on Playlist {
+      __typename
+      _id
+      name
+    }
+  }
+}

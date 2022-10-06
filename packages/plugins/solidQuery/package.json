@@ -1,0 +1,38 @@
+{
+  "name": "@inrupt/graphql-codegen-solid-query",
+  "version": "0.0.0",
+  "description": "Generate a Schema Node in Code Generation",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "tsc": "tsc",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inrupt/solid-graphql-js.git"
+  },
+  "sideEffects": false,
+  "keywords": [
+    "GraphQL",
+    "Linked",
+    "Data",
+    "Directives",
+    "Query",
+    "Solid",
+    "SPARQL",
+    "RDFJS"
+  ],
+  "author": "Inrupt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/inrupt/solid-graphql-js/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/inrupt/solid-graphql-js#readme",
+  "dependencies": {
+    "graphql": "^16.6.0"
+  }
+}

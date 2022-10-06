@@ -1,0 +1,19 @@
+query fetchAlbums {
+  albums {
+    _id
+    name
+    genre {
+      name
+    }
+    artist {
+      _id
+      name
+    }
+    url
+    songs {
+      _id
+      title
+      url
+    }
+  }
+}

@@ -1,0 +1,6 @@
+type Artist {
+  _id: ID!
+  name: String!
+  albums: [Album!]!
+  image: String! # custom
+}

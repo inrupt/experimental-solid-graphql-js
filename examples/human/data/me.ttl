@@ -1,0 +1,38 @@
+@prefix inrupt: <https://id.inrupt.com/> .
+@prefix ex: <http://example.org/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+inrupt:jeswr a ex:Person ;
+  ex:mother inrupt:leanne ;
+  ex:father inrupt:paul ;
+  ex:dob "2000-01-10"^^xsd:date ;
+  foaf:img "https://avatars.githubusercontent.com/u/63333554"^^xsd:anyURI ;
+  rdfs:label "Jesse Wright" .
+
+inrupt:paul a ex:Person ;
+  rdfs:label "Paul Wright" ;
+  ex:dob "1960-01-10"^^xsd:date ;
+  ex:mother inrupt:margaret ;
+  ex:father inrupt:peter .
+
+inrupt:leanne a ex:Person ;
+  rdfs:label "Leanne Wright" ;
+  ex:dob "1960-01-10"^^xsd:date ;
+  ex:mother inrupt:betty ;
+  ex:father inrupt:brian .
+
+inrupt:margaret a ex:Person ;
+  rdfs:label "Marg" .
+
+inrupt:peter a ex:Person ;
+  rdfs:label "Pete" .
+
+inrupt:betty a ex:Person ;
+  rdfs:label "Betty" .
+
+inrupt:brian a ex:Person ;
+  rdfs:label "Brian" .
+
+# ex:parent rdfs:subPropertyOf ex:ancestor .

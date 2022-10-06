@@ -1,0 +1,7 @@
+type Playlist {
+  _id: ID!
+  name: String!
+  songs: [Song!]!
+  creator: User!
+  image: String! # custom
+}

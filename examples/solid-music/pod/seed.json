@@ -1,0 +1,14 @@
+[
+  {
+    "podName": "example",
+    "email": "hello@example.com",
+    "password": "abc123",
+    "data": [
+      {
+        "path": "./data.ttl",
+        "resource": "/music/data",
+        "contentType": "text/turtle"
+      }
+    ]
+  }
+]

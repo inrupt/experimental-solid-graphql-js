@@ -1,0 +1,22 @@
+query fetchAlbum($id: ID!) {
+  album(_id: $id) {
+    _id
+    name
+    url
+    songs {
+      _id
+      title
+      url
+      album {
+        url
+      }
+      artist {
+        name
+      }
+    }
+    artist {
+      _id
+      name
+    }
+  }
+}

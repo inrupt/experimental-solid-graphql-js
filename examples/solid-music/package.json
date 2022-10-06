@@ -1,0 +1,46 @@
+{
+  "name": "@inrupt/solid-music",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev:next": "next dev",
+    "dev:graphql": "graphql-codegen --watch",
+    "dev:pod": "ts-node pod/start",
+    "dev": "concurrently -kn dev: npm:dev:*",
+    "build": "graphql-codegen",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "cp -r ../../node_modules/tailwindcss ./node_modules/tailwindcss"
+  },
+  "dependencies": {
+    "@comunica/query-sparql": "^2.4.3",
+    "@comunica/query-sparql-link-traversal-solid": "^0.0.2-alpha.6.0",
+    "@comunica/query-sparql-solid": "^2.3.0",
+    "@heroicons/react": "^1.0.6",
+    "@inrupt/graphql-codegen-schema-node": "^0.0.0",
+    "@inrupt/solid-client-authn-browser": "^1.12.2",
+    "@inrupt/sparql-solid-utils": "^0.0.0",
+    "next": "12.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "tailwindcss": "^3.1.8"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^2.13.2",
+    "@graphql-codegen/typed-document-node": "^2.3.3",
+    "@graphql-codegen/typescript": "^2.7.3",
+    "@graphql-codegen/typescript-operations": "^2.5.3",
+    "@inrupt/query-sparql-reasoning-solid": "^0.2.0",
+    "@types/node": "18.8.0",
+    "@types/react": "18.0.21",
+    "@types/react-dom": "18.0.6",
+    "autoprefixer": "^10.4.12",
+    "concurrently": "^7.4.0",
+    "eslint": "8.24.0",
+    "eslint-config-next": "12.3.1",
+    "get-port-please": "^2.6.1",
+    "postcss": "^8.4.17",
+    "typescript": "4.8.4"
+  }
+}

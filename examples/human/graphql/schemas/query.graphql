@@ -1,0 +1,3 @@
+type Query {
+  person(_id: ID! @identifier): Human!
+}

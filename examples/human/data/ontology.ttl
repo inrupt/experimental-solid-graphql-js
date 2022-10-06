@@ -1,0 +1,11 @@
+@prefix inrupt: <https://id.inrupt.com/> .
+@prefix ex: <http://example.org/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+ex:mother rdfs:subPropertyOf ex:parent .
+ex:father rdfs:subPropertyOf ex:parent .
+
+ex:parent rdfs:subPropertyOf ex:ancestor .
+ex:ancestor a owl:TransitiveProperty .

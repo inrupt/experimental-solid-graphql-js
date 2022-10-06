@@ -1,0 +1,6 @@
+query fetchPerson($_id: ID!) {
+  person(_id: $_id) {
+    _id
+    # name
+  }
+}

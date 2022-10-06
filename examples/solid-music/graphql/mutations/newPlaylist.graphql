@@ -1,0 +1,21 @@
+mutation newPlaylist($name: String!, $creator: ID!) {
+  newPlaylist(name: $name, creator: $creator) {
+    _id
+    name
+    creator {
+      name
+    }
+    songs {
+      _id
+      title
+      url
+      album {
+        name
+        url
+      }
+      artist {
+        name
+      }
+    }
+  }
+}

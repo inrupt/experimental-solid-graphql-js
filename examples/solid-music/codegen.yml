@@ -1,0 +1,11 @@
+schema: graphql/schemas/**/*.graphql
+documents:
+  - graphql/queries/*.graphql
+  - graphql/mutations/*.graphql
+generates:
+  graphql/index.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node
+      - '@inrupt/graphql-codegen-solid'

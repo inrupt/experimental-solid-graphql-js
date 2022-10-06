@@ -1,0 +1,13 @@
+query fetchSongs {
+  songs {
+    _id
+    title
+    artist {
+      name
+    }
+    album {
+      name
+    }
+    url
+  }
+}

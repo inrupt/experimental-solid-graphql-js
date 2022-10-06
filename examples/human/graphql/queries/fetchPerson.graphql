@@ -1,0 +1,18 @@
+query fetchPerson($id: ID!) {
+  person(_id: $id) {
+    name
+    mother {
+      name
+      birthDate
+    }
+    father {
+      name
+      birthDate
+    }
+    birthDate
+    img
+    ancestors {
+      name
+    }
+  }
+}
