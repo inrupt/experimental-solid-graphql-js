@@ -1,9 +1,9 @@
 import { MapperKind, mapSchema } from '@graphql-tools/utils';
-import {  } from '@graphql-tools/schema';
 import { getResolver, getSingleDirective } from '@inrupt/graphql-directives-utils';
-import { GraphQLFieldConfig, GraphQLSchema } from 'graphql';
-import { DataFactory } from 'n3';
-import { Source } from '../types';
+import { GraphQLSchema } from 'graphql';
+import { isType } from '@inrupt/sparql-utils';
+import { DataFactory as DF } from 'n3';
+import type { Term } from '@rdfjs/types';
 
 // TODO: Check the ordering of resolution calls
 export function is(directiveName: string): (schema: GraphQLSchema) => GraphQLSchema {
@@ -17,9 +17,12 @@ export function is(directiveName: string): (schema: GraphQLSchema) => GraphQLSch
           if (directive) {
             const c = directive.class;
             const resolve = getResolver(fieldConfig);
-            fieldConfig.resolve = (...args) => {
-              console.log('intercepting', args, c)
-              return resolve(...args);
+            fieldConfig.resolve = async (...args) => {
+              const resolved = resolve(...args) as Promise<Term> | Term;
+              if (await isType(args[2], resolved, DF.namedNode(c))) {
+                return resolved;
+              }
+              throw new Error(`Expected ${(await resolved).value} to be of type ${c}`)
             }
           }
         }
