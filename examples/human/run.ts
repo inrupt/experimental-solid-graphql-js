@@ -40,7 +40,7 @@ async function main() {
 
   if (img) {
     console.log(
-      await terminalImage.buffer(await got(img).buffer(), { width: '100%', height: '100%' })
+      await terminalImage.buffer(await got(img).buffer())
     )
   }
 
