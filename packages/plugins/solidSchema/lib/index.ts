@@ -1,5 +1,5 @@
-import { Types } from '@graphql-codegen/plugin-helpers';
-import { GraphQLSchema, printSchema, parse } from 'graphql';
+import type { Types } from '@graphql-codegen/plugin-helpers';
+import { GraphQLSchema } from 'graphql';
 
 // Adds the compiled schema to the source document
 export function plugin<T = any>(schema: GraphQLSchema, documents: Types.DocumentFile[], config: T): Types.Promisable<Types.PluginOutput> {

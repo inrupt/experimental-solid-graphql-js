@@ -176,6 +176,7 @@
     "@comunica/query-sparql-reasoning": "^0.2.0",
     "@comunica/reasoning-context-entries": "^0.2.0",
     "@comunica/runner": "^2.4.0",
+    "@comunica/types": "^2.4.0",
     "@inrupt/graphql-codegen-schema-node": "^0.0.0"
   },
   "scripts": {

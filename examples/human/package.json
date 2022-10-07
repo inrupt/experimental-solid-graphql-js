@@ -6,7 +6,6 @@
     "build": "graphql-codegen",
     "start": "ts-node run",
     "demo": "npm run start",
-    "prepare": "npm run build",
     "tsc": "tsc"
   },
   "dependencies": {
