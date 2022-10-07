@@ -1,10 +1,10 @@
 query fetchUser {
   user {
-    _id
     name
-    # playlists {
-    #   _id
-    #   name
-    # }
+    playlists {
+      _id
+      name
+    }
+    image
   }
 }

@@ -1,6 +1,8 @@
-type User {
-  _id: ID!
-  name: String!
-  playlists: [Playlist!]!
-  image: String! # custom
+scalar URL
+
+type User @is(class: "http://xmlns.com/foaf/0.1/Person") {
+  _id: ID! @identifier
+  name: String! @property(iri: "http://www.w3.org/2000/01/rdf-schema#label")
+  playlists: [Playlist!]! @property(iri: "http://example.org#playlist")
+  image: URL! @property(iri: "http://xmlns.com/foaf/0.1/img")
 }

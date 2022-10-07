@@ -15,8 +15,8 @@ import { getStorageFromSession } from '@inrupt/sparql-solid-utils';
 import { DataFactory as DF } from 'n3';
 // import {} from '@inrupt/query-sparql-reasoning-solid'
 // import { QueryEngine } from '@comunica/query-sparql-link-traversal-solid';
-import { solidQuery, FetchAlbumDocument } from '../graphql';
-
+import { solidQuery, FetchAlbumDocument, ISolidQueryOptions } from '../graphql';
+import { ExecutionResult } from 'graphql';
 // Start hacky section
 
 const CONTEXT_KEY_SESSION = '@comunica/actor-http-inrupt-solid-client-authn:session';
@@ -93,9 +93,20 @@ async function createQueryContext(engine: ISparqlEngine, session: Session): Prom
     }
   }
 }
-
 // End hacky section
 
+// TODO: Propose a good way of handling this when login changes
+function useSolidQuery<TData, TVariables extends Record<string, any>>(options: ISolidQueryOptions<TData, TVariables>): ExecutionResult<TData> | undefined {
+  const [ result, setResult ] = useState<ExecutionResult<TData> | undefined>()
+  
+  useEffect(() => {
+    solidQuery(options).then(res => {
+      setResult(res);
+    })
+  }, [options.context.context?.session, options.variables]);
+
+  return result;
+}
 
 
 function MyApp({ Component, pageProps }: AppProps) {

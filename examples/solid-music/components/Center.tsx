@@ -15,6 +15,7 @@ const colors = [
 
 import { playlist, session } from './data';
 import { SessionContext } from '../context';
+import { solidQuery } from '../graphql';
 
 function Center() {
   // const { data: session } = useSession();
@@ -37,6 +38,10 @@ function Center() {
     //   })
     //   .catch((err) => console.log('Something went wrong!', err));
   }, []);
+
+  useEffect(() => {
+    solidQuery
+  }, [])
 
   const handleToggle = () => {
     // setActive(!isActive);

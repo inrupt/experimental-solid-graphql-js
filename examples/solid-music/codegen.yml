@@ -9,3 +9,10 @@ generates:
       - typescript-operations
       - typed-document-node
       - '@inrupt/graphql-codegen-solid'
+    config:
+      scalars:
+        Date: Date
+        URL: URL
+        ID: string
+        Float: number
+        Int: number

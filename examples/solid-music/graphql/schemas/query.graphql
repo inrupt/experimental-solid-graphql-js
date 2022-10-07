@@ -1,5 +1,5 @@
 type Person {
-  _id: ID!
+  _id: ID! @identifier
   # name: String!
 }
 

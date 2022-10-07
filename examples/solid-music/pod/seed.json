@@ -8,6 +8,11 @@
         "path": "./data.ttl",
         "resource": "/music/data",
         "contentType": "text/turtle"
+      },
+      {
+        "path": "./profile.ttl",
+        "resource": "/profile/card",
+        "contentType": "text/turtle"
       }
     ]
   }

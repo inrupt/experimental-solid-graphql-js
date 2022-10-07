@@ -1,7 +1,8 @@
-type Playlist {
-  _id: ID!
-  name: String!
-  songs: [Song!]!
-  creator: User!
-  image: String! # custom
+type Playlist @is(class: "http://liveschema.it/dataset/lov_plo/resource/51cedf29-308e-4583-a2bf-06c9eff7cbb7#Playlist") {
+  _id: ID! @identifier
+  name: String! @property(iri: "http://liveschema.it/dataset/lov_plo/resource/51cedf29-308e-4583-a2bf-06c9eff7cbb7#playlistName")
+  # TODO: Implement orderby
+  songs: [Song!]! @property(iri: "http://example.org#entry") # @orderBy(iri: "http://purl.org/ontology/mo/track_number")
+  creator: User
+  # image: String! # custom
 }

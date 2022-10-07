@@ -12,6 +12,7 @@ import { Session } from '@inrupt/solid-client-authn-browser'
 import { IQueryContext, queryBindings, objectPattern, queryObjects, ISparqlEngine } from '@inrupt/sparql-utils'
 import { DataFactory as DF } from 'n3';
 import { session } from '../components/data'
+import { solidQuery, FetchUserDocument } from '../graphql'
 // import {} from '@comunica/query-sparql-link-traversal-solid';
 
 const Home: NextPage = () => {
@@ -60,7 +61,19 @@ const Home: NextPage = () => {
   // }, [ context.session.info.isLoggedIn, context.session.info.webId ])
 
   useEffect(() => {
-    console.log('the query context is', queryContext)
+    if (queryContext) {
+
+      solidQuery({
+        document: FetchUserDocument,
+        // TODO: Don't make variables required in this instance
+        variables: {},
+        context: queryContext
+      }).then(r => {
+        console.log(r)
+      })
+  
+      console.log('the query context is', queryContext)
+    }
   }, [queryContext])
   
   return (
