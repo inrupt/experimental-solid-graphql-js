@@ -5,7 +5,8 @@
   "scripts": {
     "build": "graphql-codegen",
     "start": "ts-node run",
-    "demo": "npm run build && npm run start",
+    "demo": "npm run start",
+    "prepare": "npm run build",
     "tsc": "tsc"
   },
   "dependencies": {
