@@ -12,7 +12,7 @@
     "test": "jest",
     "build": "lerna run build",
     "prepare": "lerna run prepare",
-    "postinstall": "lerna run postinstall"
+    "postinstall": "lerna bootstrap"
   },
   "devDependencies": {
     "@comunica/config-query-sparql-solid": "^2.1.0",

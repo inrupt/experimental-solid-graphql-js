@@ -9,10 +9,10 @@
     "dev": "concurrently -kn dev: npm:dev:*",
     "build:graphql": "graphql-codegen",
     "build:next": "next build",
-    "build": "npm run build:next && npm run build:graphql",
+    "build": "npm run build:graphql && npm run build:next",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "cp -r ../../node_modules/tailwindcss ./node_modules/tailwindcss"
+    "postinstall": "cp -r ../../node_modules/tailwindcss ./node_modules/tailwindcss && npm run build:graphql"
   },
   "dependencies": {
     "@comunica/query-sparql": "^2.4.3",
