@@ -181,6 +181,7 @@
   "scripts": {
     "prepare": "comunica-compile-config config/config-default.json > engine-default.js",
     "package": "comunica-package -c config/config-default.json",
+    "build": "npm run tsc",
     "tsc": "tsc"
   },
   "devDependencies": {

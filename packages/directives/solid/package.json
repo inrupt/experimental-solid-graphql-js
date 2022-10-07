@@ -6,6 +6,7 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
+    "build": "npm run tsc",
     "tsc": "tsc"
   },
   "repository": {

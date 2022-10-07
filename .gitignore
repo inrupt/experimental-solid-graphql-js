@@ -3,3 +3,4 @@ packages/**/*.js
 packages/**/*.d.ts
 coverage
 **/dist/
+lerna-debug.log

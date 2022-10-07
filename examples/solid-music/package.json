@@ -7,7 +7,9 @@
     "dev:graphql": "graphql-codegen --watch",
     "dev:pod": "ts-node pod/start",
     "dev": "concurrently -kn dev: npm:dev:*",
-    "build": "graphql-codegen",
+    "build:graphql": "graphql-codegen",
+    "build:next": "next build",
+    "build": "npm run build:next && npm run build:graphql",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "cp -r ../../node_modules/tailwindcss ./node_modules/tailwindcss"

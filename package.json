@@ -7,12 +7,12 @@
   ],
   "scripts": {
     "dev": "lerna run dev --scope @inrupt/solid-music",
-    "package": "lerna run package --scope @inrupt/query-sparql-reasoning-solid",
-    "demo:cli": "npx lerna run demo --scope @inrupt/human-graphql-query-example",
+    "package": "lerna run package",
+    "demo:cli": "lerna run demo --scope @inrupt/human-graphql-query-example",
     "test": "jest",
-    "build": "lerna run build && lerna run tsc",
+    "build": "lerna run build",
     "prepare": "lerna run prepare",
-    "postinstall": "npm run build"
+    "postinstall": "lerna run postinstall"
   },
   "devDependencies": {
     "@comunica/config-query-sparql-solid": "^2.1.0",
