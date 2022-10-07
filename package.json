@@ -10,9 +10,8 @@
     "package": "lerna run package",
     "demo:cli": "lerna run demo --scope @inrupt/human-graphql-query-example",
     "test": "jest",
-    "build": "lerna run build",
-    "prepare": "lerna run prepare",
-    "postinstall": "lerna bootstrap"
+    "prepare": "lerna bootstrap && lerna run prepare",
+    "build": "lerna run build"
   },
   "devDependencies": {
     "@comunica/config-query-sparql-solid": "^2.1.0",
