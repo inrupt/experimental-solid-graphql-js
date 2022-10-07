@@ -9,6 +9,7 @@
     "dev": "lerna run dev --scope @inrupt/solid-music",
     "package": "lerna run package",
     "demo:cli": "lerna run demo --scope @inrupt/human-graphql-query-example",
+    "demo:cli:solid": "lerna run demo --scope @inrupt/human-solid-graphql-query-example",
     "test": "jest",
     "postinstall": "npm run build && npm run prepare",
     "build": "lerna run build",
