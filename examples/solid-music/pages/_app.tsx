@@ -11,12 +11,15 @@ import { QueryEngine } from '@comunica/query-sparql-solid';
 import { useRouter } from 'next/router';
 import { session } from '../components/data';
 import { IQueryContext, ISparqlEngine, queryBindings, queryObject, queryObjects, queryTerm } from '@inrupt/sparql-utils';
+// import { get } from '@inrupt/sparql-solid-utils';
 import { getStorageFromSession } from '@inrupt/sparql-solid-utils';
 import { DataFactory as DF } from 'n3';
 // import {} from '@inrupt/query-sparql-reasoning-solid'
 // import { QueryEngine } from '@comunica/query-sparql-link-traversal-solid';
-import { solidQuery, FetchAlbumDocument, ISolidQueryOptions } from '../graphql';
+import { solidQuery, FetchAlbumDocument, ISolidQueryOptions, FetchAlbumsQuery, FetchAlbumsQueryVariables } from '../graphql';
 import { ExecutionResult } from 'graphql';
+import { getSessionFromContext } from '@inrupt/graphql-directives-solid/dist/utils';
+
 // Start hacky section
 
 const CONTEXT_KEY_SESSION = '@comunica/actor-http-inrupt-solid-client-authn:session';
@@ -96,6 +99,7 @@ async function createQueryContext(engine: ISparqlEngine, session: Session): Prom
 // End hacky section
 
 // TODO: Propose a good way of handling this when login changes
+// TODO: Handle caching better
 function useSolidQuery<TData, TVariables extends Record<string, any>>(options: ISolidQueryOptions<TData, TVariables>): ExecutionResult<TData> | undefined {
   const [ result, setResult ] = useState<ExecutionResult<TData> | undefined>()
   
@@ -108,6 +112,64 @@ function useSolidQuery<TData, TVariables extends Record<string, any>>(options: I
   return result;
 }
 
+function useAuthenticatedSolidQuery<TData, TVariables extends Record<string, any>>(options: ISolidQueryOptions<TData, TVariables>): ExecutionResult<TData> | undefined {
+  const [ result, setResult ] = useState<ExecutionResult<TData> | undefined>();
+  const session = getSessionFromContext(options.context);
+
+  useEffect(() => {
+
+    if (session.info.isLoggedIn) {
+      solidQuery(options).then(res => {
+        setResult(res);
+      })
+    }
+
+  }, [ session, session.info.isLoggedIn, session.info.webId, options.variables ]);
+
+  return result;
+}
+
+interface QueryProps<TData, TVariables extends Record<string, any>> extends ISolidQueryOptions<TData, TVariables> {
+  children: (data: ExecutionResult<TData>['data']) => JSX.Element;
+  error: (error: ExecutionResult<TData>['errors']) => JSX.Element;
+  fallback: () => JSX.Element;
+}
+
+function Query<TData, TVariables extends Record<string, any>>(props: QueryProps<TData, TVariables>): JSX.Element {
+  const result = useAuthenticatedSolidQuery(props);
+
+  if (!result) {
+    return props.fallback();
+  }
+
+  if (result.data) {
+    return props.children(result.data);
+  }
+
+  if (result.errors) {
+    return props.error(result.errors);
+  }
+
+  throw new Error('Result received with no data or errors');
+}
+
+interface AlbumProps<TData, TVariables extends Record<string, any>> {
+  context: ISolidQueryOptions<TData, TVariables>['context'];
+  variables: ISolidQueryOptions<TData, TVariables>['variables'];
+}
+
+function AlbumComponent(props: AlbumProps<FetchAlbumsQuery, FetchAlbumsQueryVariables>) {
+  return <Query
+    document={FetchAlbumDocument}
+    // TODO: Setup a codegen version of this (generate the session + query context and export a query component)
+    // with both of those
+    context={props.context}
+    variables={props.variables}
+    fallback={() => <div>Loading ...</div>}
+    error={() => <div>Error Loading data</div>}
+    children={() => <div>Data loaded!</div>}
+  />
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { query } = useRouter();
