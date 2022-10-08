@@ -16,9 +16,10 @@ import { getStorageFromSession } from '@inrupt/sparql-solid-utils';
 import { DataFactory as DF } from 'n3';
 // import {} from '@inrupt/query-sparql-reasoning-solid'
 // import { QueryEngine } from '@comunica/query-sparql-link-traversal-solid';
-import { solidQuery, FetchAlbumDocument, ISolidQueryOptions, FetchAlbumsQuery, FetchAlbumsQueryVariables } from '../graphql';
+import { solidQuery, FetchAlbumDocument, ISolidQueryOptions, FetchAlbumsQuery, FetchAlbumsQueryVariables, FetchAlbumQuery, FetchAlbumQueryVariables } from '../graphql';
 import { ExecutionResult } from 'graphql';
 import { getSessionFromContext } from '@inrupt/graphql-directives-solid/dist/utils';
+import { GraphQLError } from 'graphql';
 
 // Start hacky section
 
@@ -113,25 +114,41 @@ function useSolidQuery<TData, TVariables extends Record<string, any>>(options: I
 }
 
 function useAuthenticatedSolidQuery<TData, TVariables extends Record<string, any>>(options: ISolidQueryOptions<TData, TVariables>): ExecutionResult<TData> | undefined {
-  const [ result, setResult ] = useState<ExecutionResult<TData> | undefined>();
   const session = getSessionFromContext(options.context);
+  const [ result, setResult ] = useState<{ result?: ExecutionResult<TData> | undefined, requesting: boolean }>({
+    requesting: false
+  });
+  const [ pending, setPending ] = useState(false);
 
   useEffect(() => {
 
     if (session.info.isLoggedIn) {
-      solidQuery(options).then(res => {
-        setResult(res);
-      })
+      if (result.requesting) {
+        
+        setPending(true);
+
+      } else {
+
+        setResult({ result: result.result, requesting: true });
+
+        solidQuery(options).then(result => {
+          setResult({ result, requesting: false });
+        }).catch(error => {
+          // TODO: Check this
+          setResult({ result: result.result, requesting: false });
+        });
+        
+      }
     }
 
   }, [ session, session.info.isLoggedIn, session.info.webId, options.variables ]);
 
-  return result;
+  return result.result;
 }
 
 interface QueryProps<TData, TVariables extends Record<string, any>> extends ISolidQueryOptions<TData, TVariables> {
-  children: (data: ExecutionResult<TData>['data']) => JSX.Element;
-  error: (error: ExecutionResult<TData>['errors']) => JSX.Element;
+  children: (data: TData) => JSX.Element;
+  error: (error: ReadonlyArray<GraphQLError>) => JSX.Element;
   fallback: () => JSX.Element;
 }
 
@@ -158,7 +175,7 @@ interface AlbumProps<TData, TVariables extends Record<string, any>> {
   variables: ISolidQueryOptions<TData, TVariables>['variables'];
 }
 
-function AlbumComponent(props: AlbumProps<FetchAlbumsQuery, FetchAlbumsQueryVariables>) {
+function AlbumComponent(props: AlbumProps<FetchAlbumQuery, FetchAlbumQueryVariables>) {
   return <Query
     document={FetchAlbumDocument}
     // TODO: Setup a codegen version of this (generate the session + query context and export a query component)
@@ -167,7 +184,7 @@ function AlbumComponent(props: AlbumProps<FetchAlbumsQuery, FetchAlbumsQueryVari
     variables={props.variables}
     fallback={() => <div>Loading ...</div>}
     error={() => <div>Error Loading data</div>}
-    children={() => <div>Data loaded!</div>}
+    children={({ album }) => <div>{album.url}</div>}
   />
 }
 
