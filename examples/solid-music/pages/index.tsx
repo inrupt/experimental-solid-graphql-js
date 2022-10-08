@@ -4,14 +4,14 @@ import Image from 'next/image'
 import { useContext, useEffect } from 'react'
 import { EngineContext, QueryContext, SessionContext } from '../context'
 import styles from '../styles/Home.module.css'
-import Center from '../components/Center';
-import Sidebar from '../components/Sidebar';
-import Player from '../components/Player';
+import Center from '../components old/Center';
+import Sidebar from '../components old/Sidebar';
+import Player from '../components old/Player';
 import { getStorageFromSession } from '@inrupt/sparql-solid-utils';
 import { Session } from '@inrupt/solid-client-authn-browser'
 import { IQueryContext, queryBindings, objectPattern, queryObjects, ISparqlEngine } from '@inrupt/sparql-utils'
 import { DataFactory as DF } from 'n3';
-import { session } from '../components/data'
+import { session } from '../components old/data'
 import { solidQuery, FetchUserDocument } from '../graphql'
 // import {} from '@comunica/query-sparql-link-traversal-solid';
 

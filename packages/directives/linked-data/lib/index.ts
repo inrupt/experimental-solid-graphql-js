@@ -18,6 +18,8 @@ export function defaultOrder(prefix: string = '') {
     scalarType.url(prefix + 'URL'),
     scalarType.string(prefix + 'String'),
     objectType.is(prefix + 'is'),
+    // NOTE: This is experimental and unstable
+    objectField.orderBy(prefix + 'orderBy')
   ]
 }
 

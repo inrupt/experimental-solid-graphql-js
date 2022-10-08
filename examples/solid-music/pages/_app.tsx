@@ -9,7 +9,7 @@ import { EngineContext, QueryContext, SessionContext } from '../context';
 // TODO: USe reasoning and link traversal
 import { QueryEngine } from '@comunica/query-sparql-solid';
 import { useRouter } from 'next/router';
-import { session } from '../components/data';
+import { session } from '../components old/data';
 import { IQueryContext, ISparqlEngine, queryBindings, queryObject, queryObjects, queryTerm } from '@inrupt/sparql-utils';
 // import { get } from '@inrupt/sparql-solid-utils';
 import { getStorageFromSession } from '@inrupt/sparql-solid-utils';

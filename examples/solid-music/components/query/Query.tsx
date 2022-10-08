@@ -1,6 +1,6 @@
 import { type Reducer, useReducer, useEffect } from 'react';
 import type { ExecutionResult, GraphQLError } from 'graphql';
-import { IContext, ISolidQueryOptions, solidQuery } from '../graphql';
+import { IContext, ISolidQueryOptions, solidQuery } from '../../graphql';
 import { getSessionFromContext } from '@inrupt/graphql-directives-solid/dist/utils';
 
 interface IQueryOptions<TData, TVariables> extends ISolidQueryOptions<TData, TVariables> {
