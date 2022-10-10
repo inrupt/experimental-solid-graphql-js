@@ -19,21 +19,21 @@ type MaybePromise<T> = T | Promise<T>;
  * Get the object of a given subject-predicate pattern
  */
 export async function queryObject(context: IQueryContext, subject: MaybePromise<Term>, predicate: MaybePromise<Term>): Promise<Term> {
-  return queryTerm(context, objectPattern(await subject, await predicate));
+  return queryTerm(context, objectPattern(await subject, await predicate, true));
 }
 
 /**
  * Get the objects of a given subject-predicate pattern
  */
  export async function queryObjects(context: IQueryContext, subject: MaybePromise<Term>, predicate: MaybePromise<Term>): Promise<Term[]> {
-  return queryTerms(context, objectPattern(await subject, await predicate));
+  return queryTerms(context, objectPattern(await subject, await predicate, true));
 }
 
 /**
  * Get the label of a given subject
  */
 export async function queryLabel(context: IQueryContext, subject: MaybePromise<Term>): Promise<Term> {
-  return queryTerm(context, labelPattern(await subject));
+  return queryTerm(context, labelPattern(await subject, true));
 }
 
 /**

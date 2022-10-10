@@ -9,7 +9,7 @@ type Query {
   albums: [Album!]!
   artist(_id: ID!): Artist!
   artists: [Artist!]!
-  song(_id: ID!): Song!
+  song(_id: ID! @identifier): Song!
   songs: [Song!]!
   playlist(_id: ID!): Playlist!
   playlists: [Playlist!]!

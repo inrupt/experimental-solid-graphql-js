@@ -1,6 +1,6 @@
 type Artist {
-  _id: ID!
-  name: String!
+  _id: ID! @identifier
+  name: String! @property(iri: "http://xmlns.com/foaf/0.1/name")
   albums: [Album!]!
   image: String! # custom
 }

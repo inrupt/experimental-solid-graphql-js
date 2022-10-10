@@ -1,19 +1,19 @@
 query fetchPerson {
   person {
     id
-    # name
-    # mother {
-    #   name
-    #   birthDate
-    # }
-    # father {
-    #   name
-    #   birthDate
-    # }
-    # birthDate
-    # img
-    # ancestors {
-    #   name
-    # }
+    name
+    mother {
+      name
+      birthDate
+    }
+    father {
+      name
+      birthDate
+    }
+    birthDate
+    img
+    ancestors {
+      name
+    }
   }
 }

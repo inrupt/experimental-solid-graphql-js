@@ -1,5 +1,7 @@
 
 import { DataFactory } from "n3";
+import { Factory } from 'sparqlalgebrajs'
+const factory = new Factory();
 
 export function nodeFromDirective(directive: Record<string, any> | undefined, directiveName: string) {
   if (!directive) {
@@ -8,7 +10,7 @@ export function nodeFromDirective(directive: Record<string, any> | undefined, di
 
   const entries = Object.entries(directive);
 
-  if (entries.length !== 1) {
+  if (entries.length !== 1 && (!('reverse' in directive) && entries.length !== 2)) {
     throw new Error(`@${directiveName} requires exactly one argument, received ${entries.length}`);
   }
 

@@ -5,7 +5,12 @@ import type { Session } from '@inrupt/solid-client-authn-browser';
 
 // TODO: Fix this
 export function getSessionFromContext(context: QueryContext): Session {
-  const session = context[ActorHttpInruptSolidClientAuthn.CONTEXT_KEY_SESSION.name] ?? context.session;
+  const session = 
+    context[ActorHttpInruptSolidClientAuthn.CONTEXT_KEY_SESSION.name] ??
+    context.session ??
+    // TODO: Fix these bottom 2 [they should not be necessary]
+    context.context?.[ActorHttpInruptSolidClientAuthn.CONTEXT_KEY_SESSION.name] ??
+    context.context?.session;
 
   if (session === undefined) {
     throw new Error('Expected session, received undefined')

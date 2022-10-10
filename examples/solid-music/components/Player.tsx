@@ -6,24 +6,35 @@ import {
 import { FetchSongDocument, FetchSongQuery } from '../graphql';
 import { Query } from './query';
 
-
-function Player(props: { song: string }) {
+export default function Player(props: { song: string }) {
   return <Query
     document={FetchSongDocument}
     variables={{ id: props.song }}
-    children={data => <LoadedPlayer {...data} />}
-    fallback={() => <></>}
-    error={() => <></>}
+    // children={data => <LoadedPlayer {...data} />}
+    children={data => <>Loaded with {JSON.stringify(data.song, null, 2)}</>}
+    fallback={() => <>Fallback</>}
+    error={(e) => <>Error {JSON.stringify(e, null, 2)}</>}
     requireLogin={true}
   />
 }
 
 function LoadedPlayer({ song }: FetchSongQuery): JSX.Element {
   return (
-    <div className="h-24 bg-gradient-to-b from-gray-900 to-black text-white grid grid-cols-3 text-sm md:text-base px-2 md:px-8">
+    <div>
       Player for {song.title}
     </div>
   )
+  
+  // return (
+  //   <div className="h-24 bg-gradient-to-b from-gray-900 to-black text-white grid grid-cols-3 text-sm md:text-base px-2 md:px-8">
+  //     <div className="relative flex-grow items-center justify-evenly">
+  //     <p className="text-sm text-gray-500">
+  //     Player for {song.title}
+  //     </p>
+        
+  //     </div>
+  //   </div>
+  // )
 }
 
 interface ControlProps {

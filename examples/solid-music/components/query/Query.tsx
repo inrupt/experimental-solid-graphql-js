@@ -40,7 +40,7 @@ function reducer<T>(state: QueryState<T>, action: Action<T>): QueryState<T> {
         return { ...state, error: action.error, requesting: false }
       }
     }
-    throw new Error('Unexpected action')
+      throw new Error('Unexpected action')
   }
 }
 
@@ -51,7 +51,7 @@ function useSolidQuery<TData, TVariables extends Record<string, any>>(
 ) {
   const session = getSessionFromContext(options.context);
 
-  const [ state, dispatch ] = useReducer<SolidReducer<TData>>(
+  const [state, dispatch] = useReducer<SolidReducer<TData>>(
     reducer,
     { requesting: false, pending: false },
   );
@@ -74,13 +74,13 @@ function useSolidQuery<TData, TVariables extends Record<string, any>>(
     }
   }
 
-  useEffect(runQuery, [ session, session.info.isLoggedIn, session.info.webId, options.variables, options.context ])
+  useEffect(runQuery, [session, session.info.isLoggedIn, session.info.webId, options.variables, options.context])
 
   useEffect(() => {
     if (state.pending) {
       runQuery()
     }
-  }, [ state.requesting ]);
+  }, [state.requesting]);
 
   return { result: state.result, error: state.error };
 }

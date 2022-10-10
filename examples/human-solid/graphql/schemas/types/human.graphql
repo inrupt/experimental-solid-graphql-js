@@ -5,10 +5,10 @@ scalar URL
 
 type Human @is(class: "http://xmlns.com/foaf/0.1/Person") {
   id: ID! @identifier
-  # name: String! @property(iri: "http://www.w3.org/2000/01/rdf-schema#label")
-  # mother: Human! @property(iri: "http://example.org/mother")
-  # father: Human! @property(iri: "http://example.org/father")
-  # birthDate: Date! @property(iri: "http://example.org/dob")
-  # img: URL @property(iri: "http://xmlns.com/foaf/0.1/img")
-  # ancestors: [Human!]! @property(iri: "http://example.org/ancestor")
+  name: String! @property(iri: "http://www.w3.org/2000/01/rdf-schema#label")
+  mother: Human! @property(iri: "http://example.org#mother")
+  father: Human! @property(iri: "http://example.org#father")
+  birthDate: Date! @property(iri: "http://example.org#dob")
+  img: URL! @property(iri: "http://xmlns.com/foaf/0.1/img")
+  ancestors: [Human!]! @property(iri: "http://example.org/ancestor")
 }

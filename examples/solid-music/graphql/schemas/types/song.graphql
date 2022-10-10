@@ -1,7 +1,7 @@
 type Song {
-  _id: ID!
-  title: String!
-  artist: [Artist!]!
-  album: Album!
-  url: String! # custom 
+  _id: ID! @identifier
+  title: String! @property(iri: "http://xmlns.com/foaf/0.1/name")
+  artist: [Artist!]! @property(iri: "http://purl.org/ontology/mo/compiler")
+  album: Album # !
+  url: ID! @property(iri: "http://purl.org/ontology/mo/available_as")
 }

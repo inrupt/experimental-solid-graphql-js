@@ -5,17 +5,17 @@ import { Term } from '@rdfjs/types';
 import { factory } from './factory';
 
 /**
- * Get the object of a given subject-predicate pattern
+ * Get the objects of a given subject-predicate pattern
  */
-export function objectPattern(subject: Term, predicate: Term): Algebra.Project {
+export function objectPattern(subject: Term, predicate: Term, distinct = false): Algebra.Project {
   const object = DF.variable('o');
   const pattern = factory.createPattern(subject, predicate, object);
-  return factory.createProject(pattern, [object]);
+  return factory.createProject(distinct ? factory.createDistinct(pattern) : pattern, [object]);
 }
 
 /**
  * Gets the label of a subject
  */
-export function labelPattern(subject: Term) {
-  return objectPattern(subject, DF.namedNode(RDFS_LABEL));
+export function labelPattern(subject: Term, distinct?: boolean) {
+  return objectPattern(subject, DF.namedNode(RDFS_LABEL), distinct);
 }

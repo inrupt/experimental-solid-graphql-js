@@ -2,6 +2,13 @@
   {
     "podName": "example",
     "email": "hello@example.com",
-    "password": "abc123"
+    "password": "abc123",
+    "data": [
+      {
+        "path": "./profile.ttl",
+        "resource": "/profile/card",
+        "contentType": "text/turtle"
+      }
+    ]
   }
 ]

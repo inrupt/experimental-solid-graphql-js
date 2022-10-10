@@ -3,6 +3,8 @@ import { AppRunner, resolveModulePath } from '@solid/community-server';
 import path from 'path';
 import { QueryEngine } from '@comunica/query-sparql-solid';
 import { solidQuery, FetchPersonDocument } from './graphql';
+import terminalImage from 'terminal-image';
+import got from 'got';
 
 export function createApp() {
   return new AppRunner().create(
@@ -45,9 +47,34 @@ async function main() {
   }
 
   const { person } = data;
-  
-  console.log('The WebId of the logged in user is', person.id);
 
+  const {
+    img,
+    birthDate,
+    mother,
+    father,
+    name,
+    ancestors,
+    id
+  } = data.person
+
+  console.log('This is', name, 'their WebId is', id);
+
+  if (img) {
+    console.log(
+      await terminalImage.buffer(await got(img).buffer())
+    )
+  }
+
+  console.log('Their date of birth is', birthDate.toDateString());
+  console.log('Their biological mother', mother.name, 'was born on', mother.birthDate.toDateString());
+  console.log('Their biological father', father.name, 'was born on', father.birthDate.toDateString());
+
+  if (ancestors.length > 0) {
+    console.log('The names of their ancestors include', ancestors.map(({ name }) => `"${name}"`).join(', '))
+  }
+
+  await session.logout();
   await app.stop();
 }
 
