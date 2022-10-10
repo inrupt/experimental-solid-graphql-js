@@ -1,8 +1,8 @@
 type Album {
   _id: ID! @identifier
-  name: String!
+  name: String! @property(iri: "http://xmlns.com/foaf/0.1/name")
   artist: [Artist!]!
   songs: [Song!]!
   genre: [Genre!]!
-  url: String!
+  url: ID! @property(iri: "http://xmlns.com/foaf/0.1/thumbnail")
 }

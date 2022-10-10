@@ -123,18 +123,20 @@ song:the_end a mo:Track ;
 <https://www.dropbox.com/s/71qds7jga2y7das/The%20End%20-%20Lost%20European.wav?dl=1> a mo:AudioFile ;
   mo:encoding "WAV" .
 
-
 # Record
 record:Angels_Album a mo:Record ;
   foaf:name "Angels Album" ;
+  foaf:thumbnail <https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/cdoll.jpg> ;
   mo:track song:angel, song:the_beginning, song:china_doll .
 
 record:Angels_Album_2 a mo:Record ;
   foaf:name "Angels New and Improved Album" ;
+  foaf:thumbnail <https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/the-end2.jpg> ;
   mo:track song:an_illusion, song:the_end .
 
 record:RC_Album_2 a mo:Record ;
   foaf:name "The Red Cushions Album" ;
+  foaf:thumbnail <https://www.freemusicpublicdomain.com/wp-content/uploads/2014/09/red-cushions.jpg> ;
   mo:track song:red_cushions .
 
 # Playlist

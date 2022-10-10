@@ -46,8 +46,6 @@ async function main() {
     throw new Error(`${errors?.join(', ')}`)
   }
 
-  const { person } = data;
-
   const {
     img,
     birthDate,
