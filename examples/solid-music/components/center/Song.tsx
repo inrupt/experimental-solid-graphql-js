@@ -8,11 +8,12 @@ export function Song(props: { song: string }) {
       <Query
         document={FetchSongDocument}
         variables={{ id: props.song }}
-        children={data => <LoadedSong {...data} />}
+        // children={data => <LoadedSong {...data} />}
         fallback={() => <></>}
         error={(e) => <>Error {JSON.stringify(e, null, 2)}</>}
-        requireLogin={true}
-      />
+        requireLogin={true}>
+        {data => <LoadedSong {...data} />}
+      </Query>
     </Link>
   )
 }

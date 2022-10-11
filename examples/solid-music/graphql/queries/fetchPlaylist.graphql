@@ -5,16 +5,18 @@ query fetchPlaylist($id: ID!) {
     creator {
       name
     }
-    songs {
-      _id
-      title
-      url
-      album {
-        name
+    entries {
+      song {
+        _id
+        title
         url
-      }
-      artist {
-        name
+        album {
+          name
+          url
+        }
+        artist {
+          name
+        }
       }
     }
     image

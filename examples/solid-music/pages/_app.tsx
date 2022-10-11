@@ -184,8 +184,10 @@ function AlbumComponent(props: AlbumProps<FetchAlbumQuery, FetchAlbumQueryVariab
     variables={props.variables}
     fallback={() => <div>Loading ...</div>}
     error={() => <div>Error Loading data</div>}
-    children={({ album }) => <div>{album.url}</div>}
-  />
+    // children={({ album }) => <div>{album.url}</div>}
+  >
+    {({ album }) => <div>{album.url}</div>}
+  </Query>
 }
 
 function MyApp({ Component, pageProps }: AppProps) {

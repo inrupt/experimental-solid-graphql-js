@@ -2,7 +2,8 @@ type Playlist @is(class: "http://liveschema.it/dataset/lov_plo/resource/51cedf29
   _id: ID! @identifier
   name: String! @property(iri: "http://liveschema.it/dataset/lov_plo/resource/51cedf29-308e-4583-a2bf-06c9eff7cbb7#playlistName")
   # TODO: Implement orderby
-  songs: [Song!]! @property(iri: "http://example.org#entry") # @orderBy(iri: "http://purl.org/ontology/mo/track_number")
+  # TODO: Work out why this was not throwing a type error with the Song type
+  entries: [PlaylistEntry!]! @property(iri: "http://example.org#entry") # @orderBy(iri: "http://purl.org/ontology/mo/track_number")
   creator: User
   image: ID! @property(iri: "http://xmlns.com/foaf/0.1/thumbnail")
 }

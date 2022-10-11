@@ -2,8 +2,10 @@ query fetchPlaylists {
   playlists {
     _id
     name
-    songs {
-      title
+    entries {
+      song {
+        title
+      }
     }
   }
 }

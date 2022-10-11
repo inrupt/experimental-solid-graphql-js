@@ -10,14 +10,16 @@ export function PlayList(props: { playlist: string }) {
     error={(e) => <>{JSON.stringify(e, null, 2)}</>}
     fallback={() => <></>}
     // TODO: Don't query unecessary song data here
-    children={props => <LoadedPlaylist {...props} />}
-  />
+    // children={props => <LoadedPlaylist {...props} />}
+    >
+    {data => <LoadedPlaylist {...data} />}
+  </Query>
 }
 
 function LoadedPlaylist({ playlist }: FetchPlaylistQuery) {
   return <Center
       name={playlist.name}
-      songs={playlist.songs.map(song => song._id)}
+      songs={playlist.entries.map(song => song.song._id)}
       image={playlist.image}
       type='Playlist'
     />

@@ -12,11 +12,11 @@ export function Player(props: { song: string }) {
   return <Query
     document={FetchSongDocument}
     variables={{ id: props.song }}
-    children={data => <LoadedPlayer {...data} />}
     fallback={() => <div className="h-24 bg-gradient-to-b from-gray-900 to-black text-white grid grid-cols-3 text-sm md:text-base px-2 md:px-8" />}
     error={(e) => <>Error {JSON.stringify(e, null, 2)}</>}
-    requireLogin={true}
-  />
+    requireLogin={true}>
+    {data => <LoadedPlayer {...data} />}
+  </Query>
 }
 
 function LoadedPlayer({ song }: FetchSongQuery): JSX.Element {
