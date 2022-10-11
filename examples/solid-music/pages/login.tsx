@@ -100,7 +100,7 @@ function Login() {
       context.session.login({
         oidcIssuer: query.provider,
         redirectUrl: window.location.origin + window.location.pathname,
-        clientName: 'Solid Dotify',
+        clientName: 'Solid Music',
       }).catch(reason => {
         replace({
           pathname: pathname,
