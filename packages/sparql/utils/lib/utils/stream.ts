@@ -27,7 +27,6 @@ export function getSingleResultFromStream<T>(stream: ResultStream<T>, params?: {
         item = elem;
       } else {
         cleanup(true);
-        console.log('conflicting items', elem, item)
         rej(new Error("More than one element in iterator"));
       }
     }

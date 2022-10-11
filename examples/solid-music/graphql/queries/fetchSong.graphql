@@ -10,5 +10,6 @@ query fetchSong($id: ID!) {
       url
     }
     url
+    order
   }
 }

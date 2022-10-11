@@ -1,5 +1,5 @@
 
-function Song({ order, track }: any) {
+function Song({ order, track }: { order: number, track:  }) {
   // const spotifyApi = useSpotify();
   // const [currentTrackId, setCurrentTrackId] =
   //   useRecoilState(currentTrackIdState);

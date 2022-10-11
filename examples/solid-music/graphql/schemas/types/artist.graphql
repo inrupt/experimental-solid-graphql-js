@@ -1,4 +1,4 @@
-type Artist {
+type Artist @is(class: "http://purl.org/ontology/mo/MusicalArtist") {
   _id: ID! @identifier
   name: String! @property(iri: "http://xmlns.com/foaf/0.1/name")
   albums: [Album!]!

@@ -1,4 +1,4 @@
-type Genre {
+type Genre @is(class: "http://purl.org/ontology/mo/Genre") {
   _id: ID!
   name: String!
 }

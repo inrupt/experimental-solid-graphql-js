@@ -4,5 +4,5 @@ type Playlist @is(class: "http://liveschema.it/dataset/lov_plo/resource/51cedf29
   # TODO: Implement orderby
   songs: [Song!]! @property(iri: "http://example.org#entry") # @orderBy(iri: "http://purl.org/ontology/mo/track_number")
   creator: User
-  # image: String! # custom
+  image: ID! @property(iri: "http://xmlns.com/foaf/0.1/thumbnail")
 }

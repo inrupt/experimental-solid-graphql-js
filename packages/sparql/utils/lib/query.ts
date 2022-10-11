@@ -19,14 +19,18 @@ type MaybePromise<T> = T | Promise<T>;
  * Get the object of a given subject-predicate pattern
  */
 export async function queryObject(context: IQueryContext, subject: MaybePromise<Term>, predicate: MaybePromise<Term>): Promise<Term> {
-  return queryTerm(context, objectPattern(await subject, await predicate, true));
+  return queryTerm(context, objectPattern(await subject, await predicate, true)).catch(async (err: Error) => {
+    throw new Error(`Error when retrieving single object in pattern ${(await subject).value} ${(await predicate).value} ?o: (${err.message})`)
+  });
 }
 
 /**
  * Get the objects of a given subject-predicate pattern
  */
  export async function queryObjects(context: IQueryContext, subject: MaybePromise<Term>, predicate: MaybePromise<Term>): Promise<Term[]> {
-  return queryTerms(context, objectPattern(await subject, await predicate, true));
+  return queryTerms(context, objectPattern(await subject, await predicate, true)).catch(async (err: Error) => {
+    throw new Error(`Error when retrieving objects in pattern ${(await subject).value} ${(await predicate).value} ?o: (${err.message})`)
+  });
 }
 
 /**

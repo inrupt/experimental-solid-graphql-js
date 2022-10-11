@@ -23,6 +23,7 @@ scalar Date
 scalar URL
 
 directive @property(iri: String!, reverse: Boolean) on FIELD_DEFINITION # Require a singular property
+directive @orderBy(iri: String!) on FIELD_DEFINITION
 directive @is(class: String!) on OBJECT
 directive @identifier on ARGUMENT_DEFINITION | FIELD_DEFINITION
 directive @webId on FIELD_DEFINITION

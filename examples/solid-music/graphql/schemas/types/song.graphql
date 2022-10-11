@@ -1,7 +1,8 @@
-type Song {
+type Song @is(class: "http://purl.org/ontology/mo/Track") {
   _id: ID! @identifier
   title: String! @property(iri: "http://xmlns.com/foaf/0.1/name")
   artist: [Artist!]! @property(iri: "http://purl.org/ontology/mo/compiler")
   album: Album! @property(iri: "http://example.org#album")
   url: ID! @property(iri: "http://purl.org/ontology/mo/available_as")
+  order: Int! @property(iri: "http://liveschema.it/dataset/lov_plo/resource/51cedf29-308e-4583-a2bf-06c9eff7cbb7/position")
 }

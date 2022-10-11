@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { FetchSongDocument, FetchSongQuery } from '../graphql';
 import { Query } from './query';
 
-export default function Player(props: { song: string }) {
+export function Player(props: { song: string }) {
   return <Query
     document={FetchSongDocument}
     variables={{ id: props.song }}

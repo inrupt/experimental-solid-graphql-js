@@ -17,5 +17,6 @@ query fetchPlaylist($id: ID!) {
         name
       }
     }
+    image
   }
 }

@@ -4,13 +4,13 @@
 @prefix record: <http://example.org/record#> .
 @prefix mediaType: <http://example.org/mediaType#> .
 @prefix playlist: <http://example.org/playlist#> .
-@prefix playlistEntry: <http://example.org/playlist#> .
+@prefix playlistEntry: <http://example.org/playlistEntry#> .
 @prefix mo: <http://purl.org/ontology/mo/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix dc: <http://purl.org/dc/terms/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix po: <http://liveschema.it/dataset/lov_plo/resource/51cedf29-308e-4583-a2bf-06c9eff7cbb7> .
+@prefix po: <http://liveschema.it/dataset/lov_plo/resource/51cedf29-308e-4583-a2bf-06c9eff7cbb7#> .
 @prefix inrupt: <https://id.inrupt.com/> .
 @prefix me: <../profile/card#me> .
 

@@ -1,0 +1,3 @@
+type PlaylistEntry @is(class: "http://purl.org/ontology/mo/PlaylistEntry") {
+  song: Song! @property(iri: "http://liveschema.it/dataset/lov_plo/resource/51cedf29-308e-4583-a2bf-06c9eff7cbb7#playlistEntrySong")
+}
