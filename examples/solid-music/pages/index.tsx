@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 
 export default function Home() {
   // const [ song, setSong ] = useState('http://example.org/song#the_end')
-  const { query: { song } } = useRouter()
+  const { query: { currentSong } } = useRouter()
 
   return (
     <div className="bg-black h-screen overflow-hidden">
@@ -22,9 +22,9 @@ export default function Home() {
         <PlayList playlist='http://example.org/playlist#a'/>
       </main>
 
-      {typeof song === 'string' &&
+      {typeof currentSong === 'string' &&
         <div className="sticky bottom-0">
-          <Player song={song} />
+          <Player song={currentSong} />
         </div>
       }
     </div>

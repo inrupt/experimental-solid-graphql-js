@@ -1,3 +1,8 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix solid: <http://www.w3.org/ns/solid/terms#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://example.org#> .
 @prefix genre: <http://example.org/genre#> .
 @prefix artist: <http://example.org/artist#> .
 @prefix song: <http://example.org/song#> .
@@ -12,7 +17,8 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix po: <http://liveschema.it/dataset/lov_plo/resource/51cedf29-308e-4583-a2bf-06c9eff7cbb7#> .
 @prefix inrupt: <https://id.inrupt.com/> .
-@prefix me: <../profile/card#me> .
+@prefix me: <#me> .
+
 
 # Genres
 genre:jazz a mo:Genre ;
