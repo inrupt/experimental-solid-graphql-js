@@ -1,6 +1,8 @@
 import { Songs } from './Songs';
 import { Query } from '../query';
 import { FetchPlaylistDocument, FetchPlaylistQuery } from '../../graphql';
+import { LoginIcon } from '@heroicons/react/outline';
+import Link from 'next/link';
 
 export function PlayList(props: { playlist: string }) {
   return <Query
@@ -28,7 +30,6 @@ function LoadedPlaylist({ playlist }: FetchPlaylistQuery) {
 export function Center(props: { name: string; songs: string[]; image: string; type: string }) {
   return (
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide select-none relative bg-gradient-to-t from-purple-900 to-black">
-      
       <section className="flex items-end space-x-7 bg-gradient-to-b to-black p-5 text-white bg-[#2e2e2e] rounded m-2.5">
         <img className="h-44 w-44 rounded shadow-2xl object-cover" src={props.image} alt={props.name} />
         <div>
@@ -36,6 +37,7 @@ export function Center(props: { name: string; songs: string[]; image: string; ty
           <h1 className="text-2xl md:text-3xl xl:text-5xl">{props.name}</h1>
         </div>
       </section>
+      
 
       <div>
         <Songs songs={props.songs} />
