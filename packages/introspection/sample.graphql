@@ -1,0 +1,418 @@
+type class @is(class: "http://www.w3.org/2000/01/rdf-schema#Class")
+
+"""
+A foaf:LabelProperty is any RDF property with texual values that serve as labels.
+"""
+type labelProperty @is(class: "http://xmlns.com/foaf/0.1/LabelProperty")
+
+"""A person."""
+type person @is(class: "http://xmlns.com/foaf/0.1/Person") {
+  """
+  A textual geekcode for this person, see http://www.geekcode.com/geek.html
+  """
+  geekcode: String @property(iri: "http://xmlns.com/foaf/0.1/geekcode")
+  """The first name of a person."""
+  firstName: String @property(iri: "http://xmlns.com/foaf/0.1/firstName")
+  """The last name of a person."""
+  lastName: String @property(iri: "http://xmlns.com/foaf/0.1/lastName")
+  """The surname of some person."""
+  surname: String @property(iri: "http://xmlns.com/foaf/0.1/surname")
+  """The family name of some person."""
+  family_name: String @property(iri: "http://xmlns.com/foaf/0.1/family_name")
+  """The family name of some person."""
+  familyName: String @property(iri: "http://xmlns.com/foaf/0.1/familyName")
+  """A .plan comment, in the tradition of finger and '.plan' files."""
+  plan: String @property(iri: "http://xmlns.com/foaf/0.1/plan")
+  """
+  An image that can be used to represent some thing (ie. those depictions which are particularly representative of something, eg. one's photo on a homepage).
+  """
+  image: String @property(iri: "http://xmlns.com/foaf/0.1/img")
+  """A Myers Briggs (MBTI) personality classification."""
+  myersBriggs: String @property(iri: "http://xmlns.com/foaf/0.1/myersBriggs")
+  """
+  A workplace homepage of some person; the homepage of an organization they work for.
+  """
+  workplaceHomepage: String @property(iri: "http://xmlns.com/foaf/0.1/workplaceHomepage")
+  """
+  A  personal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a 'static inverse functional property', in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox.
+  """
+  personalMailbox: String @property(iri: "http://xmlns.com/foaf/0.1/mbox")
+  """
+  A work info homepage of some person; a page about their work for some organization.
+  """
+  workInfoHomepage: String @property(iri: "http://xmlns.com/foaf/0.1/workInfoHomepage")
+  """
+  The sha1sum of the URI of an Internet mailbox associated with exactly one owner, the  first owner of the mailbox.
+  """
+  sha1sumOfAPersonalMailboxURIName: String @property(iri: "http://xmlns.com/foaf/0.1/mbox_sha1sum")
+  """A homepage of a school attended by the person."""
+  schoolHomepage: String @property(iri: "http://xmlns.com/foaf/0.1/schoolHomepage")
+  """
+  The gender of this Agent (typically but not necessarily 'male' or 'female').
+  """
+  gender: String @property(iri: "http://xmlns.com/foaf/0.1/gender")
+  """
+  A person known by this person (indicating some level of reciprocated interaction between the parties).
+  """
+  knows: String @property(iri: "http://xmlns.com/foaf/0.1/knows")
+  """A jabber ID for something."""
+  jabberID: String @property(iri: "http://xmlns.com/foaf/0.1/jabberID")
+  """A link to the publications of this person."""
+  publications: String @property(iri: "http://xmlns.com/foaf/0.1/publications")
+  """An AIM chat ID"""
+  aIMChatID: String @property(iri: "http://xmlns.com/foaf/0.1/aimChatID")
+  """A current project this person works on."""
+  currentProject: String @property(iri: "http://xmlns.com/foaf/0.1/currentProject")
+  """A Skype ID"""
+  skypeID: String @property(iri: "http://xmlns.com/foaf/0.1/skypeID")
+  """A project this person has previously worked on."""
+  pastProject: String @property(iri: "http://xmlns.com/foaf/0.1/pastProject")
+  """An ICQ chat ID"""
+  iCQChatID: String @property(iri: "http://xmlns.com/foaf/0.1/icqChatID")
+  """A Yahoo chat ID"""
+  yahooChatID: String @property(iri: "http://xmlns.com/foaf/0.1/yahooChatID")
+  """An MSN chat ID"""
+  mSNChatID: String @property(iri: "http://xmlns.com/foaf/0.1/msnChatID")
+  """A weblog of some thing (whether person, group, company etc.)."""
+  weblog: String @property(iri: "http://xmlns.com/foaf/0.1/weblog")
+  """An OpenID for an Agent."""
+  openid: String @property(iri: "http://xmlns.com/foaf/0.1/openid")
+  """
+  A tipjar document for this agent, describing means for payment and reward.
+  """
+  tipjar: String @property(iri: "http://xmlns.com/foaf/0.1/tipjar")
+  """Something that was made by this agent."""
+  made: String @property(iri: "http://xmlns.com/foaf/0.1/made")
+  """A page about a topic of interest to this person."""
+  interest: String @property(iri: "http://xmlns.com/foaf/0.1/interest")
+  """A thing of interest to this person."""
+  topic_interest: String @property(iri: "http://xmlns.com/foaf/0.1/topic_interest")
+  """Indicates an account held by this agent."""
+  account: String @property(iri: "http://xmlns.com/foaf/0.1/holdsAccount")
+  """
+  The birthday of this Agent, represented in mm-dd string form, eg. '12-31'.
+  """
+  birthday: String @property(iri: "http://xmlns.com/foaf/0.1/birthday")
+  """The age in years of some agent."""
+  age: String @property(iri: "http://xmlns.com/foaf/0.1/age")
+  """
+  A string expressing what the user is happy for the general public (normally) to know about their current activity.
+  """
+  status: String @property(iri: "http://xmlns.com/foaf/0.1/status")
+  """
+  A location that something is based near, for some broadly human notion of near.
+  """
+  basedNear: String @property(iri: "http://xmlns.com/foaf/0.1/based_near")
+}
+
+"""An agent (eg. person, group, software or physical artifact)."""
+type agent @is(class: "http://xmlns.com/foaf/0.1/Agent") {
+  """
+  A  personal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a 'static inverse functional property', in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox.
+  """
+  personalMailbox: String @property(iri: "http://xmlns.com/foaf/0.1/mbox")
+  """
+  The sha1sum of the URI of an Internet mailbox associated with exactly one owner, the  first owner of the mailbox.
+  """
+  sha1sumOfAPersonalMailboxURIName: String @property(iri: "http://xmlns.com/foaf/0.1/mbox_sha1sum")
+  """
+  The gender of this Agent (typically but not necessarily 'male' or 'female').
+  """
+  gender: String @property(iri: "http://xmlns.com/foaf/0.1/gender")
+  """A jabber ID for something."""
+  jabberID: String @property(iri: "http://xmlns.com/foaf/0.1/jabberID")
+  """An AIM chat ID"""
+  aIMChatID: String @property(iri: "http://xmlns.com/foaf/0.1/aimChatID")
+  """A Skype ID"""
+  skypeID: String @property(iri: "http://xmlns.com/foaf/0.1/skypeID")
+  """An ICQ chat ID"""
+  iCQChatID: String @property(iri: "http://xmlns.com/foaf/0.1/icqChatID")
+  """A Yahoo chat ID"""
+  yahooChatID: String @property(iri: "http://xmlns.com/foaf/0.1/yahooChatID")
+  """An MSN chat ID"""
+  mSNChatID: String @property(iri: "http://xmlns.com/foaf/0.1/msnChatID")
+  """A weblog of some thing (whether person, group, company etc.)."""
+  weblog: String @property(iri: "http://xmlns.com/foaf/0.1/weblog")
+  """An OpenID for an Agent."""
+  openid: String @property(iri: "http://xmlns.com/foaf/0.1/openid")
+  """
+  A tipjar document for this agent, describing means for payment and reward.
+  """
+  tipjar: String @property(iri: "http://xmlns.com/foaf/0.1/tipjar")
+  """Something that was made by this agent."""
+  made: String @property(iri: "http://xmlns.com/foaf/0.1/made")
+  """A page about a topic of interest to this person."""
+  interest: String @property(iri: "http://xmlns.com/foaf/0.1/interest")
+  """A thing of interest to this person."""
+  topic_interest: String @property(iri: "http://xmlns.com/foaf/0.1/topic_interest")
+  """Indicates an account held by this agent."""
+  account: String @property(iri: "http://xmlns.com/foaf/0.1/holdsAccount")
+  """
+  The birthday of this Agent, represented in mm-dd string form, eg. '12-31'.
+  """
+  birthday: String @property(iri: "http://xmlns.com/foaf/0.1/birthday")
+  """The age in years of some agent."""
+  age: String @property(iri: "http://xmlns.com/foaf/0.1/age")
+  """
+  A string expressing what the user is happy for the general public (normally) to know about their current activity.
+  """
+  status: String @property(iri: "http://xmlns.com/foaf/0.1/status")
+}
+
+type spatialThing @is(class: "http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing") {
+  """
+  A location that something is based near, for some broadly human notion of near.
+  """
+  basedNear: String @property(iri: "http://xmlns.com/foaf/0.1/based_near")
+}
+
+"""An organization."""
+type organization @is(class: "http://xmlns.com/foaf/0.1/Organization") {
+  """
+  A  personal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a 'static inverse functional property', in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox.
+  """
+  personalMailbox: String @property(iri: "http://xmlns.com/foaf/0.1/mbox")
+  """
+  The sha1sum of the URI of an Internet mailbox associated with exactly one owner, the  first owner of the mailbox.
+  """
+  sha1sumOfAPersonalMailboxURIName: String @property(iri: "http://xmlns.com/foaf/0.1/mbox_sha1sum")
+  """
+  The gender of this Agent (typically but not necessarily 'male' or 'female').
+  """
+  gender: String @property(iri: "http://xmlns.com/foaf/0.1/gender")
+  """A jabber ID for something."""
+  jabberID: String @property(iri: "http://xmlns.com/foaf/0.1/jabberID")
+  """An AIM chat ID"""
+  aIMChatID: String @property(iri: "http://xmlns.com/foaf/0.1/aimChatID")
+  """A Skype ID"""
+  skypeID: String @property(iri: "http://xmlns.com/foaf/0.1/skypeID")
+  """An ICQ chat ID"""
+  iCQChatID: String @property(iri: "http://xmlns.com/foaf/0.1/icqChatID")
+  """A Yahoo chat ID"""
+  yahooChatID: String @property(iri: "http://xmlns.com/foaf/0.1/yahooChatID")
+  """An MSN chat ID"""
+  mSNChatID: String @property(iri: "http://xmlns.com/foaf/0.1/msnChatID")
+  """A weblog of some thing (whether person, group, company etc.)."""
+  weblog: String @property(iri: "http://xmlns.com/foaf/0.1/weblog")
+  """An OpenID for an Agent."""
+  openid: String @property(iri: "http://xmlns.com/foaf/0.1/openid")
+  """
+  A tipjar document for this agent, describing means for payment and reward.
+  """
+  tipjar: String @property(iri: "http://xmlns.com/foaf/0.1/tipjar")
+  """Something that was made by this agent."""
+  made: String @property(iri: "http://xmlns.com/foaf/0.1/made")
+  """A page about a topic of interest to this person."""
+  interest: String @property(iri: "http://xmlns.com/foaf/0.1/interest")
+  """A thing of interest to this person."""
+  topic_interest: String @property(iri: "http://xmlns.com/foaf/0.1/topic_interest")
+  """Indicates an account held by this agent."""
+  account: String @property(iri: "http://xmlns.com/foaf/0.1/holdsAccount")
+  """
+  The birthday of this Agent, represented in mm-dd string form, eg. '12-31'.
+  """
+  birthday: String @property(iri: "http://xmlns.com/foaf/0.1/birthday")
+  """The age in years of some agent."""
+  age: String @property(iri: "http://xmlns.com/foaf/0.1/age")
+  """
+  A string expressing what the user is happy for the general public (normally) to know about their current activity.
+  """
+  status: String @property(iri: "http://xmlns.com/foaf/0.1/status")
+}
+
+"""A project (a collective endeavour of some kind)."""
+type project @is(class: "http://xmlns.com/foaf/0.1/Project")
+
+"""A document."""
+type document @is(class: "http://xmlns.com/foaf/0.1/Document") {
+  """A sha1sum hash, in hex."""
+  sha1sumHex: String @property(iri: "http://xmlns.com/foaf/0.1/sha1")
+  """A topic of some page or document."""
+  topic: String @property(iri: "http://xmlns.com/foaf/0.1/topic")
+  """The primary topic of some page or document."""
+  primaryTopic: String @property(iri: "http://xmlns.com/foaf/0.1/primaryTopic")
+}
+
+"""A class of Agents."""
+type group @is(class: "http://xmlns.com/foaf/0.1/Group") {
+  """Indicates a member of a Group"""
+  member: String @property(iri: "http://xmlns.com/foaf/0.1/member")
+  """
+  A  personal mailbox, ie. an Internet mailbox associated with exactly one owner, the first owner of this mailbox. This is a 'static inverse functional property', in that  there is (across time and change) at most one individual that ever has any particular value for foaf:mbox.
+  """
+  personalMailbox: String @property(iri: "http://xmlns.com/foaf/0.1/mbox")
+  """
+  The sha1sum of the URI of an Internet mailbox associated with exactly one owner, the  first owner of the mailbox.
+  """
+  sha1sumOfAPersonalMailboxURIName: String @property(iri: "http://xmlns.com/foaf/0.1/mbox_sha1sum")
+  """
+  The gender of this Agent (typically but not necessarily 'male' or 'female').
+  """
+  gender: String @property(iri: "http://xmlns.com/foaf/0.1/gender")
+  """A jabber ID for something."""
+  jabberID: String @property(iri: "http://xmlns.com/foaf/0.1/jabberID")
+  """An AIM chat ID"""
+  aIMChatID: String @property(iri: "http://xmlns.com/foaf/0.1/aimChatID")
+  """A Skype ID"""
+  skypeID: String @property(iri: "http://xmlns.com/foaf/0.1/skypeID")
+  """An ICQ chat ID"""
+  iCQChatID: String @property(iri: "http://xmlns.com/foaf/0.1/icqChatID")
+  """A Yahoo chat ID"""
+  yahooChatID: String @property(iri: "http://xmlns.com/foaf/0.1/yahooChatID")
+  """An MSN chat ID"""
+  mSNChatID: String @property(iri: "http://xmlns.com/foaf/0.1/msnChatID")
+  """A weblog of some thing (whether person, group, company etc.)."""
+  weblog: String @property(iri: "http://xmlns.com/foaf/0.1/weblog")
+  """An OpenID for an Agent."""
+  openid: String @property(iri: "http://xmlns.com/foaf/0.1/openid")
+  """
+  A tipjar document for this agent, describing means for payment and reward.
+  """
+  tipjar: String @property(iri: "http://xmlns.com/foaf/0.1/tipjar")
+  """Something that was made by this agent."""
+  made: String @property(iri: "http://xmlns.com/foaf/0.1/made")
+  """A page about a topic of interest to this person."""
+  interest: String @property(iri: "http://xmlns.com/foaf/0.1/interest")
+  """A thing of interest to this person."""
+  topic_interest: String @property(iri: "http://xmlns.com/foaf/0.1/topic_interest")
+  """Indicates an account held by this agent."""
+  account: String @property(iri: "http://xmlns.com/foaf/0.1/holdsAccount")
+  """
+  The birthday of this Agent, represented in mm-dd string form, eg. '12-31'.
+  """
+  birthday: String @property(iri: "http://xmlns.com/foaf/0.1/birthday")
+  """The age in years of some agent."""
+  age: String @property(iri: "http://xmlns.com/foaf/0.1/age")
+  """
+  A string expressing what the user is happy for the general public (normally) to know about their current activity.
+  """
+  status: String @property(iri: "http://xmlns.com/foaf/0.1/status")
+}
+
+"""An image."""
+type image @is(class: "http://xmlns.com/foaf/0.1/Image") {
+  """A thing depicted in this representation."""
+  depicts: String @property(iri: "http://xmlns.com/foaf/0.1/depicts")
+  """A derived thumbnail image."""
+  thumbnail: String @property(iri: "http://xmlns.com/foaf/0.1/thumbnail")
+  """A sha1sum hash, in hex."""
+  sha1sumHex: String @property(iri: "http://xmlns.com/foaf/0.1/sha1")
+  """A topic of some page or document."""
+  topic: String @property(iri: "http://xmlns.com/foaf/0.1/topic")
+  """The primary topic of some page or document."""
+  primaryTopic: String @property(iri: "http://xmlns.com/foaf/0.1/primaryTopic")
+}
+
+"""A personal profile RDF document."""
+type personalProfileDocument @is(class: "http://xmlns.com/foaf/0.1/PersonalProfileDocument") {
+  """A sha1sum hash, in hex."""
+  sha1sumHex: String @property(iri: "http://xmlns.com/foaf/0.1/sha1")
+  """A topic of some page or document."""
+  topic: String @property(iri: "http://xmlns.com/foaf/0.1/topic")
+  """The primary topic of some page or document."""
+  primaryTopic: String @property(iri: "http://xmlns.com/foaf/0.1/primaryTopic")
+}
+
+"""An online account."""
+type onlineAccount @is(class: "http://xmlns.com/foaf/0.1/OnlineAccount") {
+  """Indicates a homepage of the service provide for this online account."""
+  accountServiceHomepage: String @property(iri: "http://xmlns.com/foaf/0.1/accountServiceHomepage")
+  """Indicates the name (identifier) associated with this online account."""
+  accountName: String @property(iri: "http://xmlns.com/foaf/0.1/accountName")
+  """A name for some thing."""
+  name: String @property(iri: "http://xmlns.com/foaf/0.1/name")
+  """A homepage for some thing."""
+  homepage: String @property(iri: "http://xmlns.com/foaf/0.1/homepage")
+  """A page or document about this thing."""
+  page: String @property(iri: "http://xmlns.com/foaf/0.1/page")
+  """A document that this thing is the primary topic of."""
+  isPrimaryTopicOf: String @property(iri: "http://xmlns.com/foaf/0.1/isPrimaryTopicOf")
+  """An agent that  made this thing."""
+  maker: String @property(iri: "http://xmlns.com/foaf/0.1/maker")
+  """A depiction of some thing."""
+  depiction: String @property(iri: "http://xmlns.com/foaf/0.1/depiction")
+  """An organization funding a project or person."""
+  fundedBy: String @property(iri: "http://xmlns.com/foaf/0.1/fundedBy")
+  """A logo representing some thing."""
+  logo: String @property(iri: "http://xmlns.com/foaf/0.1/logo")
+  """A theme."""
+  theme: String @property(iri: "http://xmlns.com/foaf/0.1/theme")
+}
+
+"""An online gaming account."""
+type onlineGamingAccount @is(class: "http://xmlns.com/foaf/0.1/OnlineGamingAccount") {
+  """Indicates a homepage of the service provide for this online account."""
+  accountServiceHomepage: String @property(iri: "http://xmlns.com/foaf/0.1/accountServiceHomepage")
+  """Indicates the name (identifier) associated with this online account."""
+  accountName: String @property(iri: "http://xmlns.com/foaf/0.1/accountName")
+  """A name for some thing."""
+  name: String @property(iri: "http://xmlns.com/foaf/0.1/name")
+  """A homepage for some thing."""
+  homepage: String @property(iri: "http://xmlns.com/foaf/0.1/homepage")
+  """A page or document about this thing."""
+  page: String @property(iri: "http://xmlns.com/foaf/0.1/page")
+  """A document that this thing is the primary topic of."""
+  isPrimaryTopicOf: String @property(iri: "http://xmlns.com/foaf/0.1/isPrimaryTopicOf")
+  """An agent that  made this thing."""
+  maker: String @property(iri: "http://xmlns.com/foaf/0.1/maker")
+  """A depiction of some thing."""
+  depiction: String @property(iri: "http://xmlns.com/foaf/0.1/depiction")
+  """An organization funding a project or person."""
+  fundedBy: String @property(iri: "http://xmlns.com/foaf/0.1/fundedBy")
+  """A logo representing some thing."""
+  logo: String @property(iri: "http://xmlns.com/foaf/0.1/logo")
+  """A theme."""
+  theme: String @property(iri: "http://xmlns.com/foaf/0.1/theme")
+}
+
+"""An online e-commerce account."""
+type onlineECommerceAccount @is(class: "http://xmlns.com/foaf/0.1/OnlineEcommerceAccount") {
+  """Indicates a homepage of the service provide for this online account."""
+  accountServiceHomepage: String @property(iri: "http://xmlns.com/foaf/0.1/accountServiceHomepage")
+  """Indicates the name (identifier) associated with this online account."""
+  accountName: String @property(iri: "http://xmlns.com/foaf/0.1/accountName")
+  """A name for some thing."""
+  name: String @property(iri: "http://xmlns.com/foaf/0.1/name")
+  """A homepage for some thing."""
+  homepage: String @property(iri: "http://xmlns.com/foaf/0.1/homepage")
+  """A page or document about this thing."""
+  page: String @property(iri: "http://xmlns.com/foaf/0.1/page")
+  """A document that this thing is the primary topic of."""
+  isPrimaryTopicOf: String @property(iri: "http://xmlns.com/foaf/0.1/isPrimaryTopicOf")
+  """An agent that  made this thing."""
+  maker: String @property(iri: "http://xmlns.com/foaf/0.1/maker")
+  """A depiction of some thing."""
+  depiction: String @property(iri: "http://xmlns.com/foaf/0.1/depiction")
+  """An organization funding a project or person."""
+  fundedBy: String @property(iri: "http://xmlns.com/foaf/0.1/fundedBy")
+  """A logo representing some thing."""
+  logo: String @property(iri: "http://xmlns.com/foaf/0.1/logo")
+  """A theme."""
+  theme: String @property(iri: "http://xmlns.com/foaf/0.1/theme")
+}
+
+"""An online chat account."""
+type onlineChatAccount @is(class: "http://xmlns.com/foaf/0.1/OnlineChatAccount") {
+  """Indicates a homepage of the service provide for this online account."""
+  accountServiceHomepage: String @property(iri: "http://xmlns.com/foaf/0.1/accountServiceHomepage")
+  """Indicates the name (identifier) associated with this online account."""
+  accountName: String @property(iri: "http://xmlns.com/foaf/0.1/accountName")
+  """A name for some thing."""
+  name: String @property(iri: "http://xmlns.com/foaf/0.1/name")
+  """A homepage for some thing."""
+  homepage: String @property(iri: "http://xmlns.com/foaf/0.1/homepage")
+  """A page or document about this thing."""
+  page: String @property(iri: "http://xmlns.com/foaf/0.1/page")
+  """A document that this thing is the primary topic of."""
+  isPrimaryTopicOf: String @property(iri: "http://xmlns.com/foaf/0.1/isPrimaryTopicOf")
+  """An agent that  made this thing."""
+  maker: String @property(iri: "http://xmlns.com/foaf/0.1/maker")
+  """A depiction of some thing."""
+  depiction: String @property(iri: "http://xmlns.com/foaf/0.1/depiction")
+  """An organization funding a project or person."""
+  fundedBy: String @property(iri: "http://xmlns.com/foaf/0.1/fundedBy")
+  """A logo representing some thing."""
+  logo: String @property(iri: "http://xmlns.com/foaf/0.1/logo")
+  """A theme."""
+  theme: String @property(iri: "http://xmlns.com/foaf/0.1/theme")
+}

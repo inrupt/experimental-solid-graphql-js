@@ -22,6 +22,7 @@
     "@comunica/config-query-sparql-solid": "^2.1.0",
     "@comunica/config-reasoning": "^0.2.0",
     "@comunica/query-sparql": "^2.4.3",
+    "@graphql-tools/stitching-directives": "^2.3.11",
     "@solid/community-server": "github:CommunitySolidServer/CommunitySolidServer#0d0369cb15adb722e4bbe690db4677143b96e64b",
     "@types/jest": "^29.1.1",
     "@types/n3": "^1.10.4",
