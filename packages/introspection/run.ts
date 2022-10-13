@@ -9,6 +9,8 @@ import fs from 'fs';
 
 makeSchema(new QueryEngine(), 'https://web.archive.org/web/20220614105937if_/http://xmlns.com/foaf/spec/20140114.rdf')
   .then(s => {
+    console.log(printSchemaWithDirectives(s))
+
     fs.writeFileSync(
       path.join(__dirname, 'sample.graphql'),
       printSchemaWithDirectives(s)
