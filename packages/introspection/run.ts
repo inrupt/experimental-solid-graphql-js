@@ -1,6 +1,6 @@
 import { QueryEngine } from '@comunica/query-sparql';
 import { DataFactory as DF } from 'n3';
-import { createObjectFromType, makeSchema } from './create';
+import { makeSchema } from './create';
 
 import { printSchemaWithDirectives } from '@graphql-tools/utils';
 import { makeExecutableSchema, extractExtensionsFromSchema,  } from '@graphql-tools/schema'

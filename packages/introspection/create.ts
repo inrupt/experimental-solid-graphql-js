@@ -32,16 +32,27 @@ async function getComment(context: IQueryContext, term: Term): Promise<string | 
   return (await getCommentInfo(context, term))[0]?.value
 }
 
-// TODO: Fix this typing
-async function getCachedType(context: IQueryContext, term: Term, cache: Record<string, any>) {
-  // TODO: TermType checks
-  // If the term is not in the cache then cache it
-  if (!(term.value in cache)) {
-    cache[term.value] = getType(context, term, cache);
+function memoized(f: Function) {
+  let res: any;
+  return () => {
+    if (!res) {
+      res = f();
+    }
+    return res;
   }
-
-  return cache[term.value];
 }
+
+// TODO: Fix this typing
+// async function getCachedType(context: IQueryContext, term: Term, cache: Record<string, any>) {
+//   // TODO: TermType checks
+//   // If the term is not in the cache then cache it
+
+//   cache[term.value] ??= memoized(() => getType(context, term, cache));
+//   console.log(cache[term.value]())
+  
+
+//   return cache[term.value]();
+// }
 
 async function getType(context: IQueryContext, term: Term, cache: Record<string, any>) {
   const rangeList = await getRangeInfo(context, term);
@@ -55,11 +66,16 @@ async function getType(context: IQueryContext, term: Term, cache: Record<string,
   if (DataFactory.namedNode('http://www.w3.org/2000/01/rdf-schema#Literal').equals(range)) {
     return GraphQLString;
   } else {
-    return createObjectFromType(context, term, cache)
+    return createCachedObjectFromType(context, term, cache)
   }
 }
 
-export async function createObjectFromType(context: IQueryContext, type: Term, cache: Record<string, any>) {
+async function createCachedObjectFromType(context: IQueryContext, type: Term, cache: Record<string, any>) {
+  return (cache[type.value] ??= memoized(() => createObjectFromType(context, type, cache)))();
+}
+
+async function createObjectFromType(context: IQueryContext, type: Term, cache: Record<string, any>) {
+  console.log('creating object', type, await getName(context, type))
   const propertyList = await getAllProperties(context, type);
   const properties: any = {};
 
@@ -67,10 +83,10 @@ export async function createObjectFromType(context: IQueryContext, type: Term, c
     properties[await getName(context, term)] = {
       description: await getComment(context, term),
       iri: term.value,
-      type: await getCachedType(context, term, cache),
+      type: await getType(context, term, cache),
     }
   }
-
+  //
   return createObject({
     class: type.value,
     name: await getName(context, type),
@@ -107,10 +123,15 @@ export async function makeSchema(sparqlEngine: StringSparqlQueryable<BindingsRes
 
   const cache = {}
 
-  const classes = (await getOwlClasses(context)).map(c => createObjectFromType(context, c, cache));
+  const classes = await Promise.all(
+    // TODO: Fix this - we need a memoized call here
+    (await getOwlClasses(context)).map(c => createCachedObjectFromType(context, c, cache))
+  );
+
+  console.log(classes);
 
   return new GraphQLSchema({
-    types: await Promise.all(classes)
+    types: classes,
   })
 }
 

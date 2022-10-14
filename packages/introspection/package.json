@@ -1,5 +1,5 @@
 {
-  "name": "@inrupt/graphql-codegen-solid-query",
+  "name": "@inrupt/graphql-introspection-ontology",
   "version": "0.0.0",
   "description": "Generate a Schema Node in Code Generation",
   "main": "dist/index.js",
@@ -34,8 +34,6 @@
   ],
   "homepage": "https://github.com/inrupt/solid-graphql-js#readme",
   "dependencies": {
-    "@comunica/query-sparql-link-traversal": "^0.0.1",
-    "@graphql-codegen/plugin-helpers": "^2.7.1",
-    "graphql": "^16.6.0"
+    "@comunica/query-sparql-link-traversal": "^0.0.2-alpha.6.0"
   }
 }

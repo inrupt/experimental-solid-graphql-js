@@ -34,6 +34,7 @@
   "homepage": "https://github.com/inrupt/solid-graphql-js#readme",
   "dependencies": {
     "@comunica/actor-http-inrupt-solid-client-authn": "^2.3.0",
+    "@comunica/query-sparql-link-traversal": "^0.0.1",
     "@inrupt/graphql-directives-linked-data": "^0.0.0",
     "@inrupt/graphql-directives-utils": "^0.0.0",
     "@inrupt/solid-client-authn-browser": "^1.12.2",
