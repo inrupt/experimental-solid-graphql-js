@@ -12,7 +12,7 @@
     "build": "npm run build:graphql && npm run build:next",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "cp -r ../../node_modules/tailwindcss ./node_modules/tailwindcss"
+    "postinstall": "cp -r ../../node_modules/tailwindcss ./node_modules/tailwindcss || true"
   },
   "dependencies": {
     "@comunica/query-sparql": "^2.4.3",
@@ -20,6 +20,7 @@
     "@comunica/query-sparql-solid": "^2.3.0",
     "@heroicons/react": "^1.0.6",
     "@inrupt/graphql-codegen-schema-node": "^0.0.0",
+    "@inrupt/solid-client": "^1.23.3",
     "@inrupt/solid-client-authn-browser": "^1.12.2",
     "@inrupt/sparql-solid-utils": "^0.0.0",
     "next": "12.3.1",

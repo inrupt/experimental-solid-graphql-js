@@ -3,10 +3,15 @@ import { HomeIcon } from '@heroicons/react/solid';
 import { useEffect, useState } from 'react';
 import Link from 'next/link'
 import { LibraryIcon } from '@heroicons/react/outline';
+import { Query } from './query';
+import { FetchPlaylistsQuery, FetchPlaylistsDocument, FetchUserDocument } from '../graphql';
+import { useRouter } from 'next/router';
 
 export function Sidebar() {
+  const urlData = useRouter();
+
   return (
-    <div className="h-screen text-gray-300 p-5 text-sm border-r border-gray-500 overflow-y-scroll h0screen scrollbar-hide sm:max-w-[12rem] lg:max-w-[15rem] md:inline-flex">
+    <div className="h-screen text-gray-300 p-5 text-sm border-r border-gray-500 overflow-y-scroll h0screen scrollbar-hide sm:max-w-[20rem] lg:max-w-[15rem] md:inline-flex">
       <div className='space-y-4'>
 
         <Link href='/'>
@@ -23,10 +28,54 @@ export function Sidebar() {
           </button>
         </Link>
 
+
+        <Query
+          document={FetchUserDocument}
+          error={() => <>Error</>}
+          fallback={() => <></>}
+          requireLogin={true}
+          variables={{}}
+        >
+          {
+            (data) => <>
+              {data.user.playlists.map(x => {
+                return <Link href={{
+                  ...urlData,
+                  query: {
+                    ...urlData.query,
+                    currentPlaylist: x._id
+                  }
+                }}>
+                  <button className="flex items-center pl-6 hover:text-white">
+                    <p>{x.name}</p>
+                  </button>
+                </Link>;
+              })}
+            </>
+          }
+        </Query>
+
+
       </div>
     </div>
   )
 
+  // <Link href='/playlists'>
+  //         <button className="flex items-center pl-8 hover:text-white">
+  //           {/* <LibraryIcon className="h-5 w-5" /> */}
+  //           {/* <p>Playlists</p> */}
+  // <Query
+  //   document={FetchPlaylistsDocument}
+  //   error={() => <>Error</>}
+  //   fallback={() => <>Fallback</>}
+  //   requireLogin={true}
+  //   variables={{}}
+  //   >
+  //     {(data) => <>{JSON.stringify(data, null, 2)}</>}
+  //   </Query>
+
+  //         </button>
+  //       </Link>
 
   // const spotifyApi = useSpotify();
   // const { data: session, status } = useSession();

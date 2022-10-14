@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { FetchSongDocument, FetchSongQuery } from '../../graphql';
 import { Query } from '../query';
 
@@ -17,8 +18,16 @@ export function Song(props: { song: string; order: number }) {
 }
 
 function LoadedSong({ song, order }: FetchSongQuery & { order: number }): JSX.Element {
+  const urlData = useRouter();
+
   return (
-    <Link href={`?currentSong=${encodeURIComponent(song._id)}`}>
+    <Link href={{
+      ...urlData,
+      query: {
+        ...urlData.query,
+        currentSong: song._id,
+      }
+    }}>
       <div
         className="grid grid-cols-2 text-[#929292] hover:text-white hover:bg-[#2b2d30] rounded-md cursor-pointer"
       // onClick={() => {}}

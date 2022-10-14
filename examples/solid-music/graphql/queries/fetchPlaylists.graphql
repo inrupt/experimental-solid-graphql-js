@@ -1,11 +1,13 @@
 query fetchPlaylists {
-  playlists {
-    _id
-    name
-    entries {
-      song {
-        title
-      }
+  user {
+    playlists {
+      _id
+      name
+      # entries {
+      #   song {
+      #     title
+      #   }
+      # }
     }
   }
 }
