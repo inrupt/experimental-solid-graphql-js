@@ -32,8 +32,5 @@
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/inrupt/solid-graphql-js#readme",
-  "dependencies": {
-    "@comunica/query-sparql-link-traversal": "^0.0.2-alpha.6.0"
-  }
+  "homepage": "https://github.com/inrupt/solid-graphql-js#readme"
 }
