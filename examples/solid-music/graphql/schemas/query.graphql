@@ -13,6 +13,6 @@ type Query {
   songs: [Song!]!
   playlist(_id: ID! @identifier): Playlist!
   # playlists: [Playlist!]! @property(iri: "http://example.org#playlist") @webId 
-  search(filter: String!): MusicalItem
+  search(filter: String! @filter): MusicalItem
   user: User! @webId
 }
