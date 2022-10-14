@@ -39,7 +39,7 @@ export function Sidebar() {
           {
             (data) => <>
               {data.user.playlists.map(x => {
-                return <Link href={{
+                return <Link key={x._id} href={{
                   ...urlData,
                   query: {
                     ...urlData.query,

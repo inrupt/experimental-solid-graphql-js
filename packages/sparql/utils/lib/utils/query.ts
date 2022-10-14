@@ -22,6 +22,8 @@ export function queryBindings(context: IQueryContext, query: Algebra.Project): P
 /**
  * Returns the result of a query which is expected to have exactly
  * one set of bindings containing one term.
+ * 
+ * @param params.optional [default=false] If the term is optional and undefined may be returned
  */
 export async function queryTerm(context: IQueryContext, query: Algebra.Project, params?: { optional?: false }): Promise<Term>
 export async function queryTerm(context: IQueryContext, query: Algebra.Project, params?: { optional?: boolean }): Promise<Term | null>
