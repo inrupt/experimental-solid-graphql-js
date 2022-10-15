@@ -4,8 +4,8 @@ import { makeSchema } from './create';
 
 import { printSchemaWithDirectives } from '@graphql-tools/utils';
 import { makeExecutableSchema, extractExtensionsFromSchema,  } from '@graphql-tools/schema'
-import path from 'path'
-import fs from 'fs';
+import * as path from 'path'
+import * as fs from 'fs';
 
 makeSchema(new QueryEngine(), 'https://web.archive.org/web/20220614105937if_/http://xmlns.com/foaf/spec/20140114.rdf')
   .then(s => {

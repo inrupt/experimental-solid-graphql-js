@@ -66,7 +66,7 @@ async function generateType(context: IQueryContext, type: Term) {
   for (const property of properties) {
     console.log(property, await getRangeInfo(context, property), camelize((await getLabelInfo(context, property))[0].value))
 
-    new GraphQLAbstractType
+    // new GraphQLAbstractType
 
     // const directive = new GraphQLDirective({
     //   name: 'property',
