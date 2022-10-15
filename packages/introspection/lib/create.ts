@@ -1,8 +1,9 @@
 import { BindingsResultSupport, StringSparqlQueryable, Term } from '@rdfjs/types';
 import { GraphQLSchema, GraphQLString, GraphQLObjectType } from 'graphql';
-import { camelize, createObject, getAllProperties, getCommentInfo, getLabelInfo, getOwlClasses, getProperties, IQueryContext, getRangeInfo } from './utils';
+import { camelize, createObject, getAllProperties, getCommentInfo, getLabelInfo, getOwlClasses, getProperties, IQueryContext, getRangeInfo, predictAllClasses } from './utils';
 import {  } from '@graphql-tools/schema'
 import { DataFactory } from 'n3';
+import { QueryEngine as QueryEngineLinkTraversal } from '@comunica/query-sparql-link-traversal'
 
 // TODO: Fix errors here like escaping
 function getFragment({ value }: Term) {
@@ -66,16 +67,18 @@ async function getType(context: IQueryContext, term: Term, cache: Record<string,
   if (DataFactory.namedNode('http://www.w3.org/2000/01/rdf-schema#Literal').equals(range)) {
     return GraphQLString;
   } else {
-    return createCachedObjectFromType(context, term, cache)
+    // TODO: Check this
+    return createCachedObjectFromType(context, range, cache)
   }
 }
 
 async function createCachedObjectFromType(context: IQueryContext, type: Term, cache: Record<string, any>) {
+  console.log('caching', type.value);
   return (cache[type.value] ??= memoized(() => createObjectFromType(context, type, cache)))();
 }
 
 async function createObjectFromType(context: IQueryContext, type: Term, cache: Record<string, any>) {
-  console.log('creating object', type, await getName(context, type))
+  // console.log('creating object', type, await getName(context, type))
   const propertyList = await getAllProperties(context, type);
   const properties: any = {};
 
@@ -113,6 +116,8 @@ async function createObjectFromType(context: IQueryContext, type: Term, cache: R
 
 // TODO: See if we need to generate additional types by dereferencing other documents
 export async function makeSchema(sparqlEngine: StringSparqlQueryable<BindingsResultSupport>, ontology: string) {
+  console.log('make schema called')
+
   const context = {
     sparqlEngine,
     context: {
@@ -121,14 +126,88 @@ export async function makeSchema(sparqlEngine: StringSparqlQueryable<BindingsRes
     }
   }
 
+  // TODO: Make this a link traversal context
+  const Fullcontext = context;
+  // const Fullcontext = {
+  //   sparqlEngine,
+  //   context: {
+  //     recoverBrokenLinks: true,
+  //     sources: [
+  //       ontology,
+  //       // 'www.w3.org/2002/07/owl',
+  //       'http://www.w3.org/2003/01/geo/wgs84_pos',
+  //       'http://www.w3.org/2000/01/rdf-schema'
+  //     ],
+  //     lenient: true
+  //   }
+  // }
+
   const cache = {}
 
+  const owlClasses = await getOwlClasses(context);
+  
+  // TODO: Enable this to get unique naming in schemas
+  // console.log('a')
+
+  // const c = new Set(([] as Term[]).concat(...await Promise.all(
+  //   owlClasses.map(cls => predictAllClasses({
+  //     sparqlEngine,
+  //     // sparqlEngine: new QueryEngineLinkTraversal(),
+  //     context: {
+        // sources: [
+        //   ontology,
+        //   'www.w3.org/2002/07/owl',
+        //   'http://www.w3.org/2003/01/geo/wgs84_pos',
+        //   'http://www.w3.org/2000/01/rdf-schema'
+        // ],
+  //       lenient: true,
+  //     }
+  //   }, cls))
+  // )).map(term => term.value)).values();
+
+  // const values = [...c].sort();
+
+  // console.log('b')
+
+  // console.log(values)
+  
+  
+  
+
+  // predictAllClasses({
+  //   sparqlEngine: new QueryEngineLinkTraversal(),
+  // }, )
+
+  // const classes: Record<string, string> = {};
+  
+
+  // for (const c of owlClasses) {
+  //   for (const p of await getAllProperties(context, c)) {
+  //     for (const r of await getRangeInfo(context, p)) {
+
+  //     }
+  //   }
+  // }
+
+
+  // const cs = owlClasses.map(async type => {
+  //   const props = await getAllProperties(context, type);
+  //   return props.map(p => getRangeInfo(context, p))
+  // });
+
+  // cs
+
+  // await getAllProperties(context, type)
+  // await getType(context, term, cache)
+
+  console.log('before all')
   const classes = await Promise.all(
     // TODO: Fix this - we need a memoized call here
-    (await getOwlClasses(context)).map(c => createCachedObjectFromType(context, c, cache))
+    owlClasses.map(c => createCachedObjectFromType(Fullcontext, c, cache))
   );
+  console.log('after all')
 
-  console.log(classes);
+  // console.log(classes);
 
   return new GraphQLSchema({
     types: classes,

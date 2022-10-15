@@ -1,9 +1,9 @@
 import { Bindings, BindingsResultSupport, QueryContext, StringSparqlQueryable, Term } from '@rdfjs/types';
 import { wrap } from 'asynciterator';
 
-export interface IQueryContext {
+export interface IQueryContext<C extends QueryContext = QueryContext> {
   sparqlEngine: StringSparqlQueryable<BindingsResultSupport>;
-  context: QueryContext;
+  context: C;
 }
 
 const RDFS = 'http://www.w3.org/2000/01/rdf-schema#';
@@ -45,14 +45,18 @@ export function getAllProperties(context: IQueryContext, type: Term) {
   }
 
   return runQuery(context, `SELECT DISTINCT ?s WHERE { 
-    {
-      <${type.value}> <${RDFS}subClassOf>+ ?class . ?s <${RDFS}domain> ?class
-    }
-    UNION
-    {
-      ?s <${RDFS}domain> <${type.value}>
-    }
+    <${type.value}> <${RDFS}subClassOf>*/^<${RDFS}domain> ?s
   }`);
+
+  // return runQuery(context, `SELECT DISTINCT ?s WHERE { 
+  //   {
+  //     <${type.value}> <${RDFS}subClassOf>+ ?class . ?s <${RDFS}domain> ?class
+  //   }
+  //   UNION
+  //   {
+  //     ?s <${RDFS}domain> <${type.value}>
+  //   }
+  // }`);
 }
 
 
@@ -71,4 +75,15 @@ export async function getCommentInfo(context: IQueryContext, term: Term) {
 
 export async function getOwlClasses(context: IQueryContext) {
   return runQuery(context, `SELECT * WHERE { ?s a <http://www.w3.org/2002/07/owl#Class> }`)
+}
+
+// This function traverses to all classes that we will need to define in the schema
+export async function predictAllClasses(context: IQueryContext, type: Term) {
+  return runQuery(context, `SELECT DISTINCT ?type WHERE { 
+    <${type.value}> (<${RDFS}subClassOf>*/^<${RDFS}domain>/<${RDFS}range>)* ?type
+  }
+  
+  ORDER BY (?type)
+  
+  `);
 }
