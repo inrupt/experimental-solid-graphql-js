@@ -1,9 +1,5 @@
-import { GraphQLSchema, GraphQLObjectType, print, GraphQLFieldConfig, GraphQLOutputType, GraphQLAbstractType, ConstDirectiveNode, DirectiveNode } from 'graphql';
-import { printSchema, buildSchema, GraphQLDirective, Kind } from 'graphql';
+import { GraphQLObjectType, GraphQLOutputType, Kind } from 'graphql';
 
-import { DirectiveUsage, makeDirectiveNode, printSchemaWithDirectives, makeDirectiveNodes, mapSchema, MapperKind, getDirective } from '@graphql-tools/utils'
-import { makeExecutableSchema, extractExtensionsFromSchema,} from '@graphql-tools/schema'
-import { stitchingDirectives, } from '@graphql-tools/stitching-directives' 
 
 function createDirective(name: string, args: Record<string, string>) {
   const arg = Object.entries(args).map(([ key, value ]) => {
@@ -62,7 +58,7 @@ interface PropertyInterface {
 }
 
 function createObject({ name, properties, class: c, description }: ObjectInterface) {
-  const fields = {};
+  const fields: Record<string, any> = {};
 
   for (const key in properties) {
     fields[key] = {
@@ -80,6 +76,6 @@ function createObject({ name, properties, class: c, description }: ObjectInterfa
   });
 }
 
-const object = createObject({
-  name
-})
+// const object = createObject({
+//   name
+// })
