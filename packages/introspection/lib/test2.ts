@@ -1,9 +1,6 @@
-import { GraphQLSchema, GraphQLObjectType, print, GraphQLFieldConfig, GraphQLOutputType, GraphQLAbstractType, ConstDirectiveNode, DirectiveNode } from 'graphql';
-import { printSchema, buildSchema, GraphQLDirective, Kind } from 'graphql';
+import { GraphQLObjectType, GraphQLSchema, Kind } from 'graphql';
 
-import { DirectiveUsage, makeDirectiveNode, printSchemaWithDirectives, makeDirectiveNodes, mapSchema, MapperKind, getDirective } from '@graphql-tools/utils'
-import { makeExecutableSchema, extractExtensionsFromSchema,} from '@graphql-tools/schema'
-import { stitchingDirectives, } from '@graphql-tools/stitching-directives' 
+import { makeDirectiveNode, printSchemaWithDirectives } from '@graphql-tools/utils';
 
 
 
