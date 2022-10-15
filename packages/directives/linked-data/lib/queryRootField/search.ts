@@ -1,7 +1,5 @@
 import { MapperKind, mapSchema } from '@graphql-tools/utils';
-import { getResolver, getSingleDirective } from '@inrupt/graphql-directives-utils';
 import { GraphQLFieldConfig, GraphQLSchema } from 'graphql';
-import { DataFactory } from 'n3';
 import { Source } from '../types';
 
 // TODO: Check the ordering of resolution calls

@@ -2,7 +2,6 @@ import { MapperKind, mapSchema } from '@graphql-tools/utils';
 import { getResolver, getSingleDirective } from "@inrupt/graphql-directives-utils";
 import { queryObject, queryObjects } from '@inrupt/sparql-utils';
 import { GraphQLFieldConfig, GraphQLSchema, isListType, isNonNullType } from "graphql";
-import { DataFactory } from "n3";
 import { Source } from '../types';
 import { nodeFromDirective } from '../utils';
 
