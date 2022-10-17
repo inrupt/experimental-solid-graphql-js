@@ -4,3 +4,5 @@ packages/**/*.d.ts
 coverage
 **/dist/
 lerna-debug.log
+**.csv
+
