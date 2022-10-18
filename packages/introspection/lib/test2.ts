@@ -1,22 +1,38 @@
-import { GraphQLObjectType, GraphQLSchema, Kind } from 'graphql';
+//
+// Copyright 2022 Inrupt Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to use,
+// copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+// Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+// PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+// SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+import { GraphQLObjectType, GraphQLSchema, Kind } from "graphql";
 
-import { makeDirectiveNode, printSchemaWithDirectives } from '@graphql-tools/utils';
-
-
-
-
+import { makeDirectiveNode } from "@graphql-tools/utils";
 
 const i = new GraphQLObjectType({
-  name: 'Test',
+  name: "Test",
   fields: {
     hi: {
       type: new GraphQLObjectType({
-        name: 'test2',
-        fields: {}
+        name: "test2",
+        fields: {},
       }),
-      description: 'this is a description',
+      description: "this is a description",
       extensions: {
-        myNode: makeDirectiveNode('myNode', {})
+        myNode: makeDirectiveNode("myNode", {}),
       },
       astNode: {
         // kind: Kind.FIELD_DEFINITION,
@@ -30,19 +46,18 @@ const i = new GraphQLObjectType({
         //   readonly name: NameNode;
         // },
 
-
-        directives: [createDirective('is', { class: 'http://example.org#test' })]
-      } as any
-    }
+        directives: [
+          createDirective("is", { class: "http://example.org#test" }),
+        ],
+      } as any,
+    },
   },
-  description: "Hello this is a description"
+  description: "Hello this is a description",
 });
 
-let schema = new GraphQLSchema({
-  types: [ i ]
-})
-
-
+const schema = new GraphQLSchema({
+  types: [i],
+});
 
 // let data = buildSchema(`
 // directive @is(iri: String!) on OBJECT
@@ -57,29 +72,29 @@ let schema = new GraphQLSchema({
 
 // import { Kind } from 'graphql';
 
-function createDirective(name: string, args: Record<string, string>) {
-  const arg = Object.entries(args).map(([ key, value ]) => {
+function createDirective(directiveName: string, args: Record<string, string>) {
+  const arg = Object.entries(args).map(([key, value]) => {
     return {
       kind: Kind.ARGUMENT,
       name: {
         kind: Kind.NAME,
-        value: key
+        value: key,
       },
       value: {
         kind: Kind.STRING,
-        value: value
-      }
-    }
-  })
+        value,
+      },
+    };
+  });
 
   return {
     kind: Kind.DIRECTIVE,
     name: {
       kind: Kind.NAME,
-      value: name
+      value: directiveName,
     },
-    arguments: arg
-  }
+    arguments: arg,
+  };
 }
 
 // data = mapSchema(data, {
@@ -115,8 +130,6 @@ function createDirective(name: string, args: Record<string, string>) {
 //   }
 // })
 
-
-
 // schema = mapSchema(schema, {
 //   // [MapperKind.OBJECT_TYPE]: (type, ...args) => {
 //   //   console.log(type);
@@ -131,11 +144,11 @@ function createDirective(name: string, args: Record<string, string>) {
 //     return type
 //   }
 // })
-console.log(printSchemaWithDirectives(schema))
+// console.log(printSchemaWithDirectives(scehema));
 
 // console.log(data.getDirective('is')?.astNode?.locations[0].loc?.startToken)
 
-process.exit()
+process.exit();
 
 // console.log(data.getType('Person')?.toJSON());
 
