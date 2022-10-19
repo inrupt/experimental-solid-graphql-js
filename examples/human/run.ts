@@ -1,5 +1,6 @@
 import { solidQuery, FetchPersonDocument } from './graphql';
-import { QueryEngine } from '@comunica/query-sparql-file';
+// import { QueryEngine } from '@comunica/query-sparql-file';
+import { QueryEngine } from '@comunica/query-sparql-file-reasoning';
 import { KeysRdfDereferenceConstantHylar } from '@comunica/reasoning-context-entries';
 import path from 'path';
 import terminalImage from 'terminal-image';
