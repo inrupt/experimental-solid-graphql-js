@@ -41,6 +41,7 @@
     "@inrupt/sparql-utils": "^0.0.0",
     "@rdfjs/types": "^1.1.0",
     "asynciterator": "^3.7.1",
+    "follow-redirects": "^1.15.2",
     "graphql": "^16.6.0"
   }
 }

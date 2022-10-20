@@ -30,15 +30,16 @@ makeSchema(
   "https://web.archive.org/web/20220614105937if_/http://xmlns.com/foaf/spec/20140114.rdf"
 )
   .then((s) => {
-    // console.log(printSchemaWithDirectives(s));
+    console.log('completed makeSchema')
+    console.log(printSchemaWithDirectives(s));
 
     fs.writeFileSync(
       path.join(__dirname, "sample.graphql"),
       printSchemaWithDirectives(s)
     );
   })
-  .catch(() => {
-    // Ignore error
+  .catch(err => {
+    console.error(err);
   });
 
 // const result = createObjectFromType({

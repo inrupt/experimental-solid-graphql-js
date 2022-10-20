@@ -124,10 +124,10 @@ export async function predictAllClasses(context: IQueryContext, type: Term) {
   return runQuery(
     context,
     `SELECT DISTINCT ?type WHERE { 
-    <${type.value}> (<${RDFS}subClassOf>*/^<${RDFS}domain>/<${RDFS}range>)* ?type
-  }
+      <${type.value}> (<${RDFS}subClassOf>*/^<${RDFS}domain>/<${RDFS}range>)* ?type
+    }
   
-  ORDER BY (?type)
+  
   
   `
   );
