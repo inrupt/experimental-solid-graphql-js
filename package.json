@@ -31,6 +31,7 @@
     "@inrupt/eslint-config-lib": "^1.3.0",
     "@rushstack/eslint-patch": "^1.2.0",
     "@solid/community-server": "github:CommunitySolidServer/CommunitySolidServer#0d0369cb15adb722e4bbe690db4677143b96e64b",
+    "@types/follow-redirects": "^1.14.1",
     "@types/jest": "^29.1.1",
     "@types/n3": "^1.10.4",
     "depcheck": "^1.4.3",
