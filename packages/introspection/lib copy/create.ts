@@ -36,7 +36,7 @@ import {
   IQueryContext,
   predictAllClasses,
 } from "./utils";
-// import { QueryEngine as QueryEngineLinkTraversal } from '@comunica/query-sparql-link-traversal';
+import { QueryEngine as QueryEngineLinkTraversal } from '@comunica/query-sparql-link-traversal';
 
 // TODO: Fix errors here like escaping
 function getFragment({ value }: Term) {
