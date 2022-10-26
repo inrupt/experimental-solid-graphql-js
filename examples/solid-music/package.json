@@ -1,7 +1,6 @@
 {
   "name": "@inrupt/solid-music",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev:next": "next dev",
     "dev:graphql": "graphql-codegen --watch",

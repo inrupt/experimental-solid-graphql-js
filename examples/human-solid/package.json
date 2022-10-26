@@ -1,7 +1,6 @@
 {
   "name": "@inrupt/human-solid-graphql-query-example",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "build": "graphql-codegen",
     "start": "ts-node run",

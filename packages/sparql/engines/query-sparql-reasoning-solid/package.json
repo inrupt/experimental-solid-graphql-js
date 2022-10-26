@@ -180,9 +180,10 @@
     "@inrupt/graphql-codegen-schema-node": "^0.0.0"
   },
   "scripts": {
-    "prepare": "comunica-compile-config config/config-default.json > engine-default.js && npm run build",
+    "prepare": "comunica-compile-config config/config-default.json > engine-default.js",
     "package": "comunica-package -c config/config-default.json",
     "build": "npm run tsc",
+    "prepublish": "npm run build",
     "tsc": "tsc"
   },
   "devDependencies": {
