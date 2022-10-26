@@ -3,6 +3,7 @@ query fetchAlbum($id: ID!) {
     _id
     name
     url
+    image
     songs {
       _id
       title

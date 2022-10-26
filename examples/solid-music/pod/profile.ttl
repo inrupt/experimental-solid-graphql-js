@@ -28,10 +28,13 @@ me:
     rdfs:label "jeswr" ;
     foaf:img "https://avatars.githubusercontent.com/u/63333554"^^xsd:anyURI ;
     ex:playlist playlist:a, playlist:b ;
+    ex:album record:Angels_Album, record:Angels_Album_2, record:RC_Album_2 ;
     solid:oidcIssuer <../../../>;
     a foaf:Person.
 
 ### This is temporary while we dont have a reasoner
+
+me: ex:album record:Angels_Album, record:Angels_Album_2, record:RC_Album_2 .
 
 me: ex:playlist playlist:a, playlist:b .
 

@@ -5,6 +5,10 @@ query fetchUser {
       _id
       name
     }
+    albums {
+      _id
+      name
+    }
     image
   }
 }

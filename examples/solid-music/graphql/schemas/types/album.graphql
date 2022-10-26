@@ -1,8 +1,9 @@
 type Album @is(class: "http://purl.org/ontology/mo/Record") {
   _id: ID! @identifier
   name: String! @property(iri: "http://xmlns.com/foaf/0.1/name")
-  artist: [Artist!]!
-  songs: [Song!]!
+  artist: [Artist!]! @property(iri: "http://purl.org/ontology/mo/compiler")
+  songs: [Song!]! @property(iri: "http://purl.org/ontology/mo/track")
   genre: [Genre!]! @property(iri: "http://purl.org/ontology/mo/genre")
   url: ID! @property(iri: "http://xmlns.com/foaf/0.1/thumbnail")
+  image: ID! @property(iri: "http://xmlns.com/foaf/0.1/thumbnail")
 }
