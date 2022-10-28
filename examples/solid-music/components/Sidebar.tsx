@@ -21,6 +21,42 @@ export function Sidebar() {
           </button>
         </Link>
 
+        <Link href='/albums'>
+          <button className="flex items-center space-x-2 hover:text-white">
+            <LibraryIcon className="h-5 w-5" />
+            <p>Albums</p>
+          </button>
+        </Link>
+
+
+        <Query
+          document={FetchUserDocument}
+          error={() => <>Error</>}
+          fallback={() => <></>}
+          requireLogin={true}
+          variables={{}}
+        >
+          {
+            (data) => <>
+              {data.user.albums.map(x => {
+                return <Link key={x._id} href={{
+                  ...urlData,
+                  query: {
+                    ...urlData.query,
+                    currentAlbum: x._id,
+                    currentPlaylist: null,
+                  }
+                }}>
+                  <button className="flex items-center pl-6 hover:text-white">
+                    <p>{x.name}</p>
+                  </button>
+                </Link>;
+              })}
+            </>
+          }
+        </Query>
+
+
         <Link href='/playlists'>
           <button className="flex items-center space-x-2 hover:text-white">
             <LibraryIcon className="h-5 w-5" />
@@ -43,7 +79,8 @@ export function Sidebar() {
                   ...urlData,
                   query: {
                     ...urlData.query,
-                    currentPlaylist: x._id
+                    currentPlaylist: x._id,
+                    currentAlbum: null,
                   }
                 }}>
                   <button className="flex items-center pl-6 hover:text-white">
@@ -54,7 +91,6 @@ export function Sidebar() {
             </>
           }
         </Query>
-
 
       </div>
     </div>

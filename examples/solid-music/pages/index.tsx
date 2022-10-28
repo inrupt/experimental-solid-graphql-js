@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useContext } from 'react';
 // import Center from '../components old/Center'
 // import Sidebar from '../components old/Sidebar'
-import { Player, PlayList, Sidebar } from '../components';
+import { Player, PlayList, Sidebar, Album } from '../components';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { LoginIcon, LogoutIcon } from '@heroicons/react/outline';
@@ -48,7 +48,7 @@ function LoginOrLogout() {
 }
 
 export default function Home() {
-  const { query: { currentSong, currentPlaylist } } = useRouter()
+  const { query: { currentSong, currentPlaylist, currentAlbum } } = useRouter()
 
   return (
     <div className="bg-black h-screen overflow-hidden">
@@ -64,7 +64,8 @@ export default function Home() {
       <main className="flex">
         <Sidebar />
         {/* <Center /> */}
-        {typeof currentPlaylist === 'string' && <PlayList playlist={currentPlaylist} />}
+        {(typeof currentPlaylist === 'string' && currentPlaylist.length) && <PlayList playlist={currentPlaylist} />}
+        {(typeof currentAlbum === 'string' && currentAlbum.length) && <Album album={currentAlbum} />}
       </main>
 
       {typeof currentSong === 'string' &&
