@@ -154,16 +154,14 @@ function invert(names: Record<string, string>) {
 }
 
 
-async function main() {
+export async function getOntologyData(sources: [string, ...string[]]): Promise<RunResult> {
   const ltengine = new LTEngine();
   const sparqlEngine = new QueryEngine();
 
-  console.time('getting core classes')
   const coreClasses = await getOwlClasses({
     sparqlEngine,
     context
   });
-  console.timeEnd('getting core classes')
 
 
   const props = sparqlEngine.queryBindings(`
@@ -203,7 +201,8 @@ async function main() {
       }`,
           {
             sources: [
-              "https://web.archive.org/web/20220614105937if_/http://xmlns.com/foaf/spec/20140114.rdf",
+              ...sources,
+              // "https://web.archive.org/web/20220614105937if_/http://xmlns.com/foaf/spec/20140114.rdf",
               t
             ],
             lenient: true,
@@ -248,7 +247,8 @@ async function main() {
     }`,
         {
           sources: [
-            "https://web.archive.org/web/20220614105937if_/http://xmlns.com/foaf/spec/20140114.rdf",
+            ...sources,
+            // "https://web.archive.org/web/20220614105937if_/http://xmlns.com/foaf/spec/20140114.rdf",
             t
           ],
           lenient: true,
@@ -335,13 +335,13 @@ async function main() {
     }
   }
 
-  const returnValue = {
+  return {
     classes,
     properties: propertyData
   }
 
-  console.log('--- returning ---')
-  console.log(JSON.stringify(returnValue, null, 2));
+  // console.log('--- returning ---')
+  // console.log(JSON.stringify(returnValue, null, 2));
 
 
 
@@ -361,7 +361,3 @@ interface RunResult {
   classes: Record<string, { name: string, properties: string[]; description?: string }>;
   properties: Record<string, { name: string, classes: string[]; description?: string }>;
 }
-
-
-
-main();

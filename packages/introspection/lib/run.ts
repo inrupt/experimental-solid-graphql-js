@@ -48,7 +48,7 @@ function is(c: string) {
 }
 
 
-function createGraphql({ classes, properties }: RunResult) {
+export function createGraphql({ classes, properties }: RunResult) {
   const graphqlObjects: Record<string, GraphQLObjectType> = {};
   const globalFields: Record<string, GraphQLFieldConfig<any, any, any>> = {};
 
@@ -101,12 +101,12 @@ function createGraphql({ classes, properties }: RunResult) {
   });
 }
 
-const g = createGraphql(
-  // readJSONSync('./runResults.json')
-  readJSONSync('./result4.json')
-)
+// const g = createGraphql(
+//   // readJSONSync('./runResults.json')
+//   readJSONSync('./result4.json')
+// )
 
-console.log(
-  printSchemaWithDirectives(g)
-)
+// console.log(
+//   printSchemaWithDirectives(g)
+// )
 
