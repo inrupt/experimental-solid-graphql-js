@@ -1,0 +1,19 @@
+schema:
+   - https://web.archive.org/web/20220614105937if_/http://xmlns.com/foaf/spec/20140114.rdf
+   - graphql/schemas/**/*.graphql
+documents:
+  - graphql/queries/*.graphql
+generates:
+  graphql/index.ts:
+    plugins:
+      - '@inrupt/graphql-codegen-solid'
+      - typescript
+      - typescript-operations
+      - typed-document-node
+    config:
+      scalars:
+        Date: Date
+        URL: URL
+        ID: string
+        Float: number
+        Int: number

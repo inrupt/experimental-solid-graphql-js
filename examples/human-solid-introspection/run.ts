@@ -1,8 +1,8 @@
 import { QueryEngine } from '@comunica/query-sparql-solid';
+import { createApp } from '@inrupt/human-solid-graphql-query-example/createApp';
 import got from 'got';
 import { interactiveLogin } from 'solid-node-interactive-auth';
 import terminalImage from 'terminal-image';
-import { createApp } from './createApp';
 import { FetchPersonDocument, solidQuery } from './graphql';
 
 async function main() {
