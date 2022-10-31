@@ -1,0 +1,52 @@
+{
+  "name": "@inrupt/graphql-introspection-shacl",
+  "version": "0.0.0",
+  "description": "Introspect SHACL constraints to generate GraphQL schemas",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "licenses:check": "license-checker --production --out license.csv --failOn \"AGPL-1.0-only; AGPL-1.0-or-later; AGPL-3.0-only; AGPL-3.0-or-later; Beerware; CC-BY-NC-1.0; CC-BY-NC-2.0; CC-BY-NC-2.5; CC-BY-NC-3.0; CC-BY-NC-4.0; CC-BY-NC-ND-1.0; CC-BY-NC-ND-2.0; CC-BY-NC-ND-2.5; CC-BY-NC-ND-3.0; CC-BY-NC-ND-4.0; CC-BY-NC-SA-1.0; CC-BY-NC-SA-2.0; CC-BY-NC-SA-2.5; CC-BY-NC-SA-3.0; CC-BY-NC-SA-4.0; CPAL-1.0; EUPL-1.0; EUPL-1.1; EUPL-1.1;  GPL-1.0-only; GPL-1.0-or-later; GPL-2.0-only;  GPL-2.0-or-later; GPL-3.0; GPL-3.0-only; GPL-3.0-or-later; SISSL;  SISSL-1.2; WTFPL\"",
+    "tsc": "tsc",
+    "build": "npm run tsc",
+    "test": "jest",
+    "demo": "ts-node run.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inrupt/solid-graphql-js.git"
+  },
+  "sideEffects": false,
+  "keywords": [
+    "GraphQL",
+    "Linked",
+    "Data",
+    "Directives",
+    "Query",
+    "Solid",
+    "SPARQL",
+    "RDFJS"
+  ],
+  "author": "Inrupt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/inrupt/solid-graphql-js/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/inrupt/solid-graphql-js#readme",
+  "dependencies": {
+    "@comunica/query-sparql": "^2.4.3",
+    "@graphql-mesh/types": "^0.85.4",
+    "@graphql-tools/utils": "^8.12.0",
+    "@inrupt/sparql-utils": "^0.0.0",
+    "@rdfjs/types": "^1.1.0",
+    "asynciterator": "^3.7.1",
+    "follow-redirects": "^1.15.2",
+    "graphql": "^16.6.0",
+    "rdf-validate-shacl": "^0.4.5"
+  },
+  "devDependencies": {
+    "@types/rdf-validate-shacl": "^0.4.0"
+  }
+}
