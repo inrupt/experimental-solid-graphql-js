@@ -1,9 +1,32 @@
 import { GetMeshSourcePayload, MeshHandler } from '@graphql-mesh/types';
-import { GraphQLSchema } from 'graphql';
+import { GraphQLList, GraphQLNonNull, GraphQLSchema } from 'graphql';
 import { QueryEngine } from '@comunica/query-sparql-file';
 import { queryObject, queryObjects } from '@inrupt/sparql-utils';
 import { Term } from '@rdfjs/types';
 import { DataFactory as DF } from 'n3';
+import { GraphQLType } from 'graphql';
+
+// Work out how to modify the fields based on the min/max count
+function modifier(type: GraphQLType, minCount: number = 0, maxCount: number = Infinity) {
+  if (maxCount < 1) {
+    throw new Error('Field should not exist for maxCount less than 1');
+  }
+  if (maxCount > 1) {
+    return new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(type)))
+  }
+
+  // Now we know the maxCount is exactly 1
+
+  if (minCount === 1) {
+    return new GraphQLNonNull(type);
+  }
+
+  if (minCount === 0) {
+    return type;
+  }
+
+  throw new Error(`Invalid SHACL constraint - received minCount: ${minCount} and maxCount: ${maxCount}`)
+}
 
 interface SHACLHandlerOptions {
   config: {
@@ -19,7 +42,9 @@ interface SHACLHandlerOptions {
 // - source: https://shacl.org/playground/shacl.ttl
 // - shape: http://schema.org/PersonShape
 
-// TODO: Use sh:
+// TODO: Use non-validating constraint to format output
+// TODO: Use directives to capture contraints that SHACL can capture but GraphQL cannot
+// TODO: Perform custom list handling
 
 const SH = 'http://www.w3.org/ns/shacl#';
 
@@ -64,6 +89,8 @@ export default class SHACLHandler implements MeshHandler {
         const maxCount = await queryObjects(config, property, DF.namedNode(`${SH}maxCount`));
         const minCount = await queryObjects(config, property, DF.namedNode(`${SH}minCount`));
         
+
+
         // TODO: Handle logical constraints (sh:or, sh:and)
       }
     }
