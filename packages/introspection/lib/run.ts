@@ -1,6 +1,6 @@
 
 import { readJSONSync } from 'fs-extra';
-import { GraphQLFieldConfig, GraphQLObjectType, GraphQLSchema, GraphQLString, Kind, ThunkObjMap,  } from 'graphql';
+import { GraphQLFieldConfig, GraphQLID, GraphQLObjectType, GraphQLSchema, GraphQLString, Kind, ThunkObjMap, GraphQLNonNull, GraphQLList } from 'graphql';
 import { ObjMap } from 'graphql/jsutils/ObjMap';
 import { printSchemaWithDirectives } from "@graphql-tools/utils";
 
@@ -43,6 +43,11 @@ function propertyDirective(iri: string) {
   return createAst("property", { iri });
 }
 
+
+function identifierDirective() {
+  return createAst("identifier", {});
+}
+
 function is(c: string) {
   return createAst("is", { class: c });
 }
@@ -54,7 +59,10 @@ export function createGraphql({ classes, properties }: RunResult) {
 
   for (const iri in classes) {
     const { properties: classProperties, name, description} = classes[iri];
-    const fields: ThunkObjMap<GraphQLFieldConfig<any, any, any>> = {};
+    const fields: ThunkObjMap<GraphQLFieldConfig<any, any, any>> = {
+      // @ts-node
+      id: { astNode: identifierDirective(), description: `The URI of the ${name}`, type: new GraphQLNonNull(GraphQLID) }
+    };
 
     for (const property of classProperties) {
       const { name, description } = properties[property];
@@ -82,9 +90,13 @@ export function createGraphql({ classes, properties }: RunResult) {
 
     const [range] = classes;
 
-    globalFields[property].type = range === "http://www.w3.org/2000/01/rdf-schema#Literal" ?
+
+      // TODO: Use cardinality information to avoid the need of using a list in *all* cases 
+    globalFields[property].type = new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(
+      range === "http://www.w3.org/2000/01/rdf-schema#Literal" ?
       GraphQLString :
-       graphqlObjects[range];
+       graphqlObjects[range]
+    )));
   }
   // const fields: Record<string, any> = {};
 
