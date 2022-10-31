@@ -1,7 +1,7 @@
 {
   "name": "@inrupt/graphql-introspection-ontology",
   "version": "0.0.0",
-  "description": "Generate a Schema Node in Code Generation",
+  "description": "Introspect OWL ontologies to generate GraphQL schemas",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
