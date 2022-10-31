@@ -8,6 +8,12 @@ interface OntologyHandlerOptions {
   }
 }
 
+// TODO: See if graphql should be peer dep
+// TODO: Add parameters to enable customisations
+// where we can do things like
+// - treat an RDFS list as an actual list
+// 
+
 export default class OntologyHandler implements MeshHandler {
   private sources: [string, ...string[]];
 

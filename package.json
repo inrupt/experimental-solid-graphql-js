@@ -15,6 +15,7 @@
     "demo:cli:solid:introspection": "lerna run demo --scope @inrupt/human-solid-graphql-introspection-query-example",
     "test": "jest",
     "prepare": "lerna run prepare",
+    "build": "lerna run build",
     "ncu": "lerna exec -- ncu -u --target=minor",
     "depcheck": "lerna exec --ignore @inrupt/query-sparql-reasoning-solid -- depcheck",
     "depcheck:fix": "lerna-script depFixTask",

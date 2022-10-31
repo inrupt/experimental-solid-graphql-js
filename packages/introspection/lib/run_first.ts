@@ -41,6 +41,11 @@ async function fragment(context: IQueryContext, term: Term) {
   return value ? camelize(value) : undefined;
 }
 
+// Reserved keys
+const reserved: Record<string, boolean | undefined> = {
+  id: true
+}
+
 async function getUniqueName(context: IQueryContext, term: Term, names: Record<string, string>, prefix = '') {
   let value: string | undefined;
   let i = -1;
@@ -48,9 +53,9 @@ async function getUniqueName(context: IQueryContext, term: Term, names: Record<s
   function realVal() {
     return prefix + value + (i === 0 ? '' : i);
   }
-  
+
   function clear() {
-    if (value && (realVal() in names)) {
+    if (value && (reserved[realVal()] || realVal() in names)) {
       value = undefined;
     }
   }
@@ -62,7 +67,7 @@ async function getUniqueName(context: IQueryContext, term: Term, names: Record<s
     value ??= await fragment(context, term);
     clear();
   }
-  
+
   return realVal();
 }
 
@@ -131,7 +136,7 @@ async function createNames(context: IQueryContext, classes: Term[], baseTerms: s
 
   async function getCleanPrefix(c: Term) {
     const p = await getPrefix(c.value);
-    return `${camelize(p.split(':')[0])}_`
+    return `${camelize(p.split(':')[0])}`
   }
 
   // First we need to create the
@@ -208,11 +213,11 @@ export async function getOntologyData(sources: [string, ...string[]]): Promise<R
             lenient: true,
           }
         )
-  
+
         const data = await results.map(elem => elem.get('property')!.value).toArray();
-  
+
         propertyMap[t] = [...new Set(data)];
-  
+
         for (const elem of data) {
           if (!properties.has(elem)) {
             properties.add(elem);
@@ -224,12 +229,12 @@ export async function getOntologyData(sources: [string, ...string[]]): Promise<R
       })
     )
 
-      // TODO: Work out how to handle sub properties (probably just leave it up to inference?)
+    // TODO: Work out how to handle sub properties (probably just leave it up to inference?)
 
 
     // while (unprocessed.length > 0) {
     //   const t = unprocessed.pop()!;
-      
+
     // }
 
     // while (unprocessedProperties.length > 0) {
@@ -270,7 +275,7 @@ export async function getOntologyData(sources: [string, ...string[]]): Promise<R
     await Promise.all([a, b])
   }
   console.timeEnd('processing')
-    
+
   // }
 
   // TODO: Use getUniqueNames for each of these
@@ -335,8 +340,26 @@ export async function getOntologyData(sources: [string, ...string[]]): Promise<R
     }
   }
 
+  const nonEmptyClasses: Record<string, { name: string, properties: string[]; description?: string }> = {};
+
+  // This is to avoid the generation of types with no properties. An example of this occurs in FOAF with the
+  // foaf:labelProperty
+  //
+  //
+  // """
+  // A foaf:LabelProperty is any RDF property with texual values that serve as labels.
+  // """
+  // type LabelProperty @is(class: "http://xmlns.com/foaf/0.1/LabelProperty")
+  //
+
+  for (const key in classes) {
+    if (classes[key].properties.length > 0) {
+      nonEmptyClasses[key] = classes[key];
+    }
+  }
+
   return {
-    classes,
+    classes: nonEmptyClasses,
     properties: propertyData
   }
 

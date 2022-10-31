@@ -2,3 +2,4 @@
 /graphql/*.ts
 *.js
 *.d.ts
+.mesh

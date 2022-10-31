@@ -1,0 +1,5 @@
+sources:
+  - name: FOAF
+    handler:
+      "@inrupt/graphql-introspection-ontology":
+        source: https://web.archive.org/web/20220614105937if_/http://xmlns.com/foaf/spec/20140114.rdf
