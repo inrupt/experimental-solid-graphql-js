@@ -14,6 +14,7 @@
     "demo:introspection": "lerna run demo --scope @inrupt/graphql-introspection-ontology",
     "test": "jest",
     "build": "lerna run build",
+    "postinstall": "npm run build",
     "ncu": "lerna exec -- ncu -u --target=minor",
     "depcheck": "lerna exec --ignore @inrupt/query-sparql-reasoning-solid -- depcheck",
     "depcheck:fix": "lerna-script depFixTask",
