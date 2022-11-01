@@ -1,5 +1,5 @@
 import { GetMeshSourcePayload, MeshHandler } from '@graphql-mesh/types';
-import { GraphQLList, GraphQLNonNull, GraphQLSchema } from 'graphql';
+import { GraphQLList, GraphQLNonNull, GraphQLOutputType, GraphQLSchema } from 'graphql';
 import { QueryEngine } from '@comunica/query-sparql-file';
 import { queryObject, queryObjects } from '@inrupt/sparql-utils';
 import { Term } from '@rdfjs/types';
@@ -9,6 +9,7 @@ import { TypeHandlerBoolean, TypeHandlerDate, TypeHandlerNumberDouble, TypeHandl
 import { GraphQLBoolean, GraphQLInt, GraphQLString, GraphQLScalarType } from 'graphql';
 import * as RDF from '@rdfjs/types'
 import { camelize } from './utils';
+import { createObject, type PropertyInterface } from './utils';
 
 const GraphQLDate = new GraphQLScalarType({
   name: 'Date'
@@ -18,7 +19,7 @@ const GraphQLDouble = new GraphQLScalarType({
   name: 'Double'
 });
 
-const mappings: [{ readonly TYPES: string[] }, GraphQLType][] = [
+const mappings: [{ readonly TYPES: string[] }, GraphQLOutputType][] = [
   [TypeHandlerString, GraphQLString],
   [TypeHandlerNumberInteger, GraphQLInt],
   [TypeHandlerNumberDouble, GraphQLDouble],
@@ -27,13 +28,13 @@ const mappings: [{ readonly TYPES: string[] }, GraphQLType][] = [
 ]
 
 
-function getDatatypeSafe(type: RDF.Term) {
+function getDatatypeSafe(type: RDF.Term): GraphQLOutputType | undefined {
   if (type.termType === 'NamedNode') {
     return getDatatype(type);
   }
 }
 
-function getDatatype(type: RDF.NamedNode) {
+function getDatatype(type: RDF.NamedNode): GraphQLOutputType | undefined {
   for (const [handler, gqlType] of mappings) {
     if (handler.TYPES.includes(type.value)) {
       return gqlType;
@@ -42,7 +43,7 @@ function getDatatype(type: RDF.NamedNode) {
 }
 
 // Work out how to modify the fields based on the min/max count
-function modifier(type: GraphQLType, minCount: number = 0, maxCount: number = Infinity) {
+function modifier(type: GraphQLOutputType, minCount: number = 0, maxCount: number = Infinity): GraphQLOutputType {
   if (maxCount < 1) {
     throw new Error('Field should not exist for maxCount less than 1');
   }
@@ -108,12 +109,14 @@ export default class SHACLHandler implements MeshHandler {
 
     // TODO: Refactor this so we can do it concurrently
     for (const shape of this.shapes) {
+      let propertyFields: PropertyInterface[] = [];
+
       // TODO: Handle other targets
       const targetClass = await queryObjects(config, shape, DF.namedNode(`${SH}targetClass`));
       const properties = await queryObjects(config, shape, DF.namedNode(`${SH}property`));
 
       for (const property of properties) {
-        let fieldType: GraphQLType | undefined = undefined;
+        let fieldType: GraphQLOutputType | undefined = undefined;
         let fieldName: string | undefined;
         let propertyDirective: string | undefined;
         let isDirective: string | undefined;
@@ -127,6 +130,7 @@ export default class SHACLHandler implements MeshHandler {
         const maxCount = await queryObjects(config, property, DF.namedNode(`${SH}maxCount`));
         const minCount = await queryObjects(config, property, DF.namedNode(`${SH}minCount`));
         
+        // TODO: Handle the case of more than 1 here
         if (datatype.length === 1) {
           fieldType = getDatatypeSafe(datatype[0]);
         }
@@ -155,14 +159,19 @@ export default class SHACLHandler implements MeshHandler {
         fieldType = modifier(
           fieldType,
           minCount.length > 0 ? parseInt(minCount[0].value) : undefined,
-          maxCount.length > 0 ? parseInt(maxCount[0].value) : undefined
+          maxCount.length > 0 ? parseInt(maxCount[0].value) : undefined,
         );
 
         if (path.termType !== 'NamedNode') {
+          // TODO: Handle the complex path case (i.e. where this is *not* a NamedNode)
           throw new Error('Path should be a NameNode')
         }
+        
 
-
+        propertyFields.push({
+          iri: path.value,
+          type: fieldType,
+        })
 
         // TODO: Handle logical constraints (sh:or, sh:and)
       }

@@ -6,6 +6,7 @@ import { camelize, getCommentInfo, getLabelInfo, getOwlClasses, IQueryContext } 
 import { https } from 'follow-redirects';
 import { DataFactory } from 'n3';
 
+// TODO: Remove this default context (it really, really shouldn't be here)
 const context = {
   sources: [
     "https://web.archive.org/web/20220614105937if_/http://xmlns.com/foaf/spec/20140114.rdf"
@@ -143,7 +144,6 @@ async function createNames(context: IQueryContext, classes: Term[], baseTerms: s
   const names: Record<string, string> = {};
 
   for (const c of classes) {
-    // console.log(c.value, ontology, c.value.startsWith(ontology))
     const n = await getUniqueName(context, c, names, (baseTerms.includes(c.value) || noPrefix) ? '' : await getCleanPrefix(c));
     names[n] = c.value;
   }
