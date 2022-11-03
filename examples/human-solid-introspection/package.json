@@ -15,7 +15,7 @@
     "@comunica/query-sparql-file-reasoning": "^0.2.0",
     "@graphql-mesh/types": "^0.85.4",
     "@inrupt/graphql-codegen-solid": "^0.0.0",
-    "got": "^10.7.0",
+    "got": "^11.8.5",
     "solid-node-interactive-auth": "^1.0.2",
     "terminal-image": "^1.2.1",
     "ts-node": "^10.9.1"
