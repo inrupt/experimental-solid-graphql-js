@@ -1,5 +1,5 @@
 import { GetMeshSourcePayload, MeshHandler } from '@graphql-mesh/types';
-import { GraphQLList, GraphQLNonNull, GraphQLOutputType, GraphQLSchema } from 'graphql';
+import { GraphQLList, GraphQLNamedType, GraphQLNonNull, GraphQLOutputType, GraphQLSchema } from 'graphql';
 import { QueryEngine } from '@comunica/query-sparql-file';
 import { queryObject, queryObjects } from '@inrupt/sparql-utils';
 import { Term } from '@rdfjs/types';
@@ -107,19 +107,27 @@ export default class SHACLHandler implements MeshHandler {
       throw new Error('Not implemented - shape discovery');
     }
 
+    const types: GraphQLNamedType[] = []
+
     // TODO: Refactor this so we can do it concurrently
     for (const shape of this.shapes) {
-      let propertyFields: PropertyInterface[] = [];
+      
+
+      let propertyFields: { [name: string]: PropertyInterface } = {};
 
       // TODO: Handle other targets
       const targetClass = await queryObjects(config, shape, DF.namedNode(`${SH}targetClass`));
       const properties = await queryObjects(config, shape, DF.namedNode(`${SH}property`));
+      const shName = await queryObjects(config, shape, DF.namedNode(`${SH}name`));
+      const shDescription = await queryObjects(config, shape, DF.namedNode(`${SH}description`));
 
       for (const property of properties) {
         let fieldType: GraphQLOutputType | undefined = undefined;
         let fieldName: string | undefined;
-        let propertyDirective: string | undefined;
-        let isDirective: string | undefined;
+        let description: string | undefined;
+        // This handled by us passing in the iris
+        // let propertyDirective: string | undefined;
+        // let isDirective: string | undefined;
 
         // TODO: add support for paths that are not just a single property
         const path = await queryObject(config, property, DF.namedNode(`${SH}path`));
@@ -129,6 +137,7 @@ export default class SHACLHandler implements MeshHandler {
         const name = await queryObjects(config, property, DF.namedNode(`${SH}name`));
         const maxCount = await queryObjects(config, property, DF.namedNode(`${SH}maxCount`));
         const minCount = await queryObjects(config, property, DF.namedNode(`${SH}minCount`));
+        const shDescription = await queryObjects(config, property, DF.namedNode(`${SH}description`));
         
         // TODO: Handle the case of more than 1 here
         if (datatype.length === 1) {
@@ -151,6 +160,7 @@ export default class SHACLHandler implements MeshHandler {
 
         // TODO: Add fallback code here if the fieldName is not defined to instead base it of the fragment
         // note this should be identical to the ontology introspection code.
+        
 
         if (!fieldType) {
           throw new Error('Field type should be defined by now')
@@ -167,21 +177,39 @@ export default class SHACLHandler implements MeshHandler {
           throw new Error('Path should be a NameNode')
         }
         
+        if (!fieldName) {
+          throw new Error('Expected field name to be defined by this point');
+        }
 
-        propertyFields.push({
+        // TODO: We really should also be checking if it is an xsd:String but we can
+        // use this once this code is replaced with shacl-shacl generation
+        if (shDescription.length === 1 && shDescription[0].termType === 'Literal') {
+          description = shDescription[0].value;
+        }
+
+        propertyFields[fieldName] = {
           iri: path.value,
           type: fieldType,
-        })
+          description
+        };
 
         // TODO: Handle logical constraints (sh:or, sh:and)
       }
+
+      types.push(
+        createObject({
+          // TODO: Fallback based on fragment
+          name: shName[0].value ?? '',
+          class: targetClass[0]?.value,
+          properties: propertyFields,
+          description: shDescription[0]?.value
+        })
+      )
     }
-
-
 
     return {
       schema: new GraphQLSchema({
-        types: [],
+        types,
       })
     }
   }

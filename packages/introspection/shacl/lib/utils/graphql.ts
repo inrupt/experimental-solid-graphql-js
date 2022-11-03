@@ -67,7 +67,7 @@ export interface PropertyInterface {
 
 interface ObjectInterface {
   name: string;
-  class: string;
+  class?: string;
   properties: {
     [key: string]: PropertyInterface;
   };
@@ -94,6 +94,6 @@ export function createObject({
     name: objectName,
     fields,
     description,
-    astNode: is(c),
+    astNode: c ? is(c) : undefined,
   });
 }
