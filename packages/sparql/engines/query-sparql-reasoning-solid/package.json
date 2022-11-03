@@ -40,6 +40,12 @@
     "bin/**/*.js",
     "engine-default.js"
   ],
+  "scripts": {
+    "package": "comunica-package -c config/config-default.json",
+    "prepack": "$npm_execpath run prebuild",
+    "prebuild": "comunica-compile-config config/config-default.json > engine-default.js",
+    "build": "tsc"
+  },
   "dependencies": {
     "@comunica/actor-context-preprocess-reasoning-defaults": "^0.2.0",
     "@comunica/actor-context-preprocess-source-to-destination": "^2.4.0",
@@ -178,12 +184,6 @@
     "@comunica/runner": "^2.4.0",
     "@comunica/types": "^2.4.0",
     "@inrupt/graphql-codegen-schema-node": "^0.0.0"
-  },
-  "scripts": {
-    "prepare": "comunica-compile-config config/config-default.json > engine-default.js && npm run build",
-    "package": "comunica-package -c config/config-default.json",
-    "build": "npm run tsc",
-    "tsc": "tsc"
   },
   "devDependencies": {
     "@comunica/bus-normalize-rule": "^0.2.0",
