@@ -25,7 +25,8 @@ import {
   StringSparqlQueryable,
   Term,
 } from "@rdfjs/types";
-import { wrap } from "asynciterator";
+import { QueryEngine } from '@comunica/query-sparql';
+import { AsyncIterator, wrap } from "asynciterator";
 
 export interface IQueryContext<C extends QueryContext = QueryContext> {
   sparqlEngine: StringSparqlQueryable<BindingsResultSupport>;
@@ -51,7 +52,8 @@ function getSingleBinding(bindings: Bindings): Term {
 }
 
 async function runQuery(context: IQueryContext, query: string) {
-  return wrap(context.sparqlEngine.queryBindings(query, context.context))
+  // TODO: Replace this with 'wrap' once the new version of asynciterator is released
+  return wrap(await context.sparqlEngine.queryBindings(query, context.context))
     .map((binding) => getSingleBinding(binding))
     .toArray();
 }
@@ -75,7 +77,7 @@ export function getAllProperties(context: IQueryContext, type: Term) {
 
   return runQuery(
     context,
-    `SELECT DISTINCT ?s WHERE { 
+    `SELECT ?s WHERE { 
     <${type.value}> <${RDFS}subClassOf>*/^<${RDFS}domain> ?s
   }`
   );
@@ -124,11 +126,7 @@ export async function predictAllClasses(context: IQueryContext, type: Term) {
   return runQuery(
     context,
     `SELECT DISTINCT ?type WHERE { 
-    <${type.value}> (<${RDFS}subClassOf>*/^<${RDFS}domain>/<${RDFS}range>)* ?type
-  }
-  
-  ORDER BY (?type)
-  
-  `
+      <${type.value}> (<${RDFS}subClassOf>*/^<${RDFS}domain>/<${RDFS}range>)+ ?type
+    }`
   );
 }

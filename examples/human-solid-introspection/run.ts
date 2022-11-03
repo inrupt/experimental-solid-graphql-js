@@ -1,8 +1,8 @@
 import { QueryEngine } from '@comunica/query-sparql-solid';
+import { createApp } from './configs/createApp';
 import got from 'got';
 import { interactiveLogin } from 'solid-node-interactive-auth';
 import terminalImage from 'terminal-image';
-import { createApp } from './createApp';
 import { FetchPersonDocument, solidQuery } from './graphql';
 
 async function main() {
@@ -30,29 +30,38 @@ async function main() {
   }
 
   const {
-    img,
-    birthDate,
-    mother,
-    father,
-    name,
-    ancestors,
-    id
+    id,
+    image,
+    birthday,
+    knows,
+    firstName,
+    lastName,
+    gender
   } = data.person
 
-  console.log('This is', name, 'their WebId is', id);
+  console.log('This is', firstName[0] ?? '', lastName[0] ?? '', 'their WebId is', id);
 
-  if (img) {
+  if (image?.[0]?.id) {
     console.log(
-      await terminalImage.buffer(await got(img).buffer())
+      await terminalImage.buffer(await got(image?.[0]?.id).buffer())
     )
   }
 
-  console.log('Their date of birth is', birthDate.toDateString());
-  console.log('Their biological mother', mother.name, 'was born on', mother.birthDate.toDateString());
-  console.log('Their biological father', father.name, 'was born on', father.birthDate.toDateString());
+  if (birthday?.[0]) {
+    console.log('Their date of birth is', birthday?.[0]);
+  }
 
-  if (ancestors.length > 0) {
-    console.log('The names of their ancestors include', ancestors.map(({ name }) => `"${name}"`).join(', '))
+  if (knows?.length && knows.length > 0) {
+    console.log('The names of their acquaintances include', knows.map((aquaintence) => {
+      let name = aquaintence.firstName?.[0];
+      if (name && aquaintence.lastName?.[0]) {
+        name += ' ' + aquaintence.lastName?.[0];
+      }
+      if (!name) {
+        name = aquaintence.id;
+      }
+      return name;
+    }).join(', '))
   }
 
   await session.logout();

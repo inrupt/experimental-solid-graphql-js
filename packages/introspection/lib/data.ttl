@@ -1,5 +1,0 @@
-@prefix : <http://example.org/> .
-
-:Jesse a :Person .
-
-:Person :label "Person" .

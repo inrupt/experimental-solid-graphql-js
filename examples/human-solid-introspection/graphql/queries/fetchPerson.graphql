@@ -1,0 +1,20 @@
+query fetchPerson {
+  person {
+    id
+    firstName
+    lastName
+    knows {
+      id
+      firstName
+      lastName
+    }
+    birthday
+    image {
+      id
+      thumbnail {
+        id
+      }
+    },
+    gender
+  }
+}

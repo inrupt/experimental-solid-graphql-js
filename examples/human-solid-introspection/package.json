@@ -1,0 +1,33 @@
+{
+  "name": "@inrupt/human-solid-graphql-introspection-query-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "npm run build:mesh && npm run build:codegen",
+    "start": "ts-node run",
+    "demo": "npm run start",
+    "build:mesh": "mesh build",
+    "build:codegen": "graphql-codegen",
+    "tsc": "tsc"
+  },
+  "dependencies": {
+    "@comunica/query-sparql-file": "^2.4.3",
+    "@comunica/query-sparql-file-reasoning": "^0.2.0",
+    "@graphql-mesh/types": "^0.85.4",
+    "@inrupt/graphql-codegen-solid": "^0.0.0",
+    "got": "^10.7.0",
+    "solid-node-interactive-auth": "^1.0.2",
+    "terminal-image": "^1.2.1",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^2.13.2",
+    "@graphql-codegen/typed-document-node": "^2.3.3",
+    "@graphql-codegen/typescript": "^2.7.3",
+    "@graphql-codegen/typescript-operations": "^2.5.3",
+    "@graphql-mesh/cli": "^0.79.0",
+    "@inrupt/graphql-introspection-ontology": "^0.0.0",
+    "graphql-scalars": "^1.18.0",
+    "typescript": "4.8.4"
+  }
+}

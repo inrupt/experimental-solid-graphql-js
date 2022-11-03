@@ -1,0 +1,5 @@
+# GraphQL codegen
+/graphql/*.ts
+*.js
+*.d.ts
+.mesh
