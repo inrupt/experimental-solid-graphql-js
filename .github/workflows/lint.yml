@@ -12,6 +12,5 @@ jobs:
           node-version: "18"
           registry-url: "https://registry.npmjs.org"
       - run: npm ci
-      - run: npm run bootstrap -- --ci
       - run: npm run lint:check
       - run: npm run licenses:check
