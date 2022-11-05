@@ -22,9 +22,7 @@ import { MapperKind, mapSchema } from "@graphql-tools/utils";
 import { Term } from "@rdfjs/types";
 import { GraphQLSchema } from "graphql";
 import { DataFactory as DF } from "n3";
-import {
-  TypeHandlerNumberInteger
-} from "rdf-literal";
+import { TypeHandlerNumberInteger } from "rdf-literal";
 
 // TODO: See if we should make use of BigInt
 export function int(

@@ -22,9 +22,7 @@ import { MapperKind, mapSchema } from "@graphql-tools/utils";
 import { Term } from "@rdfjs/types";
 import { GraphQLSchema } from "graphql";
 import { DataFactory as DF } from "n3";
-import {
-  TypeHandlerString
-} from "rdf-literal";
+import { TypeHandlerString } from "rdf-literal";
 
 export function string(
   scalarName: string

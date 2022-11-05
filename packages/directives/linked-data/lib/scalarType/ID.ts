@@ -79,7 +79,9 @@ export function ID(
           // @ts-ignore
           fieldConfig.serialize = (value: Term) => {
             if (value.termType !== "NamedNode") {
-              throw new Error(`Error serialising [${value.termType}] [${value.value}]: expected @${scalarName} to be a NamedNode`);
+              throw new Error(
+                `Error serialising [${value.termType}] [${value.value}]: expected @${scalarName} to be a NamedNode`
+              );
             }
             // TODO: Re-enable this once we work out what is causing side effects in the test suite
             // return serialize(value.value);

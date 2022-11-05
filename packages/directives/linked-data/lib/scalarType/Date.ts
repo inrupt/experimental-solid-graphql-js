@@ -22,9 +22,7 @@ import { MapperKind, mapSchema } from "@graphql-tools/utils";
 import { Term } from "@rdfjs/types";
 import { GraphQLSchema } from "graphql";
 import { DataFactory as DF } from "n3";
-import {
-  TypeHandlerDate
-} from "rdf-literal";
+import { TypeHandlerDate } from "rdf-literal";
 
 export function date(
   scalarName: string
