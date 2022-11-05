@@ -5,6 +5,7 @@ module.exports = {
   parserOptions: {
     project: "./tsconfig.eslint.json",
   },
+  // TODO: re-enable most of these rules
   rules: {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": "off",
