@@ -18,3 +18,67 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+import { MapperKind, mapSchema } from "@graphql-tools/utils";
+import { Term } from "@rdfjs/types";
+import { GraphQLSchema } from "graphql";
+import { DataFactory as DF } from "n3";
+import {
+  TypeHandlerDate
+} from "rdf-literal";
+
+export function date(
+  scalarName: string
+): (schema: GraphQLSchema) => GraphQLSchema {
+  const dateHandler = new TypeHandlerDate();
+  return (schema) =>
+    mapSchema(schema, {
+      [MapperKind.SCALAR_TYPE]: (fieldConfig) => {
+        if (fieldConfig.name === scalarName) {
+          // @ts-ignore
+          fieldConfig.serialize = (value: Term) => {
+            if (value.termType !== "Literal") {
+              throw new Error(
+                `Expected Literal term, instead received ${value.value} of type ${value.termType}`
+              );
+            }
+
+            if (value.datatype.termType !== "NamedNode") {
+              throw new Error(
+                `Expected datatype to be a NamedNode, instead received ${value.datatype.value} of type ${value.datatype.termType}`
+              );
+            }
+
+            if (!TypeHandlerDate.TYPES.includes(value.datatype.value)) {
+              throw new Error(
+                `Expected a string type, instead received ${value.datatype.value}`
+              );
+            }
+
+            const result = dateHandler.fromRdf(value, true);
+
+            if (!(result instanceof Date)) {
+              throw new Error(
+                `Expected node to have string value, instead received ${result} of type ${typeof result}`
+              );
+            }
+
+            return result;
+          };
+          // @ts-ignore
+          fieldConfig.parseValue = (value: Date) => {
+            if (!(value instanceof Date)) {
+              throw new Error(
+                `Expected string, received ${value} of type ${typeof value}`
+              );
+            }
+
+            // TODO: Include parsing directives to specify datatype
+            return dateHandler.toRdf(value, { dataFactory: DF }); // TODO: See if params are needed here (and add tests)
+            // TODO: Re-enable this once we work out what is causing side effects in the test suite
+            // return parseValue(DF.namedNode(value));
+          };
+        }
+        return fieldConfig;
+      },
+    });
+}

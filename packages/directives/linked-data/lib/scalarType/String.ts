@@ -18,3 +18,72 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+import { MapperKind, mapSchema } from "@graphql-tools/utils";
+import { Term } from "@rdfjs/types";
+import { GraphQLSchema } from "graphql";
+import { DataFactory as DF } from "n3";
+import {
+  TypeHandlerString
+} from "rdf-literal";
+
+export function string(
+  scalarName: string
+): (schema: GraphQLSchema) => GraphQLSchema {
+  const stringTypeHandler = new TypeHandlerString();
+  return (schema) =>
+    mapSchema(schema, {
+      [MapperKind.SCALAR_TYPE]: (fieldConfig) => {
+        if (fieldConfig.name === scalarName) {
+          // @ts-ignore
+          fieldConfig.serialize = (value: Term) => {
+            if (value.termType !== "Literal") {
+              throw new Error(
+                `Expected Literal term, instead received ${value.value} of type ${value.termType}`
+              );
+            }
+
+            if (value.datatype.termType !== "NamedNode") {
+              throw new Error(
+                `Expected datatype to be a NamedNode, instead received ${value.datatype.value} of type ${value.datatype.termType}`
+              );
+            }
+
+            if (!TypeHandlerString.TYPES.includes(value.datatype.value)) {
+              throw new Error(
+                `Expected a string type, instead received ${value.datatype.value}`
+              );
+            }
+
+            const result = stringTypeHandler.fromRdf(value);
+
+            if (typeof result !== "string") {
+              throw new Error(
+                `Expected node to have string value, instead received ${result} of type ${typeof result}`
+              );
+            }
+
+            return result;
+          };
+          // @ts-ignore
+          fieldConfig.parseValue = (value: string) => {
+            if (typeof value !== "string") {
+              throw new Error(
+                `Expected string, received ${value} of type ${typeof value}`
+              );
+            }
+
+            return stringTypeHandler.toRdf(value, {
+              dataFactory: DF,
+              datatype: DF.namedNode("http://www.w3.org/2001/XMLSchema#string"),
+            });
+
+            // TODO: Include parsing directives to specify datatype
+            // return DF.literal(value, DF.namedNode('http://www.w3.org/2001/XMLSchema#string'));
+            // TODO: Re-enable this once we work out what is causing side effects in the test suite
+            // return parseValue(DF.namedNode(value));
+          };
+        }
+        return fieldConfig;
+      },
+    });
+}
