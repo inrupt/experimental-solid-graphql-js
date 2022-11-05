@@ -71,9 +71,6 @@ describe("objectField", () => {
       fieldResolver = (source: any, args: any, context: any, info: any) => {
         if (info.fieldName === "person") {
           return DF.namedNode("http://example.org/#me");
-          return {
-            __node: DF.namedNode("http://example.org/#me"),
-          };
         }
         return defaultFieldResolver(source, args, context, info);
       };
