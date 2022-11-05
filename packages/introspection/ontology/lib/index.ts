@@ -19,8 +19,8 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 import { GetMeshSourcePayload, MeshHandler } from "@graphql-mesh/types";
-import { createGraphql } from "./run";
-import { getOntologyData } from "./run_first";
+import { createGraphql } from "./createGraphql";
+import { getOntologyData } from "./getOnotologyData";
 
 interface OntologyHandlerOptions {
   config: {
