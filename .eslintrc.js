@@ -17,6 +17,6 @@ module.exports = {
     "no-underscore-dangle": "off",
 
     // Keep these
-    "@typescript-eslint/consistent-type-imports": ["error", { prefer: "type-only" }],
+    "@typescript-eslint/consistent-type-imports": ["error", { prefer: "type-imports" }],
   },
 };
