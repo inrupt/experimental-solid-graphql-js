@@ -1,34 +1,35 @@
-
-import { HomeIcon } from '@heroicons/react/solid';
-import { useEffect, useState } from 'react';
-import Link from 'next/link'
-import { LibraryIcon } from '@heroicons/react/outline';
-import { Query } from './query';
-import { FetchPlaylistsQuery, FetchPlaylistsDocument, FetchUserDocument } from '../graphql';
-import { useRouter } from 'next/router';
+import { HomeIcon } from "@heroicons/react/solid";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { LibraryIcon } from "@heroicons/react/outline";
+import { Query } from "./query";
+import {
+  FetchPlaylistsQuery,
+  FetchPlaylistsDocument,
+  FetchUserDocument,
+} from "../graphql";
+import { useRouter } from "next/router";
 
 export function Sidebar() {
   const urlData = useRouter();
 
   return (
     <div className="h-screen text-gray-300 p-5 text-sm border-r border-gray-500 overflow-y-scroll h0screen scrollbar-hide sm:max-w-[20rem] lg:max-w-[15rem] md:inline-flex">
-      <div className='space-y-4'>
-
-        <Link href='/'>
+      <div className="space-y-4">
+        <Link href="/">
           <button className="flex items-center space-x-2 hover:text-white">
             <HomeIcon className="h-5 w-5" />
             <p>Home</p>
           </button>
         </Link>
 
-        <Link href='/albums'>
+        <Link href="/albums">
           <button className="flex items-center space-x-2 hover:text-white">
             <LibraryIcon className="h-5 w-5" />
             <p>Albums</p>
           </button>
         </Link>
 
-
         <Query
           document={FetchUserDocument}
           error={() => <>Error</>}
@@ -36,35 +37,38 @@ export function Sidebar() {
           requireLogin={true}
           variables={{}}
         >
-          {
-            (data) => <>
-              {data.user.albums.map(x => {
-                return <Link key={x._id} href={{
-                  ...urlData,
-                  query: {
-                    ...urlData.query,
-                    currentAlbum: x._id,
-                    currentPlaylist: null,
-                  }
-                }}>
-                  <button className="flex items-center pl-6 hover:text-white">
-                    <p>{x.name}</p>
-                  </button>
-                </Link>;
+          {(data) => (
+            <>
+              {data.user.albums.map((x) => {
+                return (
+                  <Link
+                    key={x._id}
+                    href={{
+                      ...urlData,
+                      query: {
+                        ...urlData.query,
+                        currentAlbum: x._id,
+                        currentPlaylist: null,
+                      },
+                    }}
+                  >
+                    <button className="flex items-center pl-6 hover:text-white">
+                      <p>{x.name}</p>
+                    </button>
+                  </Link>
+                );
               })}
             </>
-          }
+          )}
         </Query>
 
-
-        <Link href='/playlists'>
+        <Link href="/playlists">
           <button className="flex items-center space-x-2 hover:text-white">
             <LibraryIcon className="h-5 w-5" />
             <p>Playlists</p>
           </button>
         </Link>
 
-
         <Query
           document={FetchUserDocument}
           error={() => <>Error</>}
@@ -72,29 +76,33 @@ export function Sidebar() {
           requireLogin={true}
           variables={{}}
         >
-          {
-            (data) => <>
-              {data.user.playlists.map(x => {
-                return <Link key={x._id} href={{
-                  ...urlData,
-                  query: {
-                    ...urlData.query,
-                    currentPlaylist: x._id,
-                    currentAlbum: null,
-                  }
-                }}>
-                  <button className="flex items-center pl-6 hover:text-white">
-                    <p>{x.name}</p>
-                  </button>
-                </Link>;
+          {(data) => (
+            <>
+              {data.user.playlists.map((x) => {
+                return (
+                  <Link
+                    key={x._id}
+                    href={{
+                      ...urlData,
+                      query: {
+                        ...urlData.query,
+                        currentPlaylist: x._id,
+                        currentAlbum: null,
+                      },
+                    }}
+                  >
+                    <button className="flex items-center pl-6 hover:text-white">
+                      <p>{x.name}</p>
+                    </button>
+                  </Link>
+                );
               })}
             </>
-          }
+          )}
         </Query>
-
       </div>
     </div>
-  )
+  );
 
   // <Link href='/playlists'>
   //         <button className="flex items-center pl-8 hover:text-white">
@@ -115,9 +123,7 @@ export function Sidebar() {
 
   // const spotifyApi = useSpotify();
   // const { data: session, status } = useSession();
-  const [playlists, setPlaylist] = useState([
-    'http://example.org/playlist#a'
-  ]);
+  const [playlists, setPlaylist] = useState(["http://example.org/playlist#a"]);
   // const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
 
   useEffect(() => {
@@ -131,7 +137,6 @@ export function Sidebar() {
   return (
     <div className="text-white-500 p-5 text-sm border-r border-gray-900 overflow-y-scroll h-screen scrollbar-hide sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex ">
       Helel
-
       <div className="space-y-4">
         <button className="flex items-center space-x-2 hover:text-white">
           <HomeIcon className="h-5 w-5" />

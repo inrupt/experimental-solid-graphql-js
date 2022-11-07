@@ -1,5 +1,5 @@
-import { Session } from '@inrupt/solid-client-authn-browser';
-import { createContext } from 'react';
+import { Session } from "@inrupt/solid-client-authn-browser";
+import { createContext } from "react";
 
 interface SessionContext {
   session: Session;
@@ -12,6 +12,6 @@ export const SessionContext = createContext({
     requestInProgress: false,
   },
   setContext(context: SessionContext): void {
-    throw new Error('Unexpected Set Context Call')
-  }
+    throw new Error("Unexpected Set Context Call");
+  },
 });

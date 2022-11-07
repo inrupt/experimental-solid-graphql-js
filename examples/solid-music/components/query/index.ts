@@ -1,1 +1,1 @@
-export * from './ContextQuery';
+export * from "./ContextQuery";

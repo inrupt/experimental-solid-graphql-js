@@ -1,6 +1,6 @@
-import Song from './Song';
+import Song from "./Song";
 
-import { playlist } from './data';
+import { playlist } from "./data";
 
 function Songs() {
   return (
