@@ -1,4 +1,4 @@
-import { main } from "../main";
+import { main } from "../lib/main";
 
 describe("human script", () => {
   const log = console.log; // save original console.log function
