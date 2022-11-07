@@ -18,8 +18,8 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-import { Types } from "@graphql-codegen/plugin-helpers";
-import { GraphQLSchema } from "graphql";
+import type { Types } from "@graphql-codegen/plugin-helpers";
+import type { GraphQLSchema } from "graphql";
 
 import * as schemaNode from "@inrupt/graphql-codegen-schema-node";
 import * as solidQuery from "@inrupt/graphql-codegen-solid-query";

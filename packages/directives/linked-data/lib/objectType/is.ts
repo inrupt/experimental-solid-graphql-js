@@ -23,7 +23,7 @@ import {
   getResolver,
   getSingleDirective,
 } from "@inrupt/graphql-directives-utils";
-import { GraphQLSchema } from "graphql";
+import type { GraphQLSchema } from "graphql";
 import { isType } from "@inrupt/sparql-utils";
 import { DataFactory as DF } from "n3";
 import type { Term } from "@rdfjs/types";

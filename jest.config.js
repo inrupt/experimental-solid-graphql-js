@@ -13,12 +13,11 @@ module.exports = {
       //isolatedModules: true
     },
   },
-  // setupFilesAfterEnv: [ './setup-jest.js' ],
   collectCoverage: true,
-  coveragePathIgnorePatterns: [
-    '/node_modules/',
-    // '/mocks/',
-    'index.js'
+  "collectCoverageFrom": [
+    "packages/**/{!(*.d),}.ts",
+    // TODO: re-enable this
+    // "examples/**/{!(*.d),}.ts"
   ],
   testEnvironment: 'node',
   // TODO: re-enable this

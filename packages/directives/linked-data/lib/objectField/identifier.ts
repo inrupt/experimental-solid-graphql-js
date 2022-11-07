@@ -19,7 +19,7 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 import { mapObjectField } from "@inrupt/graphql-directives-utils";
-import { Source } from "../types";
+import type { Source } from "../types";
 
 export const identifier = mapObjectField<any, any, Source>(
   (resolver) => (source: Source, args, context, info) => {

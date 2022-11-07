@@ -19,7 +19,7 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 import applyLinkedDataDirectives from "@inrupt/graphql-directives-linked-data";
-import { GraphQLSchema } from "graphql";
+import type { GraphQLSchema } from "graphql";
 import * as objectField from "./objectField";
 
 export function defaultOrder(prefix = "") {

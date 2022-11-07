@@ -18,8 +18,8 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+import type { GraphQLFieldConfig, ThunkObjMap } from "graphql";
 import {
-  GraphQLFieldConfig,
   GraphQLID,
   GraphQLList,
   GraphQLNonNull,
@@ -27,7 +27,6 @@ import {
   GraphQLSchema,
   GraphQLString,
   Kind,
-  ThunkObjMap,
 } from "graphql";
 
 interface RunResult {

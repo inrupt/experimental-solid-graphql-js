@@ -19,8 +19,8 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 import { MapperKind, mapSchema } from "@graphql-tools/utils";
-import { GraphQLFieldConfig, GraphQLSchema } from "graphql";
-import { Source } from "../types";
+import type { GraphQLFieldConfig, GraphQLSchema } from "graphql";
+import type { Source } from "../types";
 
 // TODO: Check the ordering of resolution calls
 export function search(

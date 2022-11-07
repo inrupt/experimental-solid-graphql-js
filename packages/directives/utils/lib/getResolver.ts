@@ -18,7 +18,8 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-import { defaultFieldResolver, GraphQLFieldConfig } from "graphql";
+import type { GraphQLFieldConfig } from "graphql";
+import { defaultFieldResolver } from "graphql";
 
 export function getResolver<TSource, TContext, TArgs = any, K = unknown>(
   fieldConfig: GraphQLFieldConfig<TSource, TContext, TArgs>

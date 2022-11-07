@@ -19,8 +19,8 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 import { MapperKind, mapSchema } from "@graphql-tools/utils";
-import { Term } from "@rdfjs/types";
-import { GraphQLSchema } from "graphql";
+import type { Term } from "@rdfjs/types";
+import type { GraphQLSchema } from "graphql";
 import { DataFactory as DF } from "n3";
 import { TypeHandlerNumberDouble } from "rdf-literal";
 

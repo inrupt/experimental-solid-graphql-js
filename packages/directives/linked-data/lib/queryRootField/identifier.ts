@@ -23,8 +23,8 @@ import {
   getResolver,
   getSingleDirective,
 } from "@inrupt/graphql-directives-utils";
-import { GraphQLFieldConfig, GraphQLSchema } from "graphql";
-import { Source } from "../types";
+import type { GraphQLFieldConfig, GraphQLSchema } from "graphql";
+import type { Source } from "../types";
 
 // TODO: Check the ordering of resolution calls
 export function identifier(

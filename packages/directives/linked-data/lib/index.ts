@@ -18,7 +18,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-import { GraphQLSchema } from "graphql";
+import type { GraphQLSchema } from "graphql";
 
 import * as objectField from "./objectField";
 import * as queryRootField from "./queryRootField";

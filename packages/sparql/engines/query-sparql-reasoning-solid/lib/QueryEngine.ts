@@ -25,7 +25,7 @@ import {
   KeysRdfReason,
 } from "@comunica/reasoning-context-entries";
 import { ActorHttpInruptSolidClientAuthn } from "@comunica/actor-http-inrupt-solid-client-authn";
-import {
+import type {
   QueryFormatType,
   QueryStringContext,
   QueryAlgebraContext,

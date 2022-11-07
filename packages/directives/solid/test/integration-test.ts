@@ -18,14 +18,12 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-import {
-  executeSync,
-  defaultFieldResolver,
+import type {
   DocumentNode,
   GraphQLFieldResolver,
   GraphQLSchema,
-  execute,
 } from "graphql";
+import { executeSync, execute } from "graphql";
 import gql from "graphql-tag";
 import { DataFactory as DF, Store } from "n3";
 import { makeExecutableSchema } from "@graphql-tools/schema";

@@ -20,16 +20,11 @@
 //
 import { QueryEngine } from "@comunica/query-sparql";
 import { QueryEngine as LTEngine } from "@comunica/query-sparql-link-traversal";
-import { Term } from "@rdfjs/types";
+import type { Term } from "@rdfjs/types";
 import { https } from "follow-redirects";
 import { DataFactory } from "n3";
-import {
-  camelize,
-  getCommentInfo,
-  getLabelInfo,
-  getOwlClasses,
-  IQueryContext,
-} from "./utils";
+import type { IQueryContext } from "./utils";
+import { camelize, getCommentInfo, getLabelInfo, getOwlClasses } from "./utils";
 
 async function label(context: IQueryContext, term: Term) {
   const value = (await getLabelInfo(context, term))[0]?.value;
