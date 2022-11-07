@@ -52,9 +52,11 @@ export function getSingleResultFromStream<T>(
     let item: T | null = null;
 
     function cleanup(destroy?: boolean) {
+      /* eslint-disable @typescript-eslint/no-use-before-define */
       stream.off("data", onData);
       stream.off("end", onEnd);
       stream.off("error", onError);
+      /* eslint-enable @typescript-eslint/no-use-before-define */
       if (destroy) {
         destroyStream(stream);
       }

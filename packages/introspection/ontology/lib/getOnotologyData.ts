@@ -125,27 +125,29 @@ export function prefixFactory() {
     // return Object.keys(res['@context'])[0];
   }
 
-  const cache: Record<string, string | undefined> = {};
-  const request: Record<string, Promise<string> | undefined> = {};
+  const cache: Record<string, string> = {};
+  const request: Record<string, Promise<string>> = {};
 
   return (lookup: string): string | Promise<string> => {
     const namespace = lookup.slice(0, breakIndex(lookup));
 
     if (cache[namespace]) {
-      return cache[namespace]!;
+      return cache[namespace];
     }
 
     if (!request[namespace]) {
       request[namespace] = getPrefix(namespace);
-      request[namespace]!.then((res) => {
-        cache[namespace] = res;
-        return res;
-      }).catch(() => {
-        delete request[namespace];
-      });
+      request[namespace]
+        .then((res) => {
+          cache[namespace] = res;
+          return res;
+        })
+        .catch(() => {
+          delete request[namespace];
+        });
     }
 
-    return request[namespace]!;
+    return request[namespace];
   };
 }
 
@@ -204,8 +206,8 @@ export async function getOntologyData(
   `,
       context
     )
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     .then((ps) => ps.map((data) => data.get("s")!.value).toArray());
-  // const props = await ps.map(data => data.get('s')!.value).toArray();
 
   // TODO: Optimise this part by making it streams based
   let unprocessed = coreClasses.map((data) => data.value);
@@ -218,14 +220,16 @@ export async function getOntologyData(
   const rangeMap: Record<string, string[]> = {};
 
   while (unprocessed.length > 0 || unprocessedProperties.length > 0) {
-    const _unprocessed = unprocessed;
-    const _unprocessedProperties = unprocessedProperties;
+    const tempUnprocessed = unprocessed;
+    const tempUnprocessedProperties = unprocessedProperties;
     unprocessed = [];
     unprocessedProperties = [];
 
     const a = Promise.all(
       // eslint-disable-next-line no-loop-func
-      _unprocessed.map(async (t) => {
+      tempUnprocessed.map(async (t) => {
+        // TODO: Remove stuff like rdf:subClassOf* when we have a link traversal engine
+        // with reasoning
         const results = await ltengine.queryBindings(
           `
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -246,6 +250,7 @@ export async function getOntologyData(
 
         // eslint-disable-next-line no-await-in-loop
         const data = await results
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           .map((elem) => elem.get("property")!.value)
           .toArray();
 
@@ -272,7 +277,7 @@ export async function getOntologyData(
 
     const b = Promise.all(
       // eslint-disable-next-line no-loop-func
-      _unprocessedProperties.map(async (t) => {
+      tempUnprocessedProperties.map(async (t) => {
         const results = await ltengine.queryBindings(
           `
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -292,6 +297,7 @@ export async function getOntologyData(
         );
 
         const data = await results
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           .map((elem) => elem.get("type")!.value)
           .toArray();
         rangeMap[t] = [...new Set(data)];

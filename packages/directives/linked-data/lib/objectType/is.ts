@@ -40,9 +40,15 @@ export function is(
           | undefined;
 
         if (typeName) {
+          const directiveNode = schema.getType(typeName);
+
+          if (!directiveNode) {
+            throw new Error(`Could not find directive name`);
+          }
+
           const directive = getSingleDirective(
             schema,
-            schema.getType(typeName)!,
+            directiveNode,
             directiveName
           );
           if (directive) {

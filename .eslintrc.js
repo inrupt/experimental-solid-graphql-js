@@ -9,12 +9,12 @@ module.exports = {
   rules: {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/no-use-before-define": "off",
     "import/prefer-default-export": "off",
+    // We need this for the way we are currently applying directives *however*
+    // this does cause some weird side effects that we are seeing in tests if we want
+    // to test different mappings on the same schema (since it mutates the schema)
     "no-param-reassign": "off",
     "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "no-underscore-dangle": "off",
 
     // Keep these
     "@typescript-eslint/consistent-type-imports": ["error", { prefer: "type-imports" }],
