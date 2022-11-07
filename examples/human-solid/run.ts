@@ -1,5 +1,4 @@
 import { QueryEngine } from '@comunica/query-sparql-solid';
-import got from 'got';
 import { interactiveLogin } from 'solid-node-interactive-auth';
 import terminalImage from 'terminal-image';
 import { createApp } from './createApp';
@@ -43,7 +42,9 @@ async function main() {
 
   if (img) {
     console.log(
-      await terminalImage.buffer(await got(img).buffer())
+      await terminalImage.buffer(
+        Buffer.from((await (await fetch(img)).arrayBuffer()))
+      )
     )
   }
 

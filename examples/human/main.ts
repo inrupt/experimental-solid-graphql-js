@@ -4,7 +4,6 @@ import { QueryEngine } from '@comunica/query-sparql-file-reasoning';
 import { KeysRdfDereferenceConstantHylar } from '@comunica/reasoning-context-entries';
 import path from 'path';
 import terminalImage from 'terminal-image';
-import got from 'got';
 
 export async function main() {
   const { data, errors } = await solidQuery({
@@ -41,7 +40,9 @@ export async function main() {
 
   if (img) {
     console.log(
-      await terminalImage.buffer(await got(img).buffer())
+      await terminalImage.buffer(
+        Buffer.from((await (await fetch(img)).arrayBuffer()))
+      )
     )
   }
 

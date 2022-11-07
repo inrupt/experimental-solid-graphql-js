@@ -14,7 +14,6 @@
     "@comunica/query-sparql-file": "^2.4.3",
     "@comunica/query-sparql-file-reasoning": "^0.2.0",
     "@inrupt/graphql-codegen-solid": "^0.0.0",
-    "got": "^10.7.0",
     "terminal-image": "^1.2.1",
     "ts-node": "^10.9.1"
   },

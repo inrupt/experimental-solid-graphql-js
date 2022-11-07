@@ -43,7 +43,9 @@ async function main() {
 
   if (image?.[0]?.id) {
     console.log(
-      await terminalImage.buffer(await got(image?.[0]?.id).buffer())
+      await terminalImage.buffer(
+        Buffer.from((await (await fetch(image?.[0]?.id)).arrayBuffer()))
+      )
     )
   }
 
