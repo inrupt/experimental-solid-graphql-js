@@ -5,3 +5,6 @@ coverage
 **/dist/
 lerna-debug.log
 **.csv
+examples/**/.mesh/
+examples/**/.next/
+examples/**/graphql/
