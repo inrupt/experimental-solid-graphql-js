@@ -14,4 +14,4 @@ jobs:
       - run: npm ci
       - run: npm run lint:check
       - run: npm run licenses:check
-      - run: npm run depcheck:check
+      # - run: npm run depcheck:check
