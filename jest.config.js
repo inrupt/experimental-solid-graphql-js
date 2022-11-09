@@ -24,7 +24,7 @@ module.exports = {
   // and integration tests in the examples folder cover the code well
   coverageThreshold: {
     global: {
-      branches: 25,
+      branches: 20,
       functions: 10,
       lines: 25,
       statements: 10
