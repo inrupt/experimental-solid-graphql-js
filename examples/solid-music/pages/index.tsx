@@ -1,12 +1,8 @@
 import Head from "next/head";
-import { useContext } from "react";
-// import Center from '../components old/Center'
-// import Sidebar from '../components old/Sidebar'
 import { Player, PlayList, Sidebar, Album } from "../components";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { LoginIcon, LogoutIcon } from "@heroicons/react/outline";
-import { SessionContext } from "../context";
 import { Query } from "../components/query";
 import { FetchUserDocument } from "../graphql";
 

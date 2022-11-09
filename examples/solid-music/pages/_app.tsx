@@ -1,40 +1,26 @@
 // import '../styles/globals.css'
 // NOTE: This only works if tailwind is in the adjacent node_modules
-import "tailwindcss/tailwind.css";
+import { Session } from "@inrupt/solid-client-authn-browser";
 import type { AppProps } from "next/app";
-import { getDefaultSession, Session } from "@inrupt/solid-client-authn-browser";
 import { useEffect, useState } from "react";
+import "tailwindcss/tailwind.css";
 import { EngineContext, QueryContext, SessionContext } from "../context";
-// import { QueryEngine } from '@inrupt/query-sparql-reasoning-solid';
 // TODO: USe reasoning and link traversal
 import { QueryEngine } from "@comunica/query-sparql-solid";
-import { useRouter } from "next/router";
-import { session } from "../components old/data";
 import {
   IQueryContext,
-  ISparqlEngine,
-  queryBindings,
-  queryObject,
-  queryObjects,
-  queryTerm,
+  ISparqlEngine, queryObject,
+  queryObjects
 } from "@inrupt/sparql-utils";
-// import { get } from '@inrupt/sparql-solid-utils';
+import { useRouter } from "next/router";
 import { getStorageFromSession } from "@inrupt/sparql-solid-utils";
 import { DataFactory as DF } from "n3";
-// import {} from '@inrupt/query-sparql-reasoning-solid'
-// import { QueryEngine } from '@comunica/query-sparql-link-traversal-solid';
-import {
-  solidQuery,
-  FetchAlbumDocument,
-  ISolidQueryOptions,
-  FetchAlbumsQuery,
-  FetchAlbumsQueryVariables,
-  FetchAlbumQuery,
-  FetchAlbumQueryVariables,
-} from "../graphql";
-import { ExecutionResult } from "graphql";
 import { getSessionFromContext } from "@inrupt/graphql-directives-solid/dist/utils";
-import { GraphQLError } from "graphql";
+import { ExecutionResult, GraphQLError } from "graphql";
+import {
+  FetchAlbumDocument, FetchAlbumQuery,
+  FetchAlbumQueryVariables, ISolidQueryOptions, solidQuery
+} from "../graphql";
 
 // Start hacky section
 
