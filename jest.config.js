@@ -20,13 +20,14 @@ module.exports = {
     // "examples/**/{!(*.d),}.ts"
   ],
   testEnvironment: 'node',
-  // TODO: re-enable this
-  // coverageThreshold: {
-  //   global: {
-  //     branches: 100,
-  //     functions: 100,
-  //     lines: 100,
-  //     statements: 100
-  //   }
-  // }
+  // TODO: bump this to 100 - note that it is low since there are some functions we are moving to other packages,
+  // and integration tests in the examples folder cover the code well
+  coverageThreshold: {
+    global: {
+      branches: 25,
+      functions: 10,
+      lines: 25,
+      statements: 10
+    }
+  }
 };
