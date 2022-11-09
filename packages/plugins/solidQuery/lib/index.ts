@@ -20,7 +20,6 @@
 //
 import type { Types } from "@graphql-codegen/plugin-helpers";
 import type { GraphQLSchema } from "graphql";
-import { printSchema, parse } from "graphql";
 
 // Adds the compiled schema to the source document
 export function plugin<T = any>(

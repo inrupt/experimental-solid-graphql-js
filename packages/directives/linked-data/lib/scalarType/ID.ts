@@ -22,45 +22,7 @@ import { MapperKind, mapSchema } from "@graphql-tools/utils";
 import type { Term } from "@rdfjs/types";
 import type { GraphQLSchema } from "graphql";
 import { DataFactory as DF } from "n3";
-
-interface Mapper<T> {
-  serialize(value: Term): T;
-  parseValue(value: T): Term;
-}
-
-function scalarMapperFactory<T>(mapper: Mapper<T>) {
-  return (scalarName: string) => (schema: GraphQLSchema) =>
-    mapSchema(schema, {
-      [MapperKind.SCALAR_TYPE]: (fieldConfig) => {
-        if (fieldConfig.name === scalarName) {
-          // @ts-ignore
-          fieldConfig.serialize = mapper.serialize;
-          // @ts-ignore
-          fieldConfig.parseValue = mapper.parseValue;
-        }
-        return fieldConfig;
-      },
-    });
-}
-
-function stringHandler<T>(mapper: Mapper<T>) {
-  return (scalarName: string) => (schema: GraphQLSchema) =>
-    mapSchema(schema, {
-      [MapperKind.SCALAR_TYPE]: (fieldConfig) => {
-        if (fieldConfig.name === scalarName) {
-          // @ts-ignore
-          fieldConfig.serialize = mapper.serialize;
-          // @ts-ignore
-          fieldConfig.parseValue = mapper.parseValue;
-        }
-        return fieldConfig;
-      },
-    });
-}
-
-// export function URL() {
-//   'http://www.w3.org/2001/XMLSchema#anyURI'
-// }
+import { asTerm } from "./asTerm";
 
 export function ID(
   scalarName: string
@@ -69,9 +31,8 @@ export function ID(
     mapSchema(schema, {
       [MapperKind.SCALAR_TYPE]: (fieldConfig) => {
         if (fieldConfig.name === scalarName) {
-          // const { serialize, parseValue } = fieldConfig;
-          // @ts-ignore
-          fieldConfig.serialize = (value: Term) => {
+          fieldConfig.serialize = (anyValue: unknown): string => {
+            const value = asTerm(anyValue);
             if (value.termType !== "NamedNode") {
               throw new Error(
                 `Error serialising [${value.termType}] [${value.value}]: expected @${scalarName} to be a NamedNode`
@@ -81,8 +42,7 @@ export function ID(
             // return serialize(value.value);
             return value.value;
           };
-          // @ts-ignore
-          fieldConfig.parseValue = (value: string) => {
+          fieldConfig.parseValue = (value: unknown): Term => {
             if (typeof value !== "string") {
               throw new Error(
                 `Expected string, received ${value} of type ${typeof value}`

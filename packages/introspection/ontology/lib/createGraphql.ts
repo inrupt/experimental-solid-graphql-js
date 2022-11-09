@@ -92,7 +92,6 @@ export function createGraphql({ classes, properties }: RunResult) {
       description,
     } = classes[iri];
     const fields: ThunkObjMap<GraphQLFieldConfig<any, any, any>> = {
-      // @ts-node
       id: {
         astNode: identifierDirective(),
         description: `The URI of the ${className}`,
@@ -103,8 +102,8 @@ export function createGraphql({ classes, properties }: RunResult) {
     for (const property of classProperties) {
       const { name: propertyName, description: propertyDescription } =
         properties[property];
-      // @ts-ignore
-      globalFields[property] ??= {
+
+      globalFields[property] ??= <GraphQLFieldConfig<any, any, any>>{
         astNode: propertyDirective(property),
         description: propertyDescription?.trim(),
       };

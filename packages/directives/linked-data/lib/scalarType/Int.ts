@@ -23,6 +23,7 @@ import type { Term } from "@rdfjs/types";
 import type { GraphQLSchema } from "graphql";
 import { DataFactory as DF } from "n3";
 import { TypeHandlerNumberInteger } from "rdf-literal";
+import { asTerm } from "./asTerm";
 
 // TODO: See if we should make use of BigInt
 export function int(
@@ -33,8 +34,8 @@ export function int(
     mapSchema(schema, {
       [MapperKind.SCALAR_TYPE]: (fieldConfig) => {
         if (fieldConfig.name === scalarName) {
-          // @ts-ignore
-          fieldConfig.serialize = (value: Term) => {
+          fieldConfig.serialize = (anyValue: unknown): number => {
+            const value = asTerm(anyValue);
             if (value.termType !== "Literal") {
               throw new Error(
                 `Expected Literal term, instead received ${value.value} of type ${value.termType}`
@@ -57,7 +58,7 @@ export function int(
 
             const result = intHandler.fromRdf(value, true);
 
-            if (typeof result === "number") {
+            if (typeof result !== "number") {
               throw new Error(
                 `Expected node to have number value, instead received ${result} of type ${typeof result}`
               );
@@ -65,9 +66,8 @@ export function int(
 
             return result;
           };
-          // @ts-ignore
-          fieldConfig.parseValue = (value: number) => {
-            if (typeof value === "number") {
+          fieldConfig.parseValue = (value: unknown): Term => {
+            if (typeof value !== "number") {
               throw new Error(
                 `Expected node to have number value, instead received ${value} of type ${typeof value}`
               );

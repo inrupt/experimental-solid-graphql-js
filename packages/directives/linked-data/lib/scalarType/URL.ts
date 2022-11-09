@@ -22,18 +22,18 @@ import { MapperKind, mapSchema } from "@graphql-tools/utils";
 import type { Term } from "@rdfjs/types";
 import type { GraphQLSchema } from "graphql";
 import { DataFactory as DF } from "n3";
+import { asTerm } from "./asTerm";
 
 export function url(
   scalarName: string
 ): (schema: GraphQLSchema) => GraphQLSchema {
-  // const dateHandler = new TypeHandlerDate();
   const anyURI = "http://www.w3.org/2001/XMLSchema#anyURI";
   return (schema) =>
     mapSchema(schema, {
       [MapperKind.SCALAR_TYPE]: (fieldConfig) => {
         if (fieldConfig.name === scalarName) {
-          // @ts-ignore
-          fieldConfig.serialize = (value: Term) => {
+          fieldConfig.serialize = (anyValue: unknown): URL => {
+            const value = asTerm(anyValue);
             if (value.termType !== "Literal") {
               throw new Error(
                 `Expected Literal term, instead received ${value.value} of type ${value.termType}`
@@ -60,8 +60,7 @@ export function url(
 
             return new URL(v);
           };
-          // @ts-ignore
-          fieldConfig.parseValue = (value: URL) => {
+          fieldConfig.parseValue = (value: unknown): Term => {
             if (!(value instanceof URL)) {
               throw new Error(
                 `Expected URL, received ${value} of type ${typeof value}`

@@ -23,6 +23,7 @@ import type { Term } from "@rdfjs/types";
 import type { GraphQLSchema } from "graphql";
 import { DataFactory as DF } from "n3";
 import { TypeHandlerDate } from "rdf-literal";
+import { asTerm } from "./asTerm";
 
 export function date(
   scalarName: string
@@ -32,8 +33,8 @@ export function date(
     mapSchema(schema, {
       [MapperKind.SCALAR_TYPE]: (fieldConfig) => {
         if (fieldConfig.name === scalarName) {
-          // @ts-ignore
-          fieldConfig.serialize = (value: Term) => {
+          fieldConfig.serialize = (anyValue: unknown): Date => {
+            const value = asTerm(anyValue);
             if (value.termType !== "Literal") {
               throw new Error(
                 `Expected Literal term, instead received ${value.value} of type ${value.termType}`
@@ -62,8 +63,7 @@ export function date(
 
             return result;
           };
-          // @ts-ignore
-          fieldConfig.parseValue = (value: Date) => {
+          fieldConfig.parseValue = (value: unknown): Term => {
             if (!(value instanceof Date)) {
               throw new Error(
                 `Expected string, received ${value} of type ${typeof value}`
