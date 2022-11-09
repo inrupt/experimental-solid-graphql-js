@@ -7,6 +7,12 @@ module.exports = {
   },
   plugins: ["unused-imports"],
   rules: {
+    // This is disabled since we do not have a fixed interface for field configs yet. This may be re-enabled once that
+    // is decided upon and all instances of explicit any are removed.
+    "@typescript-eslint/no-explicit-any": "off",
+    // This is disabled since there are some functions/interfaces that we have to implement where
+    // we do not make use of all the parameters and thus trigger this rule
+    "@typescript-eslint/no-unused-vars": "off",
     // It is easier to do star exports in an index file without default exports
     "import/prefer-default-export": "off",
     // We need this for the way we are currently applying directives *however*

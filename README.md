@@ -130,6 +130,6 @@ Once logged into the application click sign in. The test server is the last opti
 
 The default development server username and password are: hello@example.com / abc123.
 
-You can also log into solidweb.me with the credentials music@demo.org / musicDemo 
+You can also log into solidweb.me with the credentials music@demo.org / musicDemo
 
 **Note**: Each of the solid-related demos is run against a local instance of the CSS, the data for the Pod that is created for the demo can be found in the `/pod` folder in each of the respective demos. If extending a demo and additional data is required for the query, it should be added to the relevant `.ttl` files in those folders.
