@@ -130,4 +130,4 @@ Once logged into the application click sign in. The test server is the last opti
 
 The default development server username and password are: hello@example.com / abc123.
 
-You can also log into solidweb.me with the same credentials.
+You can also log into solidweb.me with the credentials music@demo.org / musicDemo 
