@@ -19,11 +19,7 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 import type { GraphQLFieldConfig, GraphQLSchema } from "graphql";
-import { GraphQLField, GraphQLFieldResolver } from "graphql";
 import { MapperKind, mapSchema } from "@graphql-tools/utils";
-import { DataFactory } from "n3";
-import { getSingleDirective } from "./getSingleDirective";
-import { getResolver } from "./getResolver";
 import type { ResolverMap } from "./mapSingleDirective";
 import { mapSingleDirective } from "./mapSingleDirective";
 

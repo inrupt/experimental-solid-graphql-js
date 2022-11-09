@@ -5,6 +5,7 @@ module.exports = {
   parserOptions: {
     project: "./tsconfig.eslint.json",
   },
+  plugins: ["unused-imports"],
   rules: {
     // It is easier to do star exports in an index file without default exports
     "import/prefer-default-export": "off",
@@ -14,5 +15,6 @@ module.exports = {
     "no-param-reassign": "off",
     // This is here in place until https://github.com/inrupt/typescript-sdk-tools/pull/66 is closed
     "@typescript-eslint/consistent-type-imports": ["error", { prefer: "type-imports" }],
+    "unused-imports/no-unused-imports": "error",
   },
 };

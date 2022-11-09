@@ -25,8 +25,7 @@ import type {
   StringSparqlQueryable,
   Term,
 } from "@rdfjs/types";
-import { QueryEngine } from "@comunica/query-sparql";
-import { AsyncIterator, wrap } from "asynciterator";
+import { wrap } from "asynciterator";
 
 export interface IQueryContext<C extends QueryContext = QueryContext> {
   sparqlEngine: StringSparqlQueryable<BindingsResultSupport>;
