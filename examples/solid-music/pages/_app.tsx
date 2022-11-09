@@ -9,8 +9,9 @@ import { EngineContext, QueryContext, SessionContext } from "../context";
 import { QueryEngine } from "@comunica/query-sparql-solid";
 import {
   IQueryContext,
-  ISparqlEngine, queryObject,
-  queryObjects
+  ISparqlEngine,
+  queryObject,
+  queryObjects,
 } from "@inrupt/sparql-utils";
 import { useRouter } from "next/router";
 import { getStorageFromSession } from "@inrupt/sparql-solid-utils";
@@ -18,8 +19,11 @@ import { DataFactory as DF } from "n3";
 import { getSessionFromContext } from "@inrupt/graphql-directives-solid/dist/utils";
 import { ExecutionResult, GraphQLError } from "graphql";
 import {
-  FetchAlbumDocument, FetchAlbumQuery,
-  FetchAlbumQueryVariables, ISolidQueryOptions, solidQuery
+  FetchAlbumDocument,
+  FetchAlbumQuery,
+  FetchAlbumQueryVariables,
+  ISolidQueryOptions,
+  solidQuery,
 } from "../graphql";
 
 // Start hacky section
