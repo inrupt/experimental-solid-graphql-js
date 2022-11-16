@@ -1,6 +1,6 @@
 # solid-graphql-js experiment
 
-This repo is a proof-of-concept demonstrating how we can query over the Solid ecosystem using spec-compliant GraphQL. 
+This repo is a proof-of-concept demonstrating how we can query over the Solid ecosystem using spec-compliant GraphQL.
 
 ## Warning
 
@@ -8,7 +8,7 @@ This code is experimental, it could change or disappear at any time and comes wi
 
 ## What is this for?
 
-This codebase is designed to demonstrate *one possible abstraction layer* for querying in Solid. In this instance 
+This codebase is designed to demonstrate _one possible abstraction layer_ for querying in Solid. In this instance
 
 ## Usage
 
@@ -42,9 +42,6 @@ schema {
 }
 
 ```
-
-
-
 
 We strongly recommend making use of codegen and the [typed-document-node](https://the-guild.dev/blog/typed-document-node) feature to enforce strict typings in code based on the GraphQL schema. The examples demonstrate our recommended setup which consists of the following codegen file
 
