@@ -1,6 +1,6 @@
 {
   "name": "@inrupt/experimental-graphql-codegen-solid",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Generate a Schema Node in Code Generation",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -36,9 +36,9 @@
   "homepage": "https://github.com/inrupt/solid-graphql-js#readme",
   "dependencies": {
     "@graphql-codegen/plugin-helpers": "^2.7.1",
-    "@inrupt/experimental-graphql-codegen-schema-node": "^0.0.0",
-    "@inrupt/experimental-graphql-codegen-solid-query": "^0.0.0",
-    "@inrupt/experimental-graphql-codegen-solid-schema": "^0.0.0",
+    "@inrupt/experimental-graphql-codegen-schema-node": "^0.1.0",
+    "@inrupt/experimental-graphql-codegen-solid-query": "^0.1.0",
+    "@inrupt/experimental-graphql-codegen-solid-schema": "^0.1.0",
     "graphql": "^16.6.0"
   }
 }
