@@ -1,6 +1,6 @@
 {
   "name": "@inrupt/experimental-sparql-utils",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Utilities for calling RDFJS compliant SPARQL Engines",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
