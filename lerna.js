@@ -5,7 +5,7 @@ const { readFileSync, readdirSync } = require('fs');
 
 async function depInfo({ location, name }, log) {
   const folders = readdirSync(location, { withFileTypes: true });
-  
+
   const { files } = JSON.parse(readFileSync(path.join(location, 'package.json'), 'utf8'));
   let ignore = files ? folders.filter(elem => files.every(file => !file.startsWith(elem.name))) : folders;
   ignore = ignore.map(x => x.isDirectory() ? `${x.name}/**` : x.name)
@@ -41,3 +41,35 @@ async function depFixTask(log) {
 }
 
 module.exports.depFixTask = depFixTask
+
+async function depCheckTask(log) {
+  // Filter out Comunica engine builds
+  const packages = (await (log.packages || loadPackages())).filter(package => !package.location.includes('engines') && package.location.startsWith(path.join(__dirname, '/packages')));
+  const resolutions = Object.keys(JSON.parse(readFileSync(path.join(__dirname, 'package.json'), 'utf8')).resolutions ?? {});
+
+  return iter.forEach(packages, { log })(async package => {
+    const { missingDeps, unusedDeps, allDeps } = await depInfo(package)
+
+    if (missingDeps.length > 0) {
+      throw new Error(`Missing dependencies:  ${missingDeps.join(', ')} from ${package.name}`);
+    }
+
+    if (unusedDeps.length > 0) {
+      throw new Error(`Extra dependencies: ${unusedDeps.join(', ')} in ${package.name}`);
+    }
+
+    if (allDeps.includes(package.name))
+      throw new Error(`${package.name} is a dependency of itself`);
+
+
+    // Now check all resolutions use a star ("*") import
+    const packageJson = JSON.parse(readFileSync(path.join(package.location, 'package.json'), 'utf8'));
+    for (const dep of Object.keys(packageJson.dependencies ?? {})) {
+      if (resolutions.includes(dep) && packageJson.dependencies[dep] !== '*') {
+        throw new Error(`Resolution not using \'*\' import for ${dep} in ${package.name}`);
+      }
+    }
+  })
+}
+
+module.exports.depCheckTask = depCheckTask

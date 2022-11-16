@@ -1,158 +1,189 @@
 // import '../styles/globals.css'
 // NOTE: This only works if tailwind is in the adjacent node_modules
-import 'tailwindcss/tailwind.css'
-import type { AppProps } from 'next/app'
-import { getDefaultSession, Session } from '@inrupt/solid-client-authn-browser';
-import { useEffect, useState } from 'react';
-import { EngineContext, QueryContext, SessionContext } from '../context';
-// import { QueryEngine } from '@inrupt/query-sparql-reasoning-solid';
+import { Session } from "@inrupt/solid-client-authn-browser";
+import type { AppProps } from "next/app";
+import { useEffect, useState } from "react";
+import "tailwindcss/tailwind.css";
+import { EngineContext, QueryContext, SessionContext } from "../context";
 // TODO: USe reasoning and link traversal
-import { QueryEngine } from '@comunica/query-sparql-solid';
-import { useRouter } from 'next/router';
-import { session } from '../components old/data';
-import { IQueryContext, ISparqlEngine, queryBindings, queryObject, queryObjects, queryTerm } from '@inrupt/sparql-utils';
-// import { get } from '@inrupt/sparql-solid-utils';
-import { getStorageFromSession } from '@inrupt/sparql-solid-utils';
-import { DataFactory as DF } from 'n3';
-// import {} from '@inrupt/query-sparql-reasoning-solid'
-// import { QueryEngine } from '@comunica/query-sparql-link-traversal-solid';
-import { solidQuery, FetchAlbumDocument, ISolidQueryOptions, FetchAlbumsQuery, FetchAlbumsQueryVariables, FetchAlbumQuery, FetchAlbumQueryVariables } from '../graphql';
-import { ExecutionResult } from 'graphql';
-import { getSessionFromContext } from '@inrupt/graphql-directives-solid/dist/utils';
-import { GraphQLError } from 'graphql';
+import { QueryEngine } from "@comunica/query-sparql-solid";
+import {
+  IQueryContext,
+  ISparqlEngine,
+  queryObject,
+  queryObjects,
+} from "@inrupt/experimental-sparql-utils";
+import { useRouter } from "next/router";
+import { getStorageFromSession } from "@inrupt/experimental-sparql-solid-utils";
+import { DataFactory as DF } from "n3";
+import { getSessionFromContext } from "@inrupt/experimental-graphql-directives-solid/dist/utils";
+import { ExecutionResult, GraphQLError } from "graphql";
+import {
+  FetchAlbumDocument,
+  FetchAlbumQuery,
+  FetchAlbumQueryVariables,
+  ISolidQueryOptions,
+  solidQuery,
+} from "../graphql";
 
 // Start hacky section
 
-const CONTEXT_KEY_SESSION = '@comunica/actor-http-inrupt-solid-client-authn:session';
+const CONTEXT_KEY_SESSION =
+  "@comunica/actor-http-inrupt-solid-client-authn:session";
 
 function toMeta(container: string) {
-  return new URL('.meta', container).href;
+  return new URL(".meta", container).href;
 }
 
 function getContained(context: IQueryContext, storage: string) {
-  return queryObjects({
-    ...context,
-    context: {
-      ...context.context,
-      sources: [ toMeta(storage) ]
-    }
-  }, DF.namedNode(storage), DF.namedNode('http://www.w3.org/ns/ldp#contains'));
+  return queryObjects(
+    {
+      ...context,
+      context: {
+        ...context.context,
+        sources: [toMeta(storage)],
+      },
+    },
+    DF.namedNode(storage),
+    DF.namedNode("http://www.w3.org/ns/ldp#contains")
+  );
 }
 
 async function getContainedString(context: IQueryContext, storage: string) {
   const nodes = await getContained(context, storage);
-  return nodes.map(node => {
-    if (node.termType !== 'NamedNode') {
-      throw new Error('Named Node expected')
+  return nodes.map((node) => {
+    if (node.termType !== "NamedNode") {
+      throw new Error("Named Node expected");
     }
     return node.value;
   });
 }
 
-async function getAllContains(context: IQueryContext, storage: string): Promise<string[]> {
+async function getAllContains(
+  context: IQueryContext,
+  storage: string
+): Promise<string[]> {
   const contained = await getContainedString(context, storage);
   const result = contained.map(async (contain) => {
     // TOOD: Do this using metadata instead
-    if (contain.endsWith('/')) {
+    if (contain.endsWith("/")) {
       return getAllContains(context, contain);
     } else {
-      const type = await queryObject({
-        ...context,
-        context: {
-          ...context.context,
-          sources: [ contain + '.meta' ]
-        }
-      }, DF.namedNode(contain), DF.namedNode('http://www.w3.org/ns/ma-ont#format'));
+      const type = await queryObject(
+        {
+          ...context,
+          context: {
+            ...context.context,
+            sources: [contain + ".meta"],
+          },
+        },
+        DF.namedNode(contain),
+        DF.namedNode("http://www.w3.org/ns/ma-ont#format")
+      );
       // console.log(type)
-      if (type.value === 'text/turtle') {
-        return [ contain ];
+      if (type.value === "text/turtle") {
+        return [contain];
       } else {
         return [];
       }
     }
   });
   const resolved = await Promise.all(result);
-  return ([] as string[]).concat(...resolved)
+  return ([] as string[]).concat(...resolved);
 }
-
 
 async function getFiles(context: IQueryContext, session: Session) {
   const storage = await getStorageFromSession(context, session);
   return getAllContains(context, storage);
 }
 
-async function createQueryContext(engine: ISparqlEngine, session: Session): Promise<IQueryContext> {
-  const sources = await getFiles({
-    sparqlEngine: engine,
-    context: {
-      [CONTEXT_KEY_SESSION]: session,
-    }
-  }, session);
+async function createQueryContext(
+  engine: ISparqlEngine,
+  session: Session
+): Promise<IQueryContext> {
+  const sources = await getFiles(
+    {
+      sparqlEngine: engine,
+      context: {
+        [CONTEXT_KEY_SESSION]: session,
+      },
+    },
+    session
+  );
 
   return {
     sparqlEngine: engine,
     context: {
       [CONTEXT_KEY_SESSION]: session,
       sources,
-    }
-  }
+    },
+  };
 }
 // End hacky section
 
 // TODO: Propose a good way of handling this when login changes
 // TODO: Handle caching better
-function useSolidQuery<TData, TVariables extends Record<string, any>>(options: ISolidQueryOptions<TData, TVariables>): ExecutionResult<TData> | undefined {
-  const [ result, setResult ] = useState<ExecutionResult<TData> | undefined>()
-  
+function useSolidQuery<TData, TVariables extends Record<string, any>>(
+  options: ISolidQueryOptions<TData, TVariables>
+): ExecutionResult<TData> | undefined {
+  const [result, setResult] = useState<ExecutionResult<TData> | undefined>();
+
   useEffect(() => {
-    solidQuery(options).then(res => {
+    solidQuery(options).then((res) => {
       setResult(res);
-    })
+    });
   }, [options.context.context?.session, options.variables]);
 
   return result;
 }
 
-function useAuthenticatedSolidQuery<TData, TVariables extends Record<string, any>>(options: ISolidQueryOptions<TData, TVariables>): ExecutionResult<TData> | undefined {
+function useAuthenticatedSolidQuery<
+  TData,
+  TVariables extends Record<string, any>
+>(
+  options: ISolidQueryOptions<TData, TVariables>
+): ExecutionResult<TData> | undefined {
   const session = getSessionFromContext(options.context);
-  const [ result, setResult ] = useState<{ result?: ExecutionResult<TData> | undefined, requesting: boolean }>({
-    requesting: false
+  const [result, setResult] = useState<{
+    result?: ExecutionResult<TData> | undefined;
+    requesting: boolean;
+  }>({
+    requesting: false,
   });
-  const [ pending, setPending ] = useState(false);
+  const [pending, setPending] = useState(false);
 
   useEffect(() => {
-
     if (session.info.isLoggedIn) {
       if (result.requesting) {
-        
         setPending(true);
-
       } else {
-
         setResult({ result: result.result, requesting: true });
 
-        solidQuery(options).then(result => {
-          setResult({ result, requesting: false });
-        }).catch(error => {
-          // TODO: Check this
-          setResult({ result: result.result, requesting: false });
-        });
-        
+        solidQuery(options)
+          .then((result) => {
+            setResult({ result, requesting: false });
+          })
+          .catch((error) => {
+            // TODO: Check this
+            setResult({ result: result.result, requesting: false });
+          });
       }
     }
-
-  }, [ session, session.info.isLoggedIn, session.info.webId, options.variables ]);
+  }, [session, session.info.isLoggedIn, session.info.webId, options.variables]);
 
   return result.result;
 }
 
-interface QueryProps<TData, TVariables extends Record<string, any>> extends ISolidQueryOptions<TData, TVariables> {
+interface QueryProps<TData, TVariables extends Record<string, any>>
+  extends ISolidQueryOptions<TData, TVariables> {
   children: (data: TData) => JSX.Element;
   error: (error: ReadonlyArray<GraphQLError>) => JSX.Element;
   fallback: () => JSX.Element;
 }
 
-function Query<TData, TVariables extends Record<string, any>>(props: QueryProps<TData, TVariables>): JSX.Element {
+function Query<TData, TVariables extends Record<string, any>>(
+  props: QueryProps<TData, TVariables>
+): JSX.Element {
   const result = useAuthenticatedSolidQuery(props);
 
   if (!result) {
@@ -167,27 +198,31 @@ function Query<TData, TVariables extends Record<string, any>>(props: QueryProps<
     return props.error(result.errors);
   }
 
-  throw new Error('Result received with no data or errors');
+  throw new Error("Result received with no data or errors");
 }
 
 interface AlbumProps<TData, TVariables extends Record<string, any>> {
-  context: ISolidQueryOptions<TData, TVariables>['context'];
-  variables: ISolidQueryOptions<TData, TVariables>['variables'];
+  context: ISolidQueryOptions<TData, TVariables>["context"];
+  variables: ISolidQueryOptions<TData, TVariables>["variables"];
 }
 
-function AlbumComponent(props: AlbumProps<FetchAlbumQuery, FetchAlbumQueryVariables>) {
-  return <Query
-    document={FetchAlbumDocument}
-    // TODO: Setup a codegen version of this (generate the session + query context and export a query component)
-    // with both of those
-    context={props.context}
-    variables={props.variables}
-    fallback={() => <div>Loading ...</div>}
-    error={() => <div>Error Loading data</div>}
-    // children={({ album }) => <div>{album.url}</div>}
-  >
-    {({ album }) => <div>{album.url}</div>}
-  </Query>
+function AlbumComponent(
+  props: AlbumProps<FetchAlbumQuery, FetchAlbumQueryVariables>
+) {
+  return (
+    <Query
+      document={FetchAlbumDocument}
+      // TODO: Setup a codegen version of this (generate the session + query context and export a query component)
+      // with both of those
+      context={props.context}
+      variables={props.variables}
+      fallback={() => <div>Loading ...</div>}
+      error={() => <div>Error Loading data</div>}
+      // children={({ album }) => <div>{album.url}</div>}
+    >
+      {({ album }) => <div>{album.url}</div>}
+    </Query>
+  );
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -198,7 +233,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
   const [engine] = useState(new QueryEngine());
   const [queryContext, setQueryContext] = useState<undefined | IQueryContext>();
-
 
   useEffect(() => {
     if (context.session.info.isLoggedIn) {
@@ -243,30 +277,28 @@ function MyApp({ Component, pageProps }: AppProps) {
       //     console.warn(err)
       //   })
       // })
-      createQueryContext(engine, context.session)
-      .then(c => {
+      createQueryContext(engine, context.session).then((c) => {
         setQueryContext(c);
       });
-      
     }
-  }, [ context.session.info.isLoggedIn, context.session.info.webId ])
+  }, [context.session.info.isLoggedIn, context.session.info.webId]);
 
   useEffect(() => {
     if (queryContext) {
-      const r = queryContext
-        .sparqlEngine
-        .queryBindings(`SELECT * WHERE { <${context.session.info.webId}> ?p ?o }` as any, queryContext.context)
-        .then(d => {
+      const r = queryContext.sparqlEngine
+        .queryBindings(
+          `SELECT * WHERE { <${context.session.info.webId}> ?p ?o }` as any,
+          queryContext.context
+        )
+        .then((d) => {
+          d.on("data", (data) => {
+            console.log(data.get("p").value, data.get("o").value);
+          });
 
-          d.on('data', data => {
-            console.log(data.get('p').value, data.get('o').value)
-          })
-
-          d.on('end', () => {
-            console.log('end')
-          })
-
-        })
+          d.on("end", () => {
+            console.log("end");
+          });
+        });
 
       // TODO: Get GraphQL working and enable this
       // solidQuery({
@@ -293,8 +325,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   //       setContext({ session: context.session, requestInProgress: false });
   //     })
   //   }
-    
-
 
   //   // if (query.code) {
   //   //   context.session.onSessionRestore(() => {
@@ -339,7 +369,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </QueryContext.Provider>
       </EngineContext.Provider>
     </SessionContext.Provider>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

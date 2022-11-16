@@ -18,17 +18,10 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-import {
-  GraphQLField,
-  GraphQLFieldConfig,
-  GraphQLFieldResolver,
-  GraphQLSchema,
-} from "graphql";
+import type { GraphQLFieldConfig, GraphQLSchema } from "graphql";
 import { MapperKind, mapSchema } from "@graphql-tools/utils";
-import { DataFactory } from "n3";
-import { getSingleDirective } from "./getSingleDirective";
-import { getResolver } from "./getResolver";
-import { mapSingleDirective, ResolverMap } from "./mapSingleDirective";
+import type { ResolverMap } from "./mapSingleDirective";
+import { mapSingleDirective } from "./mapSingleDirective";
 
 export function mapObjectField<TSource, TContext, TArgs = any>(
   resolveMap: ResolverMap<TSource, TContext, TArgs>

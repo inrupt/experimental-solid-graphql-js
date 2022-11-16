@@ -18,15 +18,14 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-import {
+import type {
   Bindings,
   BindingsResultSupport,
   QueryContext,
   StringSparqlQueryable,
   Term,
 } from "@rdfjs/types";
-import { QueryEngine } from '@comunica/query-sparql';
-import { AsyncIterator, wrap } from "asynciterator";
+import { wrap } from "asynciterator";
 
 export interface IQueryContext<C extends QueryContext = QueryContext> {
   sparqlEngine: StringSparqlQueryable<BindingsResultSupport>;

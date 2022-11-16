@@ -22,15 +22,11 @@ import { MapperKind, mapSchema } from "@graphql-tools/utils";
 import {
   getResolver,
   getSingleDirective,
-} from "@inrupt/graphql-directives-utils";
-import { queryObject, queryObjects } from "@inrupt/sparql-utils";
-import {
-  GraphQLFieldConfig,
-  GraphQLSchema,
-  isListType,
-  isNonNullType,
-} from "graphql";
-import { Source } from "../types";
+} from "@inrupt/experimental-graphql-directives-utils";
+import { queryObject, queryObjects } from "@inrupt/experimental-sparql-utils";
+import type { GraphQLFieldConfig, GraphQLSchema } from "graphql";
+import { isListType, isNonNullType } from "graphql";
+import type { Source } from "../types";
 import { nodeFromDirective } from "../utils";
 
 export function property(

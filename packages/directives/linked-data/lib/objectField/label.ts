@@ -18,16 +18,19 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-import { mapObjectField } from "@inrupt/graphql-directives-utils";
-import { queryLabel } from "@inrupt/sparql-utils";
-import { Source } from "../types";
+import { mapObjectField } from "@inrupt/experimental-graphql-directives-utils";
+import { queryLabel } from "@inrupt/experimental-sparql-utils";
+import type { Source } from "../types";
 
 export const label = mapObjectField<any, any, Source>(
-  (resolver) => (source: Source, args, context, info) =>
+  (resolver) => (source, args, context, info) =>
     resolver(
       {
-        ...source,
-        [info.fieldName]: { __node: queryLabel(context, source.__node!) },
+        // TODO: See if this spreader should be re-enabled
+        // ...source,
+        // TODO: See if we need to re-enable that pattern
+        // [info.fieldName]: { __node: queryLabel(context, source.__node!) },
+        [info.fieldName]: queryLabel(context, source),
       },
       args,
       context,

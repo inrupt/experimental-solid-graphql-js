@@ -1,0 +1,10 @@
+node_modules/
+packages/**/*.js
+packages/**/*.d.ts
+coverage
+**/dist/
+lerna-debug.log
+**.csv
+examples/**/.mesh/
+examples/**/.next/
+examples/**/graphql/*.ts

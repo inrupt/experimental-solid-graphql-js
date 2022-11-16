@@ -18,7 +18,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-import { Term } from "@rdfjs/types";
+import type { Term } from "@rdfjs/types";
 
 // TODO create fieldConfig type
 // TODO: Move this to more generic package

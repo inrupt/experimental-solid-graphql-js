@@ -19,7 +19,7 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 import { ActorHttpInruptSolidClientAuthn } from "@comunica/actor-http-inrupt-solid-client-authn";
-import { QueryContext } from "@rdfjs/types";
+import type { QueryContext } from "@rdfjs/types";
 import { DataFactory as DF } from "n3";
 import type { Session } from "@inrupt/solid-client-authn-browser";
 

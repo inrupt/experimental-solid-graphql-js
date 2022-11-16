@@ -22,10 +22,10 @@ import {
   queryTerm,
   type IQueryContext,
   objectPattern,
-} from "@inrupt/sparql-utils";
+} from "@inrupt/experimental-sparql-utils";
 import { DataFactory as DF } from "n3";
-import { Term } from "@rdfjs/types";
-import { Session } from "@inrupt/solid-client-authn-browser";
+import type { Term } from "@rdfjs/types";
+import type { Session } from "@inrupt/solid-client-authn-browser";
 
 export function getPimStorage(context: IQueryContext, webId: Term) {
   return queryTerm(

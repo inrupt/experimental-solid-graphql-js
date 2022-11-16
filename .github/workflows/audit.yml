@@ -1,0 +1,12 @@
+name: Audit
+
+on:
+  push:
+  schedule:
+    - cron: "40 10 * * *"
+
+jobs:
+  audit:
+    uses: inrupt/javascript-style-configs/.github/workflows/reusable-audit.yml@1.4.2
+    secrets:
+      WEBHOOK_E2E_FAILURE: ${{ secrets.WEBHOOK_E2E_FAILURE }}

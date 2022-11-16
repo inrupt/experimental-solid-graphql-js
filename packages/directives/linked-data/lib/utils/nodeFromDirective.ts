@@ -19,9 +19,6 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 import { DataFactory } from "n3";
-import { Factory } from "sparqlalgebrajs";
-
-const factory = new Factory();
 
 export function nodeFromDirective(
   directive: Record<string, any> | undefined,

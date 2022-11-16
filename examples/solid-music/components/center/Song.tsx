@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { FetchSongDocument, FetchSongQuery } from '../../graphql';
-import { Query } from '../query';
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FetchSongDocument, FetchSongQuery } from "../../graphql";
+import { Query } from "../query";
 
 export function Song(props: { song: string; order: number }) {
   return (
@@ -11,26 +11,32 @@ export function Song(props: { song: string; order: number }) {
       // children={data => <LoadedSong {...data} />}
       fallback={() => <></>}
       error={(e) => <>Error {JSON.stringify(e, null, 2)}</>}
-      requireLogin={true}>
-      {data => <LoadedSong {...data} order={props.order} />}
+      requireLogin={true}
+    >
+      {(data) => <LoadedSong {...data} order={props.order} />}
     </Query>
-  )
+  );
 }
 
-function LoadedSong({ song, order }: FetchSongQuery & { order: number }): JSX.Element {
+function LoadedSong({
+  song,
+  order,
+}: FetchSongQuery & { order: number }): JSX.Element {
   const urlData = useRouter();
 
   return (
-    <Link href={{
-      ...urlData,
-      query: {
-        ...urlData.query,
-        currentSong: song._id,
-      }
-    }}>
+    <Link
+      href={{
+        ...urlData,
+        query: {
+          ...urlData.query,
+          currentSong: song._id,
+        },
+      }}
+    >
       <div
         className="grid grid-cols-2 text-[#929292] hover:text-white hover:bg-[#2b2d30] rounded-md cursor-pointer"
-      // onClick={() => {}}
+        // onClick={() => {}}
       >
         <div className="flex items-center pl-3 space-x-4 py-1">
           <p>{order}</p>
@@ -44,7 +50,9 @@ function LoadedSong({ song, order }: FetchSongQuery & { order: number }): JSX.El
               {song.title}
             </p>
             {/* TODO: Make these into URLS */}
-            <p className="w-40">{song.artist.map(artist => artist.name).join(", ")}</p>
+            <p className="w-40">
+              {song.artist.map((artist) => artist.name).join(", ")}
+            </p>
           </div>
         </div>
 
@@ -57,5 +65,5 @@ function LoadedSong({ song, order }: FetchSongQuery & { order: number }): JSX.El
         </div>
       </div>
     </Link>
-  )
+  );
 }

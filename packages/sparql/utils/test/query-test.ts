@@ -20,7 +20,7 @@
 //
 import { QueryEngine } from "@comunica/query-sparql";
 import { Store, DataFactory as DF } from "n3";
-import { QueryContext } from "@rdfjs/types";
+import type { QueryContext } from "@rdfjs/types";
 import {
   type IQueryContext,
   type ISparqlEngine,

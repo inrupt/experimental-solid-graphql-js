@@ -18,9 +18,9 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-import { Term } from "@rdfjs/types";
+import type { Term } from "@rdfjs/types";
 import { DataFactory as DF } from "n3";
-import { Algebra } from "sparqlalgebrajs";
+import type { Algebra } from "sparqlalgebrajs";
 import { RDFS_LABEL } from "../terms";
 import { factory } from "./factory";
 

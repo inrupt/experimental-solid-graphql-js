@@ -1,5 +1,5 @@
 {
-  "name": "@inrupt/sparql-solid-utils",
+  "name": "@inrupt/experimental-sparql-solid-utils",
   "version": "0.0.0",
   "description": "Utilities for calling RDFJS compliant SPARQL Engines",
   "main": "dist/index.js",
@@ -36,7 +36,7 @@
   "homepage": "https://github.com/inrupt/solid-graphql-js#readme",
   "dependencies": {
     "@inrupt/solid-client-authn-browser": "^1.12.2",
-    "@inrupt/sparql-utils": "^0.0.0",
+    "@inrupt/experimental-sparql-utils": "^0.0.0",
     "@rdfjs/types": "^1.1.0",
     "n3": "^1.16.2"
   }

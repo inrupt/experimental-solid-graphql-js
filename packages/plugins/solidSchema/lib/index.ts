@@ -19,7 +19,7 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 import type { Types } from "@graphql-codegen/plugin-helpers";
-import { GraphQLSchema } from "graphql";
+import type { GraphQLSchema } from "graphql";
 
 // Adds the compiled schema to the source document
 export function plugin<T = any>(
@@ -30,7 +30,7 @@ export function plugin<T = any>(
   return {
     content: "",
     prepend: [
-      `import applySolidDirectives from '@inrupt/graphql-directives-solid'`,
+      `import applySolidDirectives from '@inrupt/experimental-graphql-directives-solid'`,
     ],
     append: [
       `

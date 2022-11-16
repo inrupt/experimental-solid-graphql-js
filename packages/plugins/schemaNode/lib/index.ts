@@ -18,9 +18,9 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-import { Types } from "@graphql-codegen/plugin-helpers";
+import type { Types } from "@graphql-codegen/plugin-helpers";
 import { printSchemaWithDirectives } from "@graphql-tools/utils";
-import { GraphQLSchema } from "graphql";
+import type { GraphQLSchema } from "graphql";
 
 // Adds the compiled schema to the source document
 export function plugin<T = any>(
