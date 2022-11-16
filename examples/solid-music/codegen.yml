@@ -8,7 +8,7 @@ generates:
       - typescript
       - typescript-operations
       - typed-document-node
-      - "@inrupt/graphql-codegen-solid"
+      - "@inrupt/experimental-graphql-codegen-solid"
     config:
       scalars:
         Date: Date

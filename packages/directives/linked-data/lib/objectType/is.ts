@@ -22,9 +22,9 @@ import { MapperKind, mapSchema } from "@graphql-tools/utils";
 import {
   getResolver,
   getSingleDirective,
-} from "@inrupt/graphql-directives-utils";
+} from "@inrupt/experimental-graphql-directives-utils";
 import type { GraphQLSchema } from "graphql";
-import { isType } from "@inrupt/sparql-utils";
+import { isType } from "@inrupt/experimental-sparql-utils";
 import { DataFactory as DF } from "n3";
 import type { Term } from "@rdfjs/types";
 

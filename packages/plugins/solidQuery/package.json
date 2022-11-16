@@ -1,5 +1,5 @@
 {
-  "name": "@inrupt/graphql-codegen-solid-query",
+  "name": "@inrupt/experimental-graphql-codegen-solid-query",
   "version": "0.0.0",
   "description": "Generate a Schema Node in Code Generation",
   "main": "dist/index.js",

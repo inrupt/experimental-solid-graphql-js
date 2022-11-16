@@ -1,6 +1,6 @@
 // This is a script for uploading the seed data to a live instance
 
-import { saveSolidDatasetAt, fromRdfJsDataset } from "@inrupt/solid-client";
+import { saveSolidDatasetAt, fromRdfJsDataset } from "@inrupt/experimental-solid-client";
 import { Store, Parser } from "n3";
 import fs from "fs";
 import path from "path";

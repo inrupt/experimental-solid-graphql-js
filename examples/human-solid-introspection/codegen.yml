@@ -6,7 +6,7 @@ documents:
 generates:
   graphql/index.ts:
     plugins:
-      - "@inrupt/graphql-codegen-solid"
+      - "@inrupt/experimental-graphql-codegen-solid"
       - typescript
       - typescript-operations
       - typed-document-node

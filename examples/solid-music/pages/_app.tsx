@@ -12,11 +12,11 @@ import {
   ISparqlEngine,
   queryObject,
   queryObjects,
-} from "@inrupt/sparql-utils";
+} from "@inrupt/experimental-sparql-utils";
 import { useRouter } from "next/router";
-import { getStorageFromSession } from "@inrupt/sparql-solid-utils";
+import { getStorageFromSession } from "@inrupt/experimental-sparql-solid-utils";
 import { DataFactory as DF } from "n3";
-import { getSessionFromContext } from "@inrupt/graphql-directives-solid/dist/utils";
+import { getSessionFromContext } from "@inrupt/experimental-graphql-directives-solid/dist/utils";
 import { ExecutionResult, GraphQLError } from "graphql";
 import {
   FetchAlbumDocument,

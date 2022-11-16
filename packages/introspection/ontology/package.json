@@ -1,5 +1,5 @@
 {
-  "name": "@inrupt/graphql-introspection-ontology",
+  "name": "@inrupt/experimental-graphql-introspection-ontology",
   "version": "0.0.0",
   "description": "Introspect OWL ontologies to generate GraphQL schemas",
   "main": "dist/index.js",

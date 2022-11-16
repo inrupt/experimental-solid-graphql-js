@@ -22,7 +22,7 @@ import { MapperKind, mapSchema } from "@graphql-tools/utils";
 import {
   getResolver,
   getSingleDirective,
-} from "@inrupt/graphql-directives-utils";
+} from "@inrupt/experimental-graphql-directives-utils";
 import type { GraphQLFieldConfig, GraphQLSchema } from "graphql";
 import type { Source } from "../types";
 

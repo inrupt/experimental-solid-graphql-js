@@ -1,8 +1,52 @@
 # solid-graphql-js experiment
 
-This repo is a proof-of-concept demonstrating how we can query over the Solid ecosystem using GraphQL. We strongly recommend making use of codegen and the [typed-document-node](https://the-guild.dev/blog/typed-document-node) feature to enforce strict typings in code.
+This repo is a proof-of-concept demonstrating how we can query over the Solid ecosystem using spec-compliant GraphQL. 
 
-The examples demonstrate our recommended setup which consists of the following codegen file
+## Warning
+
+This code is experimental, it could change or disappear at any time and comes with no maintenance guarantees.
+
+## What is this for?
+
+This codebase is designed to demonstrate *one possible abstraction layer* for querying in Solid. In this instance 
+
+## Usage
+
+These packages build off [graphql-js](https://graphql.org/graphql-js/) by providing custom [directives](https://graphql.org/learn/queries/#directives) to specify how fields evaluate fields in GraphQL schemas.
+
+The key directives added are the `@is` (which is used to assert the `rdf:type` a particular object type must have when it is retrieved) and `@property` directive is used to specify the `iri` that should be looked up to get the value of an object field.
+
+```ts
+type Human @is(class: "http://example.org/Person") {
+  // The `@identifier` here indicates that a particular
+  // field should be assigned to the `iri` of the Thing that
+  // is being queried.
+  id: ID! @identifier
+  name: String! @property(iri: "http://www.w3.org/2000/01/rdf-schema#label")
+  biologicalMother: Human! @property(iri: "http://example.org/biologicalMother")
+}
+
+type Query {
+  // The `@identifier` here indicates that we should be
+  // looking up the Human associated to the `_id` iri that
+  // was given as an input to the query.
+  person(_id: ID! @identifier): Human!
+
+  // Note if we wanted to query about the user that is
+  // currently logged in then this can be written as
+  // person: Human! @webId
+}
+
+schema {
+  query: Query
+}
+
+```
+
+
+
+
+We strongly recommend making use of codegen and the [typed-document-node](https://the-guild.dev/blog/typed-document-node) feature to enforce strict typings in code based on the GraphQL schema. The examples demonstrate our recommended setup which consists of the following codegen file
 
 codegen.yml
 
@@ -13,7 +57,7 @@ documents:
 generates:
   graphql/index.ts:
     plugins:
-      - "@inrupt/graphql-codegen-solid"
+      - "@inrupt/experimental-graphql-codegen-solid"
       - typescript
       - typescript-operations
       - typed-document-node
@@ -111,6 +155,8 @@ npm run demo:cli:solid:introspection
 When prompted username and password are: hello@example.com / abc123.
 
 ## Running the solid-music demo
+
+**Warning** this app is a PoC and is not stable; in particular the login flow is not stable in all browsers. Consequently, we recommend using Chromium based browsers for this demo.
 
 A sample application built using the graphql components
 

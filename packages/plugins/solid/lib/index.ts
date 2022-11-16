@@ -21,9 +21,9 @@
 import type { Types } from "@graphql-codegen/plugin-helpers";
 import type { GraphQLSchema } from "graphql";
 
-import * as schemaNode from "@inrupt/graphql-codegen-schema-node";
-import * as solidQuery from "@inrupt/graphql-codegen-solid-query";
-import * as solidSchema from "@inrupt/graphql-codegen-solid-schema";
+import * as schemaNode from "@inrupt/experimental-graphql-codegen-schema-node";
+import * as solidQuery from "@inrupt/experimental-graphql-codegen-solid-query";
+import * as solidSchema from "@inrupt/experimental-graphql-codegen-solid-schema";
 
 // Adds the compiled schema to the source document
 export async function plugin<T = any>(

@@ -30,7 +30,7 @@ export function plugin<T = any>(
   return {
     content: "",
     prepend: [
-      `import applySolidDirectives from '@inrupt/graphql-directives-solid'`,
+      `import applySolidDirectives from '@inrupt/experimental-graphql-directives-solid'`,
     ],
     append: [
       `

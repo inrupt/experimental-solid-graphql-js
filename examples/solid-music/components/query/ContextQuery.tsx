@@ -1,7 +1,7 @@
 import { Context, useContext } from "react";
 import { Query as PureQuery, QueryProps as PureQueryProps } from "./Query";
 import { QueryContext } from "../../context/engine";
-import { IQueryContext } from "@inrupt/sparql-utils";
+import { IQueryContext } from "@inrupt/experimental-sparql-utils";
 
 export type QueryProps<TData, TVariables extends Record<string, any>> = Omit<
   PureQueryProps<TData, TVariables>,

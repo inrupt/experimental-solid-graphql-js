@@ -1,9 +1,10 @@
 {
-  "name": "@inrupt/query-sparql-reasoning-solid",
+  "name": "@inrupt/experimental-query-sparql-reasoning-solid",
   "version": "0.2.0",
   "description": "A SPARQL query engine with reasoning capabilities for querying over decentralized RDF knowledge graphs on the Web",
   "main": "dist/index.js",
   "typings": "dist/index",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/comunica/comunica-feature-reasoning.git",
@@ -184,7 +185,7 @@
     "@comunica/reasoning-context-entries": "^0.2.0",
     "@comunica/runner": "^2.4.0",
     "@comunica/types": "^2.4.0",
-    "@inrupt/graphql-codegen-schema-node": "^0.0.0"
+    "@inrupt/experimental-graphql-codegen-schema-node": "^0.0.0"
   },
   "devDependencies": {
     "@comunica/bus-normalize-rule": "^0.2.0",
