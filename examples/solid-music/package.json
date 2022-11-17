@@ -1,6 +1,6 @@
 {
   "name": "@inrupt/experimental-solid-music",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -20,8 +20,8 @@
     "@comunica/query-sparql-link-traversal-solid": "^0.0.2-alpha.6.0",
     "@comunica/query-sparql-solid": "^2.3.0",
     "@heroicons/react": "^1.0.6",
-    "@inrupt/experimental-graphql-codegen-solid": "^0.1.0",
-    "@inrupt/experimental-sparql-solid-utils": "^0.1.0",
+    "@inrupt/experimental-graphql-codegen-solid": "^0.1.1",
+    "@inrupt/experimental-sparql-solid-utils": "^0.1.1",
     "@inrupt/solid-client": "^1.23.3",
     "@inrupt/solid-client-authn-browser": "^1.12.2",
     "next": "12.3.1",
@@ -35,7 +35,7 @@
     "@graphql-codegen/typed-document-node": "^2.3.3",
     "@graphql-codegen/typescript": "^2.7.3",
     "@graphql-codegen/typescript-operations": "^2.5.3",
-    "@inrupt/experimental-query-sparql-reasoning-solid": "^0.1.0",
+    "@inrupt/experimental-query-sparql-reasoning-solid": "^0.1.1",
     "@types/node": "18.8.0",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
