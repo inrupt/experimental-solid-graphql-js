@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 
 ## Unreleased
 
-The following changes have been implemented but not released yet:
+- Add `.nvmrc` so that releases are also made on npm
 
 ## [0.1.0] - 2022-11-17
 
