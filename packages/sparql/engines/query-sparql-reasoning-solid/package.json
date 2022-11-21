@@ -10,9 +10,6 @@
     "url": "https://github.com/comunica/comunica-feature-reasoning.git",
     "directory": "packages/sparql/engines/query-sparql-reasoning-solid"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "sideEffects": false,
   "keywords": [
     "comunica",
