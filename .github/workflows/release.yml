@@ -18,6 +18,6 @@ jobs:
           node-version-file: ".nvmrc"
           registry-url: "https://registry.npmjs.org"
       - run: npm ci
-      - run: npm run publish -- from-package --no-verify-access --yes
+      - run: npm run publish -- from-package --no-verify-access --no-private --yes
         env:
           NODE_AUTH_TOKEN: ${{ secrets.INRUPT_NPM_TOKEN }}
