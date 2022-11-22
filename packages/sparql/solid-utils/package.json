@@ -39,5 +39,8 @@
     "@inrupt/solid-client-authn-browser": "^1.12.2",
     "@rdfjs/types": "^1.1.0",
     "n3": "^1.16.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

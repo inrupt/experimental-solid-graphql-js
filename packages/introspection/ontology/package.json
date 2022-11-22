@@ -44,5 +44,8 @@
     "follow-redirects": "^1.15.2",
     "graphql": "^16.6.0",
     "n3": "^1.16.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
