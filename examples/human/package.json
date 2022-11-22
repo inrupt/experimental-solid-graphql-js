@@ -1,6 +1,6 @@
 {
   "name": "@inrupt/experimental-human-graphql-query-example",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -13,7 +13,7 @@
   "dependencies": {
     "@comunica/query-sparql-file": "^2.4.3",
     "@comunica/query-sparql-file-reasoning": "^0.2.0",
-    "@inrupt/experimental-graphql-codegen-solid": "^0.1.1",
+    "@inrupt/experimental-graphql-codegen-solid": "^0.1.2",
     "terminal-image": "^1.2.1",
     "ts-node": "^10.9.1"
   },
