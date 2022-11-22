@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/inrupt/solid-graphql-js.git"
+    "url": "git+https://github.com/inrupt/experimental-solid-graphql-js.git"
   },
   "sideEffects": false,
   "keywords": [
@@ -28,12 +28,12 @@
   "author": "Inrupt",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/inrupt/solid-graphql-js/issues"
+    "url": "https://github.com/inrupt/experimental-solid-graphql-js/issues"
   },
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/inrupt/solid-graphql-js#readme",
+  "homepage": "https://github.com/inrupt/experimental-solid-graphql-js#readme",
   "dependencies": {
     "@graphql-codegen/plugin-helpers": "^2.7.1",
     "graphql": "^16.6.0"
