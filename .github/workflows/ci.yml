@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         # Note - we exclude node 14 since npm ci fails on git dependencies
-        # see https://github.com/inrupt/solid-graphql-js/actions/runs/3390977682/jobs/5635685354
+        # see https://github.com/inrupt/experimental-solid-graphql-js/actions/runs/3390977682/jobs/5635685354
         node-version: ["18", "16"]
     steps:
       - uses: actions/checkout@v3
