@@ -15,7 +15,7 @@
   "dependencies": {
     "@comunica/query-sparql-file": "^2.4.3",
     "@comunica/query-sparql-file-reasoning": "^0.2.0",
-    "@graphql-mesh/types": "^0.85.4",
+    "@graphql-mesh/types": "^0.87.0",
     "@inrupt/experimental-graphql-codegen-solid": "^0.1.2",
     "solid-node-interactive-auth": "^1.0.2",
     "terminal-image": "^1.2.1",
